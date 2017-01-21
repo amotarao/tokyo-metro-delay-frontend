@@ -1,0 +1,97 @@
+
+.line--40 .metro-symbol {
+  // transform: translate(-80px,-80px) scale(0.2);
+  transform: scale(0.2);
+}
+.line--60 .metro-symbol {
+  // transform: translate(-70px,-70px) scale(0.3);
+  transform: scale(0.3);
+}
+.line--80 .metro-symbol {
+  // transform: translate(-60px,-60px) scale(0.4);
+  transform: scale(0.4);
+}
+.metro-symbol {
+  background: #fff;
+  border-radius: 50%;
+  border-width: 45px;
+  border-style: solid;
+  margin: auto;
+  height: 110px;
+  width: 110px;
+  box-sizing: content-box;
+
+  flex: none;
+
+  transition: all 0.2s ease-in-out;
+
+  // ラインコード縦横中央用
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // テキスト選択禁止
+  user-select: none;
+  cursor: default;
+
+  /*
+  position: absolute;
+  top: -100%;
+  right: -100%;
+  bottom: -100%;
+  left: -100%;
+  */
+}
+.metro-symbol:hover {
+  cursor: pointer;
+  box-shadow: 0 3px 15px 0 rgba(0,0,0,0.5);
+  // transform: translateY(-5px);
+}
+.metro-symbol-ginza {
+  border-color: #FF9500;
+}
+.metro-symbol-marunouchi {
+  border-color: #F62E36;
+}
+.metro-symbol-hibiya {
+  border-color: #B5B5AC;
+}
+.metro-symbol-tozai {
+  border-color: #009BBF;
+}
+.metro-symbol-chiyoda {
+  border-color: #00BB85;
+}
+.metro-symbol-yurakucho {
+  border-color: #C1A470;
+}
+.metro-symbol-hanzomon {
+  border-color: #8F76D6;
+}
+.metro-symbol-namboku {
+  border-color: #00AC9B;
+}
+.metro-symbol-fukutoshin {
+  border-color: #9C5E31;
+}
+.metro-symbol-asakusa {
+  border-color: #e85298;
+}
+.metro-symbol-mita {
+  border-color: #0079c2;
+}
+.metro-symbol-shinjuku {
+  border-color: #6cbb5a;
+}
+.metro-symbol-oedo {
+  border-color: #b6007a;
+}
+.metro-char {
+  color: #000;
+  font-family: futura;
+  font-weight: bold;
+  font-size: 84px;
+}
+.metro-symbol-chiyoda .metro-char {
+  letter-spacing: .1em;
+}

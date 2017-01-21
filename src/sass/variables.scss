@@ -1,0 +1,46 @@
+$bgcolor-morning : #faffff;
+$bgcolor-afternoon : #faffff;
+$bgcolor-evening : #faffff;
+$bgcolor-night : #faffff;
+
+$color-company-metro :         #00abd2;
+$color-line-metro-ginza :      #FF9500;
+$color-line-metro-marunouchi : #F62E36;
+$color-line-metro-hibiya :     #B5B5AC;
+$color-line-metro-tozai :      #009BBF;
+$color-line-metro-chiyoda :    #00BB85;
+$color-line-metro-yurakucho :  #C1A470;
+$color-line-metro-hanzomon :   #8F76D6;
+$color-line-metro-namboku :    #00AC9B;
+$color-line-metro-fukutoshin : #9C5E31;
+$color-line-metro-asakusa :    #e85298;
+$color-line-metro-mita :       #0079c2;
+$color-line-metro-shinjuku :   #6cbb5a;
+$color-line-metro-oedo :       #b6007a;
+
+/*
+$part-control-main-color : #fff;
+$part-control-color : #fff;
+$part-control-bgcolor : $color-company-metro;
+*/
+///*
+$part-control-main-color : $color-company-metro;
+$part-control-color : #999;
+$part-control-bgcolor : transparent;
+//*/
+
+$font-family-default : "Noto Sans CJK JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, Verdana, Meiryo, "M+ 1p", sans-serif;
+$font-family-roboto : "Roboto", "Noto Sans CJK JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, Verdana, Meiryo, "M+ 1p", sans-serif;
+
+$media-square :        "only screen and (max-width : 479px) and (max-height : 479px)";
+$media-mobile :        "only screen and (max-width : 479px) and (min-height : 480px)";
+$media-horizontal :    "only screen and (min-width : 480px) and (max-height : 479px)";
+$media-small :         "only screen and (max-width : 839px) and (min-height : 480px)";
+$media-normal :        "only screen and (min-width : 840px) and (min-height : 480px)";
+
+$media-square-mobile : "only screen and (max-width : 479px)";
+
+$color-scheduled : #8BC34A;
+$color-nodata :    #FBC02D;
+
+$time-changing : 0.3s;

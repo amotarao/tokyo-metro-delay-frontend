@@ -1,0 +1,44 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  color: #333;
+  font-family: $font-family-roboto;
+
+  background: #fafafa;
+  min-width: 840px;
+  min-height: 480px;
+
+  @media #{$media-square-mobile} {
+    min-height: 320px;
+    min-width: 320px;
+  }
+
+  & > body {
+    overflow: auto;
+  }
+}
+.is-hide {
+  display: none;
+}
+
+.container {
+  width: 100vw;
+  min-width: 840px;
+  height: 100vh;
+  min-height: 480px;
+
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media #{$media-square-mobile} {
+    min-height: 320px;
+    min-width: 320px;
+  }
+}

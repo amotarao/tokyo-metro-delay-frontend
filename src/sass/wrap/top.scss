@@ -1,0 +1,356 @@
+/*
+// .top-wrap
+*/
+
+.top-wrap {
+  height: 100%;
+  width: 100%;
+  margin-top: 0;
+
+  @media #{$media-square} {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+
+
+/*
+// .line-list
+*/
+
+.line-list {
+  height: calc(100vh + 72px);
+  width: 70%;
+  max-width: 960px;
+  margin: -18px auto -54px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  @media #{$media-square-mobile} {
+    height: 80%;
+    min-height: 288px;
+    max-height: 100vw;
+    width: 90%;
+    min-width: 288px;
+  }
+
+  @media #{$media-square} {
+    height: 90%;
+    padding-bottom: 7%;
+  }
+
+  &.is-changing {
+    height: calc(200vh + 144px);
+    margin: calc(-50vh + -36px) auto calc(-50vh + -108px);
+//    transition: height $time-changing ease-in-out,
+//                margin $time-changing ease-in-out;
+  }
+
+  &.line-list--count_1 .line.line-delay {
+    width: 100%;
+  }
+  &.line-list--count_2 .line.line-delay {
+    width: 50%;
+  }
+  &.line-list--count_3 .line.line-delay {
+    width: 30%;
+  }
+  &.line-list--count_4 .line.line-delay {
+    width: 22%;
+  }
+  &.line-list--count_5 .line.line-delay {
+    width: 18%;
+  }
+  &.line-list--count_6 .line.line-delay {
+    width: 15%;
+    min-width: 60px;
+  }
+  &.line-list--count_7 .line.line-delay {
+    width: 13%;
+    min-width: 60px;
+  }
+  &.line-list--count_8 .line.line-delay {
+    width: 11%;
+    min-width: 60px;
+  }
+  &.line-list--count_9 .line.line-delay {
+    width: 10%;
+    min-width: 60px;
+  }
+  &[class*="line-list--count_"] .line.line-delay {
+    @media #{$media-square-mobile} {
+      width: 27%;
+    }
+  }
+
+  .line.line-delay .line-symbol {
+    @media #{$media-square-mobile} {
+      box-shadow: 0 0 8px 2px rgba(211,47,47,0.8);
+    }
+  }
+}
+.line-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50%;
+//  transition: height 0.3s ease-in-out;
+}
+.line-information {
+  width: 100%;
+  order: -1;
+  
+  @media #{$media-square-mobile} {
+    display: none;
+  }
+}
+.line-blank-middle {
+  width: 100%;
+  height: 0;
+  order: 0;
+  transition: height $time-changing ease-in-out;
+
+  @media #{$media-square-mobile} {
+    display: none;
+  }
+}
+.line-list[class*="line-list--count_"] {
+  .line-information {
+    height: 0;
+  }
+}
+.line-list.line-list--count_9 {
+  .line-blank-middle {
+    height: 50%;
+  }
+}
+.line-list.is-changing {
+  .line-blank-middle {
+    height: 100%;
+  }
+}
+.line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 60px;
+  transition: order 0s linear $time-changing,
+              height $time-changing ease-in-out;
+
+  & > div {
+    max-width: 100%;
+  }
+  
+  @media #{$media-square-mobile} {
+    height: 27%;
+    width: 27%;
+    min-height: 75px;
+    min-width: 75px;
+  }
+
+  &.line-delay {
+    width: auto;
+    order: -1;
+
+    @media #{$media-square-mobile} {
+      order: 0;
+    }
+  }
+}
+.line-list.is-changing {
+  .line {
+    height: 25%;
+  }
+}
+.line-symbol {
+  width: 160px;
+  max-width: 100%;
+  border-radius: 50%;
+  user-select: none;
+  transition: box-shadow 0.2s ease-in-out, // ホバー時のアクション
+              transform 0.2s ease-in-out;
+  &:hover {
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.3);
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+  @media #{$media-square-mobile} {
+    max-width: 27vh;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.line-text {
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: .1em;
+  
+  padding: 0.4em 0;
+  text-align: center;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  span {
+    white-space: nowrap;
+  }
+  .delay-text {
+    color: #FFB300;
+  }
+
+  @media #{$media-square-mobile} {
+    display: none;
+  }
+}
+.line-delay     .line-text,
+.line-loader    .line-text,
+.line-scheduled .line-text,
+.line-nodata    .line-text {
+  font-size: 14px;
+  padding: 0.6em 0;
+}
+
+.ok-circle,
+.ok-circle:after {
+  border-radius: 50%;
+  width: 88px;
+  height: 88px;
+}
+.ok-circle {
+  background: #fff;
+  margin: auto;
+  font-size: 10px;
+  text-indent: -9999em;
+  border-width: 36px;
+  border-style: solid;
+}
+
+
+.line-scheduled {
+//  transition: display 0s ease $time-changing;
+  .ok-circle {
+    border-color: $color-scheduled;
+  }
+  .line-text {
+    color: $color-scheduled;
+  }
+}
+
+.line-nodata {
+  .ok-circle {
+    border-color: $color-nodata;
+  }
+  .line-text {
+    color: $color-nodata;
+  }
+}
+
+.line-loader {
+  .line-text {
+    color: $color-company-metro;
+  }
+}
+
+
+/*
+// 遅延情報 無し => 有り
+*/
+
+/*
+// チェンジ中 & 遅延路線有り
+.line-list.is-changing[class*="line-list--count_"] { // height 50% => 25%
+  .line-information {
+    height: 25%;
+//    transition: height $time-changing ease-in-out;
+  }
+}
+// Notチェンジ中 & 遅延路線有り
+.line-list[class*="line-list--count_"] { // height 0
+  .line-information {
+    height: 0;
+  }
+}
+// チェンジ中 & 遅延路線有り
+.line-list.is-changing:not([class*="line-list--count_"]) { // height 0
+  .line-information {
+    height: 0;
+  }
+}
+// Notチェンジ中 & 遅延路線無し
+.line-list:not([class*="line-list--count_"]) { // height 25% => 50%
+  .line-information {
+//    animation: changing-infomation $time-changing ease-in-out 1;
+    height: 50%;
+  }
+}
+
+
+
+// チェンジ中 & 遅延路線有り
+.line-list.is-changing[class*="line-list--count_"] {
+  .line-delay {
+    order: inherit;
+  }
+}
+// Notチェンジ中 & 遅延路線無し
+.line-list[class*="line-list--count_"] {
+  .line-delay {
+    order: -1;
+  }
+}
+
+
+// 遅延情報 有り => 無し
+
+
+@keyframes changing-infomation {
+  from {
+    height: 25%;
+  }
+  to {
+    height: 50%;
+  }
+}
+.line-list.is-changing:not([class*="line-list--count_"]) { // height 0
+  .line-delay {
+    order: -1;
+  }
+}
+.line-list:not([class*="line-list--count_"]) { // height 25% => 50%
+  .line-delay {
+    order: inherit;
+  }
+}
+
+
+.line-list.is-changing {
+  .line-blank-middle {
+    height: 50%
+  }
+  .line-list-item.line {
+    height: 25%;
+  }
+}
+.line-list {
+  .line-blank-middle {
+    height: 0;
+//    transition: height $time-changing ease-in-out;
+  }
+  .line-list-item.line {
+    height: 50%;
+//    transition: height $time-changing ease-in-out;
+  }
+}
+
+*/

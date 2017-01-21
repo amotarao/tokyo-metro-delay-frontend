@@ -1,0 +1,13 @@
+node_modules
+docker
+Dockerfile
+config.rb
+api/data
+dist
+trash.html
+yarukoto.md
+memo.md
+_.php
+_set.php
+src/svg/icon_*
+old
