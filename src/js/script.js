@@ -11,7 +11,7 @@ var dateStringToDate = function(v) {
 }
 
 
-var dateDateToString = function(v) {
+var dateToString = function(v) {
   v = calcDate(v, -9, 'h');
 
   var dateStr = String(v.getFullYear());
@@ -135,7 +135,7 @@ TokyoMetroDelay.prototype.init = function() {
   this.initDraw();
 
   this.loading = true;
-  this.data = JSON.parse('{"' + dateDateToString(this.currentDate) + '":{"' + this.selectTimezone + '":{"delayLine":[],"delayLineDetail":[]}}}');
+  this.data = JSON.parse('{"' + dateToString(this.currentDate) + '":{"' + this.selectTimezone + '":{"delayLine":[],"delayLineDetail":[]}}}');
   this.getJSON('./api/get');
   this.setDelayLine();
 }
@@ -203,7 +203,7 @@ TokyoMetroDelay.prototype.setCurrentTime = function() {
  */
 
 TokyoMetroDelay.prototype.setSelectDate = function() {
-  var dateStr = dateDateToString(this.currentDate);
+  var dateStr = dateToString(this.currentDate);
   var paramDate = getUrlVars().date;
 
   if (typeof paramDate === "undefined") {
@@ -302,7 +302,7 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
  */
 
 TokyoMetroDelay.prototype.setDelayLine = function() {
-  var date = dateDateToString(calcDate(this.currentDate, this.dateDifference, 'd'));
+  var date = dateToString(calcDate(this.currentDate, this.dateDifference, 'd'));
 
   this.currentData = false;
   this.currentDataDetail = false;
