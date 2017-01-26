@@ -125,10 +125,10 @@ TokyoMetroDelay.prototype.getJSON = function(url) {
  */
 
 TokyoMetroDelay.prototype.setDocumentSelecter = function() {
-  this._listWrap = document.querySelector('.top-wrap');
-  this._list = document.querySelector('.line-list');
-  this._loader = document.querySelector('.line-loader');
-  this._lineInfo = document.querySelector('.line-information');
+  this._listWrap   = document.querySelector('.top-wrap');
+  this._list       = document.querySelector('.list');
+  this._loader     = document.querySelector('.line-loader');
+  this._lineInfo   = document.querySelector('.line-information');
   this._selectDate = document.querySelector('.select-date .current');
   this._selectTime = document.querySelector('.select-time .current');
 }
@@ -315,7 +315,7 @@ TokyoMetroDelay.prototype.draw = function() {
 
 TokyoMetroDelay.prototype.drawDelayLine = function() {
   // 遅延路線リセット
-  this._list.classList.remove('line-list--count_' + document.querySelectorAll('.line-delay').length);
+  this._list.classList.remove('list--count_' + document.querySelectorAll('.line-delay').length);
   Array.prototype.forEach.call(this._list.querySelectorAll('.line-delay'), function(e) {
     e.classList.remove('line-delay');
   });
@@ -340,7 +340,7 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
       self._list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(ele);
 
     });
-    this._list.classList.add('line-list--count_' + this.currentData.length);
+    this._list.classList.add('list--count_' + this.currentData.length);
 //    this.drawInfo('hide');
   } else if (!this.currentData) {
     this.drawInfo('nodata');

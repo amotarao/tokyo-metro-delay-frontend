@@ -16,10 +16,10 @@
 
 
 /*
-// .line-list
+// .list
 */
 
-.line-list {
+.list {
   height: calc(100vh + 72px);
   width: 70%;
   max-width: 960px;
@@ -49,38 +49,38 @@
 //                margin $time-changing ease-in-out;
   }
 
-  &.line-list--count_1 .line.line-delay {
+  &.list--count_1 .line.line-delay {
     width: 100%;
   }
-  &.line-list--count_2 .line.line-delay {
+  &.list--count_2 .line.line-delay {
     width: 50%;
   }
-  &.line-list--count_3 .line.line-delay {
+  &.list--count_3 .line.line-delay {
     width: 30%;
   }
-  &.line-list--count_4 .line.line-delay {
+  &.list--count_4 .line.line-delay {
     width: 22%;
   }
-  &.line-list--count_5 .line.line-delay {
+  &.list--count_5 .line.line-delay {
     width: 18%;
   }
-  &.line-list--count_6 .line.line-delay {
+  &.list--count_6 .line.line-delay {
     width: 15%;
     min-width: 60px;
   }
-  &.line-list--count_7 .line.line-delay {
+  &.list--count_7 .line.line-delay {
     width: 13%;
     min-width: 60px;
   }
-  &.line-list--count_8 .line.line-delay {
+  &.list--count_8 .line.line-delay {
     width: 11%;
     min-width: 60px;
   }
-  &.line-list--count_9 .line.line-delay {
+  &.list--count_9 .line.line-delay {
     width: 10%;
     min-width: 60px;
   }
-  &[class*="line-list--count_"] .line.line-delay {
+  &[class*="list--count_"] .line.line-delay {
     @media #{$media-square-mobile} {
       width: 27%;
     }
@@ -92,7 +92,7 @@
     }
   }
 }
-.line-list-item {
+.list-item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,17 +117,17 @@
     display: none;
   }
 }
-.line-list[class*="line-list--count_"] {
+.list[class*="list--count_"] {
   .line-information {
     height: 0;
   }
 }
-.line-list.line-list--count_9 {
+.list.list--count_9 {
   .line-blank-middle {
     height: 50%;
   }
 }
-.line-list.is-changing {
+.list.is-changing {
   .line-blank-middle {
     height: 100%;
   }
@@ -161,7 +161,7 @@
     }
   }
 }
-.line-list.is-changing {
+.list.is-changing {
   .line {
     height: 25%;
   }
@@ -269,26 +269,26 @@
 
 /*
 // チェンジ中 & 遅延路線有り
-.line-list.is-changing[class*="line-list--count_"] { // height 50% => 25%
+.list.is-changing[class*="list--count_"] { // height 50% => 25%
   .line-information {
     height: 25%;
 //    transition: height $time-changing ease-in-out;
   }
 }
 // Notチェンジ中 & 遅延路線有り
-.line-list[class*="line-list--count_"] { // height 0
+.list[class*="list--count_"] { // height 0
   .line-information {
     height: 0;
   }
 }
 // チェンジ中 & 遅延路線有り
-.line-list.is-changing:not([class*="line-list--count_"]) { // height 0
+.list.is-changing:not([class*="list--count_"]) { // height 0
   .line-information {
     height: 0;
   }
 }
 // Notチェンジ中 & 遅延路線無し
-.line-list:not([class*="line-list--count_"]) { // height 25% => 50%
+.list:not([class*="list--count_"]) { // height 25% => 50%
   .line-information {
 //    animation: changing-infomation $time-changing ease-in-out 1;
     height: 50%;
@@ -298,13 +298,13 @@
 
 
 // チェンジ中 & 遅延路線有り
-.line-list.is-changing[class*="line-list--count_"] {
+.list.is-changing[class*="list--count_"] {
   .line-delay {
     order: inherit;
   }
 }
 // Notチェンジ中 & 遅延路線無し
-.line-list[class*="line-list--count_"] {
+.list[class*="list--count_"] {
   .line-delay {
     order: -1;
   }
@@ -322,32 +322,32 @@
     height: 50%;
   }
 }
-.line-list.is-changing:not([class*="line-list--count_"]) { // height 0
+.list.is-changing:not([class*="list--count_"]) { // height 0
   .line-delay {
     order: -1;
   }
 }
-.line-list:not([class*="line-list--count_"]) { // height 25% => 50%
+.list:not([class*="list--count_"]) { // height 25% => 50%
   .line-delay {
     order: inherit;
   }
 }
 
 
-.line-list.is-changing {
+.list.is-changing {
   .line-blank-middle {
     height: 50%
   }
-  .line-list-item.line {
+  .list-item.line {
     height: 25%;
   }
 }
-.line-list {
+.list {
   .line-blank-middle {
     height: 0;
 //    transition: height $time-changing ease-in-out;
   }
-  .line-list-item.line {
+  .list-item.line {
     height: 50%;
 //    transition: height $time-changing ease-in-out;
   }
