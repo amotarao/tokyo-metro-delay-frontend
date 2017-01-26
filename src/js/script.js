@@ -77,7 +77,6 @@ var getJPDate = function() {
  */
 
 var getTimezone = function(date) {
-  date = calcDate(date, 9, 'h');
   date = calcDate(date, timeAdjustment, 'm');
   date = date % 86400000 / 3600000;
   if      (timezoneBorder[0] <= date && date < timezoneBorder[1]) return 'a';
