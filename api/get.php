@@ -2,7 +2,7 @@
 
 /*
 $date       = paramToData('date', $tmp)             ? $tmp : date("Y-m-d");
-$timeZone   = paramToData('timeZone', $tmp)         ? $tmp : null;
+$timezone   = paramToData('timezone', $tmp)         ? $tmp : null;
 $count      = paramToData('count', $tmp)            ? $tmp : 3;
 $countWay   = paramToData('countWay', $tmp, true)   ? $tmp : array('previos');
 $line       = paramToData('line', $tmp, true)       ? $tmp : array('ginza','marunouchi','hibiya','tozai','chiyoda','yurakucho','hanzomon','namboku','fukutoshin');
@@ -70,29 +70,29 @@ foreach ($dirs as $dir) {
     if ($dir == '.' || $dir == '..' || $i >= 10) continue;
 
     $date = explode('-', $dir)[0];
-    $timeZone = explode('-', $dir)[1];
-    switch ($timeZone) {
+    $timezone = explode('-', $dir)[1];
+    switch ($timezone) {
         case '1':
-            $timeZone = 'a';
+            $timezone = 'a';
             break;
         case '2':
-            $timeZone = 'b';
+            $timezone = 'b';
             break;
         case '3':
-            $timeZone = 'c';
+            $timezone = 'c';
             break;
         case '4':
-            $timeZone = 'd';
+            $timezone = 'd';
             break;
     }
 
-    $array[$date][$timeZone]['delayLine'] = array();
-    $array[$date][$timeZone]['delayLineDetail'] = array();
+    $array[$date][$timezone]['delayLine'] = array();
+    $array[$date][$timezone]['delayLineDetail'] = array();
     
     foreach ($lines as $line) {
         if (filesize("./data/{$dir}/{$line}.txt") > 0) {
-            $array[$date][$timeZone]['delayLine'][] = $line;
-            $array[$date][$timeZone]['delayLineDetail'][$line] = file_get_contents("./data/{$dir}/{$line}.txt");
+            $array[$date][$timezone]['delayLine'][] = $line;
+            $array[$date][$timezone]['delayLineDetail'][$line] = file_get_contents("./data/{$dir}/{$line}.txt");
         }
     }
     $i++;

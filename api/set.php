@@ -18,23 +18,23 @@ if (isset($_GET['date'])) {
     $date = date("Ymd");
 }
 
-if (isset($_GET['timeZone'])) {
-    $timeZone = $_GET['timeZone'];
-    switch ($timeZone) {
+if (isset($_GET['timezone'])) {
+    $timezone = $_GET['timezone'];
+    switch ($timezone) {
         case 'a':
-            $timeZone = '1';
+            $timezone = '1';
             break;
         case 'b':
-            $timeZone = '2';
+            $timezone = '2';
             break;
         case 'c':
-            $timeZone = '3';
+            $timezone = '3';
             break;
         case 'd':
-            $timeZone = '4';
+            $timezone = '4';
             break;
         default:
-            $timeZone = '1';
+            $timezone = '1';
             break;
     }
 } else {
@@ -42,24 +42,24 @@ if (isset($_GET['timeZone'])) {
     $hour = ($timestamp / 60 / 60 + 9) % 24;
 
     if (4 <= $hour && $hour < 7) {
-        $timeZone = '1';
+        $timezone = '1';
     } else if (7 <= $hour && $hour < 10) {
-        $timeZone = '2';
+        $timezone = '2';
     } else if (10 <= $hour && $hour < 17) {
-        $timeZone = '3';
+        $timezone = '3';
     } else if (17 <= $hour) {
-        $timeZone = '4';
+        $timezone = '4';
     } else {
         $date = date("Ymd", strtotime("-1 day", $date));
-        $timeZone = '4';
+        $timezone = '4';
     }
 }
 
 foreach ($lines as $line):
 
-$result = getCertificateData($date, $line, $timeZone);
-mkdir("./data/{$date}-{$timeZone}");
-file_put_contents("./data/{$date}-{$timeZone}/{$line}.txt", $result);
+$result = getCertificateData($date, $line, $timezone);
+mkdir("./data/{$date}-{$timezone}");
+file_put_contents("./data/{$date}-{$timezone}/{$line}.txt", $result);
 
 endforeach;
 

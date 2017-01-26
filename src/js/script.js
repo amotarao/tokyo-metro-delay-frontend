@@ -1,4 +1,4 @@
-var timeZoneBorder = [4, 7, 10, 17];
+var timezoneBorder = [4, 7, 10, 17];
 var timeAdjustment = -5;
 var weekDayList = ['日', '月', '火', '水', '木', '金', '土'];
 
@@ -69,21 +69,21 @@ var getJPDate = function() {
 
 
 /**
- * getTimeZone()
+ * getTimezone()
  * 日付のタイムゾーンを取得
  * 
  * @param {number} date
  * @return {string}
  */
 
-var getTimeZone = function(date) {
+var getTimezone = function(date) {
   date = calcDate(date, 9, 'h');
   date = calcDate(date, timeAdjustment, 'm');
   date = date % 86400000 / 3600000;
-  if      (timeZoneBorder[0] <= date && date < timeZoneBorder[1]) return 'a';
-  else if (timeZoneBorder[1] <= date && date < timeZoneBorder[2]) return 'b';
-  else if (timeZoneBorder[2] <= date && date < timeZoneBorder[3]) return 'c';
-  else if (timeZoneBorder[3] <= date || date < timeZoneBorder[0]) return 'd';
+  if      (timezoneBorder[0] <= date && date < timezoneBorder[1]) return 'a';
+  else if (timezoneBorder[1] <= date && date < timezoneBorder[2]) return 'b';
+  else if (timezoneBorder[2] <= date && date < timezoneBorder[3]) return 'c';
+  else if (timezoneBorder[3] <= date || date < timezoneBorder[0]) return 'd';
 }
 
 
@@ -130,12 +130,12 @@ function TokyoMetroDelay() {
 TokyoMetroDelay.prototype.init = function() {
   this.setCurrentTime()
   this.setSelectDate();
-  this.setSelectTimeZone();
+  this.setSelectTimezone();
   this.setDocumentSelecter();
   this.initDraw();
 
   this.loading = true;
-  this.data = JSON.parse('{"' + dateDateToString(this.currentDate) + '":{"' + this.selectTimeZone + '":{"delayLine":[],"delayLineDetail":[]}}}');
+  this.data = JSON.parse('{"' + dateDateToString(this.currentDate) + '":{"' + this.selectTimezone + '":{"delayLine":[],"delayLineDetail":[]}}}');
   this.getJSON('./api/get');
   this.setDelayLine();
 }
@@ -178,7 +178,7 @@ TokyoMetroDelay.prototype.setDocumentSelecter = function() {
   this._lineInfo   = document.querySelector('.line-information');
   this._selectDate = document.querySelector('.select-date .current');
   this._selectTime = document.querySelector('.select-time .current');
-  this._controlNext = document.getElementById('nextTimeZone');
+  this._controlNext = document.getElementById('nextTimezone');
 }
 
 
@@ -191,7 +191,7 @@ TokyoMetroDelay.prototype.setDocumentSelecter = function() {
 TokyoMetroDelay.prototype.setCurrentTime = function() {
   date = getJPDate();
   this.currentDate = calcDate(date, -4, 'h');
-  this.currentTimeZone = getTimeZone(date);
+  this.currentTimezone = getTimezone(date);
 }
 
 
@@ -215,82 +215,82 @@ TokyoMetroDelay.prototype.setSelectDate = function() {
 
 
 /**
- * setSelectTimeZone()
+ * setSelectTimezone()
  *
  * 選択する時間帯をセットする
- * Make: this.selectTimeZone
+ * Make: this.selectTimezone
  */
 
-TokyoMetroDelay.prototype.setSelectTimeZone = function() {
+TokyoMetroDelay.prototype.setSelectTimezone = function() {
   date = getJPDate();
   date = calcDate(date, timeAdjustment, 'm');
-  timeZone = getTimeZone(date);
+  timezone = getTimezone(date);
 
-  if (date.getHours() - timeAdjustment < timeZoneBorder[0]) this.dateDifference = -1;
+  if (date.getHours() - timeAdjustment < timezoneBorder[0]) this.dateDifference = -1;
 
-  var paramTimeZone = getUrlVars().timeZone;
+  var paramTimezone = getUrlVars().timezone;
 
-  if (typeof paramTimeZone === "undefined") {
-    this.selectTimeZone = timeZone;
+  if (typeof paramTimezone === "undefined") {
+    this.selectTimezone = timezone;
   } else {
-    this.selectTimeZone = paramTimeZone;
+    this.selectTimezone = paramTimezone;
   }
 }
 
 
 /**
- * setPreviousTimeZone()
+ * setPreviousTimezone()
  *
  * 前の時間帯にセット
  */
 
-TokyoMetroDelay.prototype.setPreviousTimeZone = function() {
-  switch (this.selectTimeZone) {
+TokyoMetroDelay.prototype.setPreviousTimezone = function() {
+  switch (this.selectTimezone) {
     case 'a':
-      this.selectTimeZone = 'd';
+      this.selectTimezone = 'd';
       this.dateDifference--;
       this.drawCurrentDate();
       break;
     case 'b':
-      this.selectTimeZone = 'a';
+      this.selectTimezone = 'a';
       break;
     case 'c':
-      this.selectTimeZone = 'b';
+      this.selectTimezone = 'b';
       break;
     case 'd':
-      this.selectTimeZone = 'c';
+      this.selectTimezone = 'c';
       break;
   }
   this.setDelayLine();
-  this.drawCurrentTimeZone();
+  this.drawCurrentTimezone();
 }
 
 
 /**
- * setNextTimeZone()
+ * setNextTimezone()
  *
  * 次の時間帯にセット
  */
 
-TokyoMetroDelay.prototype.setNextTimeZone = function() {
-  switch (this.selectTimeZone) {
+TokyoMetroDelay.prototype.setNextTimezone = function() {
+  switch (this.selectTimezone) {
     case 'a':
-      this.selectTimeZone = 'b';
+      this.selectTimezone = 'b';
       break;
     case 'b':
-      this.selectTimeZone = 'c';
+      this.selectTimezone = 'c';
       break;
     case 'c':
-      this.selectTimeZone = 'd';
+      this.selectTimezone = 'd';
       break;
     case 'd':
-      this.selectTimeZone = 'a';
+      this.selectTimezone = 'a';
       this.dateDifference++;
       this.drawCurrentDate();
       break;
   }
   this.setDelayLine();
-  this.drawCurrentTimeZone();
+  this.drawCurrentTimezone();
 }
 
 
@@ -308,9 +308,9 @@ TokyoMetroDelay.prototype.setDelayLine = function() {
   this.currentDataDetail = false;
 
   if (date in this.data) {
-    if (this.selectTimeZone in this.data[date]) {
-      this.currentData = this.data[date][this.selectTimeZone]['delayLine'];
-      this.currentDataDetail = this.data[date][this.selectTimeZone]['delayLineDetail'];
+    if (this.selectTimezone in this.data[date]) {
+      this.currentData = this.data[date][this.selectTimezone]['delayLine'];
+      this.currentDataDetail = this.data[date][this.selectTimezone]['delayLineDetail'];
     }
   }
 }
@@ -325,7 +325,7 @@ TokyoMetroDelay.prototype.setDelayLine = function() {
 TokyoMetroDelay.prototype.initDraw = function() {
   this.drawInfo('loading');
   this.drawCurrentDate();
-  this.drawCurrentTimeZone();
+  this.drawCurrentTimezone();
 }
 
 
@@ -469,15 +469,15 @@ TokyoMetroDelay.prototype.drawCurrentDate = function() {
 
 
 /**
- * drawCurrentTimeZone()
+ * drawCurrentTimezone()
  *
  * 選択中の時間帯を描画
  */
 
-TokyoMetroDelay.prototype.drawCurrentTimeZone = function() {
+TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
   var time;
 
-  switch (this.selectTimeZone) {
+  switch (this.selectTimezone) {
     case 'a':
       var time = '~ 7:00';
       break;
@@ -504,12 +504,12 @@ TokyoMetroDelay.prototype.drawCurrentTimeZone = function() {
 var app = new TokyoMetroDelay();
 app.draw();
 
-document.getElementById("previousTimeZone").addEventListener("click", function(event) {
-  app.setPreviousTimeZone();
+document.getElementById("previousTimezone").addEventListener("click", function(event) {
+  app.setPreviousTimezone();
   app.draw();
 }, false);
-document.getElementById("nextTimeZone").addEventListener("click", function(event) {
-  app.setNextTimeZone();
+document.getElementById("nextTimezone").addEventListener("click", function(event) {
+  app.setNextTimezone();
   app.draw();
 }, false);
 
@@ -527,10 +527,10 @@ window.addEventListener("touchmove", function(event) {
 }, false);
 window.addEventListener("touchend", function(event) {
   if (direction == 'right') {
-    app.setNextTimeZone();
+    app.setNextTimezone();
     app.draw();
   } else if (direction == 'left') {
-    app.setPreviousTimeZone();
+    app.setPreviousTimezone();
     app.draw();
   }
 }, false);
