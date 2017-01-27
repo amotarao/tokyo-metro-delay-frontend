@@ -2,27 +2,6 @@ var timezoneBorder = [4, 7, 10, 17];
 var timeAdjustment = -5;
 var weekDayList = ['日', '月', '火', '水', '木', '金', '土'];
 
-var dateStringToDate = function(v) {
-  var year = v.substr(0, 4);
-  var month = v.substr(4, 2);
-  var day = v.substr(6, 2);
-  var date = new Date(month + '/' + day + '/' + year);
-  return date;
-}
-
-
-var dateToString = function(v) {
-  v = calcDate(v, -9, 'h');
-
-  var dateStr = String(v.getFullYear());
-  if (v.getMonth() + 1 < 10) dateStr += "0";
-  dateStr += String(v.getMonth() + 1);
-  if (v.getDate() < 10) dateStr += "0";
-  dateStr += String(v.getDate());
-
-  return dateStr;
-}
-
 
 var getUrlVars = function() {
   var vars = {};
@@ -38,13 +17,6 @@ var getUrlVars = function() {
 }
 
 
-var divisionDate = function(a, b) {
-  var b = (b !== undefined) ? b : new Date();
-  var division = Math.ceil((a.getTime() - b.getTime()) / 1000 / 60 / 60 / 24);
-  return division;
-}
-
-
 var delayTextToSimple = function(v) {
   if (v.substr(0, 2) == '最大') {
     return '+' + v.substr(2, 3);
@@ -55,34 +27,20 @@ var delayTextToSimple = function(v) {
 
 
 /**
- * getJPDate()
- * GMTを無視した日本の時刻を取得
- *
- * @return {number}
- */
-
-var getJPDate = function() {
-  date = new Date();
-  date = calcDate(date, 9, 'h');
-  return date;
-}
-
-
-/**
  * getTimezone()
  * 日付のタイムゾーンを取得
  * 
- * @param {number} date
- * @return {string}
+ * @param {Number} date
+ * @returns {String}
  */
 
 var getTimezone = function(date) {
-  date = calcDate(date, timeAdjustment, 'm');
-  date = date % 86400000 / 3600000;
-  if      (timezoneBorder[0] <= date && date < timezoneBorder[1]) return 'a';
-  else if (timezoneBorder[1] <= date && date < timezoneBorder[2]) return 'b';
-  else if (timezoneBorder[2] <= date && date < timezoneBorder[3]) return 'c';
-  else if (timezoneBorder[3] <= date || date < timezoneBorder[0]) return 'd';
+  hour = date.getUTCHours() + 9;
+  if (hour >= 24) hour = hour - 24;
+  if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
+  else if (timezoneBorder[1] <= hour && hour < timezoneBorder[2]) return 'b';
+  else if (timezoneBorder[2] <= hour && hour < timezoneBorder[3]) return 'c';
+  else if (timezoneBorder[3] <= hour || hour < timezoneBorder[0]) return 'd';
 }
 
 
@@ -90,13 +48,14 @@ var getTimezone = function(date) {
  * calcDate()
  * 日付を計算（相対の加減算なので時差関係なし）
  * 
- * @param {number} date
- * @param {number} diff
- * @param {string} unit
- * @return {number}
+ * @param {Number} date
+ * @param {Number} diff
+ * @param {String} unit
+ * @returns {Number}
  */
 
 var calcDate = function(date, diff, unit) {
+
   switch (unit) {
     case 'd':
       date.setDate(date.getDate() + diff);
@@ -106,6 +65,155 @@ var calcDate = function(date, diff, unit) {
       date.setMinutes(date.getMinutes() + diff);
   }
   return date;
+
+}
+
+
+/**
+ * displaceArrayDate()
+ * 配列の日付をずらす
+ * 
+ * @param {Array} date
+ * @param {Boolean} o
+ * @returns {Array}
+ */
+
+var displaceArrayDate = function(date, o) {
+
+  if (typeof o === 'undefined') o = false;
+
+  switch (o) {
+    case true:
+      date[2]++;
+      if (0 < date[2] && date[2] < 29) break;
+      switch (date[2]) {
+        case 32:
+          date[1]++;
+          date[2] = 1;
+          if (date[1] == 12) date[0]++;
+          break;
+        case 31:
+          switch (date[1]) {
+            case 2:
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+              date[1]++;
+              date[2] = 1;
+          }
+          break;
+        case 30:
+          if (date[1] != 2) break;
+          date[1]++;
+          date[2] = 1;
+          break;
+        case 29:
+          if (date[1] != 2) break;
+          if (date[1] % 400 == 0) break;
+          if (date[1] % 4 == 0 || date[1] % 100 != 0) break;
+          date[1]++;
+          date[2] = 1;
+          break;
+      }
+      break;
+
+    case false:
+      date[2]--;
+      if (date[2] > 0) break;
+      switch (date[1] - 1) {
+        case 0:
+          date[0]--;
+          date[1] = 12;
+          date[2] = 31;
+          break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+          date[1]--;
+          date[2] = 30;
+          break;
+        case 2:
+          date[1]--;
+          date[2] = 28;
+          if (date[1] % 400 == 0) break;
+          if (date[1] % 4 == 0 || date[1] % 100 != 0) break;
+          date[2] = 29;
+          break;
+        default:
+          date[1]--;
+          date[2] = 31;
+      }
+      break;
+  }
+
+  return date;
+}
+
+
+/**
+ * encodeArrayDate()
+ * 文字列の日付を配列に変換
+ * 変換出来ない場合、falseを返す
+ * 
+ * @param {String} v
+ * @returns {Array|Boolean}
+ */
+
+var encodeArrayDate = function(v) {
+
+  format = v.match(/([0-9]{4})-([0-9]{2})-([0-9]{2})/g);
+  if (!format) return false;
+
+  v = v.replace(/-0/g , '-') ;
+  v = v.split('-');
+
+  dt = new Date(v[0], v[1] - 1, v[2]);
+  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) {
+    return false;
+  }
+
+  return v;
+
+}
+
+
+/**
+ * decodeArrayDate()
+ * 配列の日付を文字列に変換
+ * 変換出来ない場合、falseを返す
+ * 
+ * @param {Array} v
+ * @param {String} p 区切り文字
+ * @param {Boolean} w 曜日の有無
+ * @returns {String|Boolean}
+ */
+
+var decodeArrayDate = function(v, p, w) {
+
+  if (typeof p === 'undefined') w = '-';
+  if (typeof w === 'undefined') w = false;
+
+  dt = new Date(v[0], v[1] - 1, v[2]);
+  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) {
+    return false;
+  }
+
+  str = '';
+  str += v[0];
+  str += p;
+  str += (v[1] < 10) ? '0' + v[1] : v[1];
+  str += p;
+  str += (v[2] < 10) ? '0' + v[2] : v[2];
+
+  if (w === true) {
+    str += ' ';
+    str += weekDayList[dt.getDay()];
+  }
+
+  return str;
+
 }
 
 
@@ -134,7 +242,7 @@ TokyoMetroDelay.prototype.init = function() {
   this.initDraw();
 
   this.loading = true;
-  this.data = JSON.parse('{"' + dateToString(this.currentDate) + '":{"' + this.selectTimezone + '":{"delayLine":[],"delayLineDetail":[]}}}');
+  this.data = JSON.parse('{"' + decodeArrayDate(this.selectDate, '') + '":{"' + this.selectTimezone + '":{"delayLine":[],"delayLineDetail":[]}}}');
   this.getJSON('./api/get');
   this.setDelayLine();
 }
@@ -188,9 +296,14 @@ TokyoMetroDelay.prototype.setDocumentSelecter = function() {
  */
 
 TokyoMetroDelay.prototype.setCurrentTime = function() {
-  date = getJPDate();
-  this.currentDate = calcDate(date, -4, 'h');
-  this.currentTimezone = getTimezone(date);
+
+  today = new Date();
+  date = calcDate(today, 3, 'h'); // 深夜調整
+  this.currentDate = [date.getUTCFullYear(), date.getUTCMonth()+1, date.getUTCDate()];
+  this.currentTimezone = getTimezone(today);
+
+  return
+
 }
 
 
@@ -198,18 +311,24 @@ TokyoMetroDelay.prototype.setCurrentTime = function() {
  * setSelectDate()
  *
  * 選択する日付をセットする
- * Make: this.dateDifference
  */
 
 TokyoMetroDelay.prototype.setSelectDate = function() {
-  var dateStr = dateToString(this.currentDate);
-  var paramDate = getUrlVars().date;
 
-  if (typeof paramDate === "undefined") {
-    this.dateDifference = 0;
-  } else {
-    this.dateDifference = divisionDate(dateStringToDate(paramDate));
+  param = getUrlVars().date;
+
+  if (typeof param !== "undefined") {
+    arrayDate = encodeArrayDate(param);
+    if (arrayDate) {
+      this.selectDate = arrayDate;
+      return;
+    }
   }
+
+  this.selectDate = this.currentDate;
+
+  return;
+
 }
 
 
@@ -221,19 +340,24 @@ TokyoMetroDelay.prototype.setSelectDate = function() {
  */
 
 TokyoMetroDelay.prototype.setSelectTimezone = function() {
-  date = getJPDate();
-  date = calcDate(date, timeAdjustment, 'm');
-  timezone = getTimezone(date);
 
-  if (date.getHours() - timeAdjustment < timezoneBorder[0]) this.dateDifference = -1;
+  param = getUrlVars().timezone;
 
-  var paramTimezone = getUrlVars().timezone;
-
-  if (typeof paramTimezone === "undefined") {
-    this.selectTimezone = timezone;
-  } else {
-    this.selectTimezone = paramTimezone;
+  if (typeof param !== "undefined") {
+    switch (param) {
+      case 'a':
+      case 'b':
+      case 'c':
+      case 'd':
+        this.selectTimezone = param;
+        return;
+    }
   }
+
+  this.selectTimezone = this.currentTimezone;
+
+  return;
+
 }
 
 
@@ -244,10 +368,11 @@ TokyoMetroDelay.prototype.setSelectTimezone = function() {
  */
 
 TokyoMetroDelay.prototype.setPreviousTimezone = function() {
+
   switch (this.selectTimezone) {
     case 'a':
       this.selectTimezone = 'd';
-      this.dateDifference--;
+      this.selectDate = displaceArrayDate(this.selectDate, false);
       this.drawCurrentDate();
       break;
     case 'b':
@@ -262,6 +387,9 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
   }
   this.setDelayLine();
   this.drawCurrentTimezone();
+
+  return
+
 }
 
 
@@ -272,6 +400,7 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
  */
 
 TokyoMetroDelay.prototype.setNextTimezone = function() {
+
   switch (this.selectTimezone) {
     case 'a':
       this.selectTimezone = 'b';
@@ -284,12 +413,15 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
       break;
     case 'd':
       this.selectTimezone = 'a';
-      this.dateDifference++;
+      this.selectDate = displaceArrayDate(this.selectDate, true);
       this.drawCurrentDate();
       break;
   }
   this.setDelayLine();
   this.drawCurrentTimezone();
+
+  return;
+
 }
 
 
@@ -301,7 +433,7 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
  */
 
 TokyoMetroDelay.prototype.setDelayLine = function() {
-  var date = dateToString(calcDate(this.currentDate, this.dateDifference, 'd'));
+  var date = decodeArrayDate(this.selectDate, '');
 
   this.currentData = false;
   this.currentDataDetail = false;
@@ -457,13 +589,11 @@ TokyoMetroDelay.prototype.drawInfo = function(v) {
  */
 
 TokyoMetroDelay.prototype.drawCurrentDate = function() {
-  var d = calcDate(this.currentDate, this.dateDifference, 'd');
-  var year = d.getFullYear();
-  var month = d.getMonth() + 1;
-  var day = d.getDate();
-  var weekDay = weekDayList[d.getDay()];
 
-  this._selectDate.innerHTML = year + '.' + month + '.' + day + ' ' + weekDay;
+  this._selectDate.innerHTML = decodeArrayDate(this.selectDate, '.', true);
+
+  return;
+
 }
 
 
