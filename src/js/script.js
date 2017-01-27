@@ -30,41 +30,18 @@ var delayTextToSimple = function(v) {
  * getTimezone()
  * 日付のタイムゾーンを取得
  * 
- * @param {Number} date
+ * @param {Object} date
  * @returns {String}
  */
 
 var getTimezone = function(date) {
+
   hour = date.getUTCHours() + 9;
   if (hour >= 24) hour = hour - 24;
   if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
   else if (timezoneBorder[1] <= hour && hour < timezoneBorder[2]) return 'b';
   else if (timezoneBorder[2] <= hour && hour < timezoneBorder[3]) return 'c';
   else if (timezoneBorder[3] <= hour || hour < timezoneBorder[0]) return 'd';
-}
-
-
-/**
- * calcDate()
- * 日付を計算（相対の加減算なので時差関係なし）
- * 
- * @param {Number} date
- * @param {Number} diff
- * @param {String} unit
- * @returns {Number}
- */
-
-var calcDate = function(date, diff, unit) {
-
-  switch (unit) {
-    case 'd':
-      date.setDate(date.getDate() + diff);
-    case 'h':
-      date.setHours(date.getHours() + diff);
-    case 'm':
-      date.setMinutes(date.getMinutes() + diff);
-  }
-  return date;
 
 }
 
@@ -170,9 +147,7 @@ var encodeArrayDate = function(v) {
   v = v.split('-');
 
   dt = new Date(v[0], v[1] - 1, v[2]);
-  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) {
-    return false;
-  }
+  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) return false;
 
   return v;
 
@@ -196,9 +171,7 @@ var decodeArrayDate = function(v, p, w) {
   if (typeof w === 'undefined') w = false;
 
   dt = new Date(v[0], v[1] - 1, v[2]);
-  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) {
-    return false;
-  }
+  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) return false;
 
   str = '';
   str += v[0];
@@ -298,13 +271,20 @@ TokyoMetroDelay.prototype.setDocumentSelecter = function() {
 TokyoMetroDelay.prototype.setCurrentTime = function() {
 
   today = new Date();
-  date = calcDate(today, 3, 'h'); // 深夜調整
-  this.currentDate = [date.getUTCFullYear(), date.getUTCMonth()+1, date.getUTCDate()];
+
+  arrayDate = [today.getUTCFullYear(), today.getUTCMonth()+1, today.getUTCDate()];
+  if (today.getUTCHours < 19) {
+    this.currentDate = arrayDate;
+  } else {
+    this.currentDate = displaceArrayDate(arrayDate, true);
+  }
+
   this.currentTimezone = getTimezone(today);
 
-  return
+  return;
 
 }
+
 
 
 /**
