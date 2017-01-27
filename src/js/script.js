@@ -326,6 +326,7 @@ TokyoMetroDelay.prototype.setSelectDate = function() {
   }
 
   this.selectDate = this.currentDate;
+  this.drawControlArrow();
 
   return;
 
@@ -627,6 +628,46 @@ TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
 
   //  node.parentNode.removeChild(node);
   this._selectTime.innerHTML = time;
+}
+
+
+/**
+ * drawControlArrow()
+ *
+ * コントロール矢印の描画
+ */
+
+TokyoMetroDelay.prototype.drawControlArrow = function() {
+
+  c = this.currentDate;
+  s = this.selectDate;
+
+  c = c[0] * 500 + c[1] * 500 + c[2];
+  s = s[0] * 500 + s[1] * 500 + s[2];
+
+  if (c < s) {
+    this._controlNext.classList.add('is-invalid');
+    return;
+  }
+  if (c > s) {
+    this._controlNext.classList.remove('is-invalid');
+    return;
+  }
+
+  c = this.currentTimezone;
+  s = this.selectTimezone;
+
+  if (c <= s) {
+    this._controlNext.classList.add('is-invalid');
+    return;
+  }
+  if (c > s) {
+    this._controlNext.classList.remove('is-invalid');
+    return;
+  }
+
+  return
+
 }
 
 
