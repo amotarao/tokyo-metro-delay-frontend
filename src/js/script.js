@@ -57,7 +57,7 @@ var getTimezone = function(date) {
 
 var displaceArrayDate = function(date, o) {
 
-  if (typeof o === 'undefined') o = false;
+  if (typeof o === 'undefined') o = true;
 
   switch (o) {
     case true:
@@ -273,10 +273,10 @@ TokyoMetroDelay.prototype.setCurrentTime = function() {
   today = new Date();
 
   arrayDate = [today.getUTCFullYear(), today.getUTCMonth()+1, today.getUTCDate()];
-  if (today.getUTCHours < 19) {
-    this.currentDate = arrayDate;
-  } else {
+  if (19 <= today.getUTCHours()) {
     this.currentDate = displaceArrayDate(arrayDate, true);
+  } else {
+    this.currentDate = arrayDate;
   }
 
   this.currentTimezone = getTimezone(today);
