@@ -1,5 +1,7 @@
 <?php
 
+ini_set( 'display_errors', 1 );
+
 $lines = array(
     'ginza',
     'marunouchi',
@@ -58,7 +60,7 @@ if (isset($_GET['timezone'])) {
 foreach ($lines as $line):
 
 $result = getCertificateData($date, $line, $timezone);
-mkdir("./data/{$date}-{$timezone}");
+if ( !file_exists("./data/{$date}-{$timezone}") ) mkdir("./data/{$date}-{$timezone}");
 file_put_contents("./data/{$date}-{$timezone}/{$line}.txt", $result);
 
 endforeach;
