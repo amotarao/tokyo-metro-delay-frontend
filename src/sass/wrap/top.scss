@@ -7,6 +7,10 @@
   width: 100%;
   margin-top: 0;
 
+  @media #{$media-mobile} {
+    max-height: 150vw;
+  }
+
   @media #{$media-square} {
     display: flex;
     align-items: center;
@@ -29,24 +33,30 @@
   flex-wrap: wrap;
   justify-content: space-around;
 
-  @media #{$media-square-mobile} {
-    height: 80%;
-    min-height: 288px;
+  @media #{$media-normal} {
+    &.is-changing {
+      height: calc(200vh + 144px);
+      margin: calc(-50vh + -36px) auto calc(-50vh + -108px);
+  //    transition: height $time-changing ease-in-out,
+  //                margin $time-changing ease-in-out;
+    }
+  }
+
+  @media #{$media-mobile} {
+    width: 80vw;
+    max-width: 80vh;
+    height: 75vh;
     max-height: 100vw;
-    width: 90%;
-    min-width: 288px;
+    margin: auto;
   }
 
   @media #{$media-square} {
-    height: 90%;
-    padding-bottom: 7%;
-  }
-
-  &.is-changing {
-    height: calc(200vh + 144px);
-    margin: calc(-50vh + -36px) auto calc(-50vh + -108px);
-//    transition: height $time-changing ease-in-out,
-//                margin $time-changing ease-in-out;
+    width: 90vw;
+    max-width: 90vh;
+    height: 90vh;
+    max-height: 90vw;
+    margin: auto;
+    padding-bottom: 10%;
   }
 
   &.list--count_1 .line.line-delay {
@@ -140,16 +150,14 @@
   width: 60px;
   transition: order 0s linear $time-changing,
               height $time-changing ease-in-out;
-
-  & > div {
-    max-width: 100%;
-  }
   
   @media #{$media-square-mobile} {
     height: 27%;
     width: 27%;
-    min-height: 75px;
-    min-width: 75px;
+  }
+  @media #{$media-mobile} {
+    height: 25%;
+    width: 27%;
   }
 
   &.line-delay {
@@ -163,11 +171,20 @@
 }
 .list.is-changing {
   .line {
-    height: 25%;
+    @media #{$media-normal} {
+      height: 25%;
+    }
+  }
+}
+.line-item {
+  max-width: 100%;
+
+  @media #{$media-square-mobile} {
+    height: 100%;
   }
 }
 .line-symbol {
-  width: 160px;
+  width: 100%;
   max-width: 100%;
   border-radius: 50%;
   user-select: none;
@@ -179,14 +196,19 @@
     transform: scale(1.1);
   }
 
-  @media #{$media-square-mobile} {
-    max-width: 27vh;
+  @media #{$media-mobile} {
+    width: 18vw;
+    height: 18vw;
   }
 
   img {
     display: block;
     width: 100%;
     height: 100%;
+
+    @media #{$media-mobile} {
+      width: auto;
+    }
   }
 }
 
@@ -207,18 +229,27 @@
   }
   .delay-text {
     color: #FFB300;
+    @media #{$media-mobile} {
+      display: none;
+    }
   }
 
-  @media #{$media-square-mobile} {
+  @media #{$media-square} {
     display: none;
+  }
+
+  @media #{$media-mobile} {
+    padding: 0.75em 0;
   }
 }
 .line-delay     .line-text,
 .line-loader    .line-text,
 .line-scheduled .line-text,
 .line-nodata    .line-text {
-  font-size: 14px;
-  padding: 0.6em 0;
+  @media #{$media-normal} {
+    font-size: 14px;
+    padding: 0.6em 0;
+  }
 }
 
 .ok-circle,
