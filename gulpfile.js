@@ -39,6 +39,9 @@ gulp.task('js', function(){
 
 gulp.task('html', function(){
   gulp.src('./src/**/*.html')
+    .pipe(plumber({
+      errorHandler: notify.onError("<%= error.message %>")
+    }))
     .pipe(htmlmin({
       collapseWhitespace: true
     }))
