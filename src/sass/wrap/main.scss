@@ -43,6 +43,7 @@
   @media #{$media-mobile} {
     font-size: 23px;
     letter-spacing: .3em;
+    text-indent: .3em;
   }
 
   @media #{$media-square} {
@@ -57,6 +58,7 @@
   height: 1.7em;
   justify-content: space-between;
   letter-spacing: .075em;
+  text-indent: .075em;
   line-height: 1.7;
   margin: auto;
   overflow: hidden;
