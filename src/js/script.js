@@ -1,8 +1,3 @@
-var timezoneBorder = [4, 7, 10, 17];
-var timeAdjustment = -5;
-var weekDayList = ['日', '月', '火', '水', '木', '金', '土'];
-
-
 var getUrlVars = function() {
   var vars = {};
   var param = location.search.substring(1).split('&');
@@ -36,8 +31,12 @@ var delayTextToSimple = function(v) {
 
 var getTimezone = function(date) {
 
+  timezoneBorder = [4, 7, 10, 17];
+
   hour = date.getUTCHours() + 9;
-  if (hour >= 24) hour = hour - 24;
+  if (date.getUTCMinutes() < 5 && (timezoneBorder.indexOf(hour) >= 0 || timezoneBorder.indexOf(hour-24) >= 0)) hour--;
+  if (hour >= 24) hour -= 24;
+
   if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
   else if (timezoneBorder[1] <= hour && hour < timezoneBorder[2]) return 'b';
   else if (timezoneBorder[2] <= hour && hour < timezoneBorder[3]) return 'c';
@@ -166,6 +165,8 @@ var encodeArrayDate = function(v) {
  */
 
 var decodeArrayDate = function(v, p, w) {
+
+  weekDayList = ['日', '月', '火', '水', '木', '金', '土'];
 
   if (typeof p === 'undefined') w = '-';
   if (typeof w === 'undefined') w = false;
