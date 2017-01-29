@@ -622,8 +622,8 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
   c = this.currentDate;
   s = this.selectDate;
 
-  c = c[0] * 500 + c[1] * 500 + c[2];
-  s = s[0] * 500 + s[1] * 500 + s[2];
+  c = c[0] * 500 + c[1] * 40 + c[2];
+  s = s[0] * 500 + s[1] * 40 + s[2];
 
   if (c < s) {
     this._controlNext.classList.add('is-invalid');
