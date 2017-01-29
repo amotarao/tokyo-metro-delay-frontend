@@ -8,6 +8,7 @@ var uglify = require('gulp-uglify');
 var svgmin = require('gulp-svgmin');
 var htmlmin = require('gulp-htmlmin');
 var sourcemaps = require('gulp-sourcemaps');
+var browserSync = require('browser-sync').create();
 
 gulp.task('sass', function() {
   gulp.src('./src/sass/**/style.scss')
@@ -23,7 +24,8 @@ gulp.task('sass', function() {
       cascade: false
     }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./dist/css'));
+    .pipe(gulp.dest('./dist/css'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('js', function(){
@@ -34,7 +36,8 @@ gulp.task('js', function(){
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./dist/js'));
+    .pipe(gulp.dest('./dist/js'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('html', function(){
@@ -45,7 +48,8 @@ gulp.task('html', function(){
     .pipe(htmlmin({
       collapseWhitespace: true
     }))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('svg', function() {
@@ -60,6 +64,13 @@ gulp.task('watch', function(){
   gulp.watch('./src/**/*.html', ['html']);
 });
 
+gulp.task('serve', ['watch'], function(){
+  browserSync.init({
+    server: './dist'
+  });
+  gulp.watch('./dist/**/*.html').on('change', browserSync.reload);
+});
+
 gulp.task('default', function(){
-  gulp.run('watch');
+  gulp.run('serve');
 });
