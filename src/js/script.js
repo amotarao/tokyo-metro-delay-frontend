@@ -1,3 +1,10 @@
+/**
+ * getUrlVars()
+ * URLのパラメータを取得する
+ *
+ * @returns {Object}
+ */
+
 var getUrlVars = function() {
   var vars = {};
   var param = location.search.substring(1).split('&');
@@ -11,6 +18,14 @@ var getUrlVars = function() {
   return vars;
 }
 
+
+/**
+ * delayTextToSimple()
+ * 遅延テキストをシンプルにする
+ *
+ * @param {String} v
+ * @returns {String}
+ */
 
 var delayTextToSimple = function(v) {
   if (v.substr(0, 2) == '最大') {
