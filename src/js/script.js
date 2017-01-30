@@ -62,7 +62,6 @@ TokyoMetroDelay.prototype.getJSON = function(url) {
 TokyoMetroDelay.prototype.setDocumentSelecter = function() {
   this._listWrap   = document.querySelector('.top-wrap');
   this._list       = document.querySelector('.list');
-  this._loader     = document.querySelector('.line-loader');
   this._lineInfo   = document.querySelector('.line-information');
   this._selectDate = document.querySelector('.select-date .current');
   this._selectTime = document.querySelector('.select-time .current');
