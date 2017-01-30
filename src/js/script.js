@@ -255,9 +255,9 @@ TokyoMetroDelay.prototype.initDraw = function() {
  */
 
 TokyoMetroDelay.prototype.draw = function() {
-  var oldDelayLineCount = document.querySelectorAll('.line-delay').length;
-  var delayLineCount = this.currentData.length;
-  if (oldDelayLineCount == 0) var infoClass = this._lineInfo.querySelector('div div').classList[0];
+  oldDelayLineCount = document.querySelectorAll('.line-delay').length;
+  delayLineCount = this.currentData.length;
+  if (oldDelayLineCount == 0) infoClass = this._lineInfo.classList[2];
 
   if (this.loading) { // ロード中
     this.drawInfo('loading');
@@ -267,7 +267,7 @@ TokyoMetroDelay.prototype.draw = function() {
     this.drawInfo('scheduled');
     return true;
   }
-  if (oldDelayLineCount == 0 && !this.currentData && (infoClass == 'line-nodata' || infoClass == 'line-scheduled' || infoClass == 'line-loader')) {
+  if (oldDelayLineCount == 0 && !this.currentData && (infoClass == 'info-nodata' || infoClass == 'info-scheduled' || infoClass == 'info-loader')) {
     this.drawInfo('nodata');
     return true;
   }
