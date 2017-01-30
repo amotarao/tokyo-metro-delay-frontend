@@ -335,33 +335,27 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
  */
 
 TokyoMetroDelay.prototype.drawInfo = function(v) {
+
+  this._lineInfo.classList.remove('info-loading', 'info-scheduled', 'info-nodata');
+
   switch (v) {
     case 'null':
-      this._lineInfo.innerHTML = '';
+      this._lineInfo.querySelector('.info-text').innerHTML = '';
       break;
 
     case 'loading':
-      this._lineInfo.innerHTML = '\
-            <div class="line-loader">\
-                <div class="loader"></div>\
-                <p class="info-text">読み込み中</p>\
-            </div>';
+      this._lineInfo.classList.add('info-loading');
+      this._lineInfo.querySelector('.info-text').innerHTML = '読み込み中';
       break;
 
     case 'scheduled':
-      this._lineInfo.innerHTML = '\
-            <div class="line-scheduled">\
-                <div class="ok-circle"></div>\
-                <p class="info-text">時刻通り</p>\
-            </div>';
+      this._lineInfo.classList.add('info-scheduled');
+      this._lineInfo.querySelector('.info-text').innerHTML = '時刻通り';
       break;
 
     case 'nodata':
-      this._lineInfo.innerHTML = '\
-            <div class="line-nodata">\
-                <div class="ok-circle"></div>\
-                <p class="info-text">データなし</p>\
-            </div>';
+      this._lineInfo.classList.add('info-nodata');
+      this._lineInfo.querySelector('.info-text').innerHTML = 'データなし';
       break;
 
     case 'hide':
