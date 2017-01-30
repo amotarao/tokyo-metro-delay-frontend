@@ -62,7 +62,7 @@ TokyoMetroDelay.prototype.getJSON = function(url) {
 TokyoMetroDelay.prototype.setDocumentSelecter = function() {
   this._listWrap   = document.querySelector('.top-wrap');
   this._list       = document.querySelector('.list');
-  this._lineInfo   = document.querySelector('.line-information');
+  this._lineInfo   = document.querySelector('.line-info');
   this._selectDate = document.querySelector('.select-date .current');
   this._selectTime = document.querySelector('.select-time .current');
   this._controlNext = document.getElementById('nextTimezone');
@@ -344,7 +344,7 @@ TokyoMetroDelay.prototype.drawInfo = function(v) {
       this._lineInfo.innerHTML = '\
             <div class="line-loader">\
                 <div class="loader"></div>\
-                <p class="line-text">読み込み中</p>\
+                <p class="info-text">読み込み中</p>\
             </div>';
       break;
 
@@ -352,7 +352,7 @@ TokyoMetroDelay.prototype.drawInfo = function(v) {
       this._lineInfo.innerHTML = '\
             <div class="line-scheduled">\
                 <div class="ok-circle"></div>\
-                <p class="line-text">時刻通り</p>\
+                <p class="info-text">時刻通り</p>\
             </div>';
       break;
 
@@ -360,7 +360,7 @@ TokyoMetroDelay.prototype.drawInfo = function(v) {
       this._lineInfo.innerHTML = '\
             <div class="line-nodata">\
                 <div class="ok-circle"></div>\
-                <p class="line-text">データなし</p>\
+                <p class="info-text">データなし</p>\
             </div>';
       break;
 
