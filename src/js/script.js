@@ -1,212 +1,4 @@
 /**
- * getUrlVars()
- * URLのパラメータを取得する
- *
- * @returns {Object}
- */
-
-var getUrlVars = function() {
-  var vars = {};
-  var param = location.search.substring(1).split('&');
-  for (var i = 0; i < param.length; i++) {
-    var keySearch = param[i].search(/=/);
-    var key = '';
-    if (keySearch != -1) key = param[i].slice(0, keySearch);
-    var val = param[i].slice(param[i].indexOf('=', 0) + 1);
-    if (key != '') vars[key] = decodeURI(val);
-  }
-  return vars;
-}
-
-
-/**
- * delayTextToSimple()
- * 遅延テキストをシンプルにする
- *
- * @param {String} v
- * @returns {String}
- */
-
-var delayTextToSimple = function(v) {
-  if (v.substr(0, 2) == '最大') {
-    return '+' + v.substr(2, 3);
-  } else {
-    return '61+分';
-  }
-}
-
-
-/**
- * getTimezone()
- * 日付のタイムゾーンを取得
- * 
- * @param {Object} date
- * @returns {String}
- */
-
-var getTimezone = function(date) {
-
-  timezoneBorder = [4, 7, 10, 17];
-
-  hour = date.getUTCHours() + 9;
-  if (date.getUTCMinutes() < 5 && (timezoneBorder.indexOf(hour) >= 0 || timezoneBorder.indexOf(hour-24) >= 0)) hour--;
-  if (hour >= 24) hour -= 24;
-
-  if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
-  else if (timezoneBorder[1] <= hour && hour < timezoneBorder[2]) return 'b';
-  else if (timezoneBorder[2] <= hour && hour < timezoneBorder[3]) return 'c';
-  else if (timezoneBorder[3] <= hour || hour < timezoneBorder[0]) return 'd';
-
-}
-
-
-/**
- * displaceArrayDate()
- * 配列の日付をずらす
- * 
- * @param {Array} date
- * @param {Boolean} o
- * @returns {Array}
- */
-
-var displaceArrayDate = function(date, o) {
-
-  if (typeof o === 'undefined') o = true;
-
-  switch (o) {
-    case true:
-      date[2]++;
-      if (0 < date[2] && date[2] < 29) break;
-      switch (date[2]) {
-        case 32:
-          date[1]++;
-          date[2] = 1;
-          if (date[1] == 12) date[0]++;
-          break;
-        case 31:
-          switch (date[1]) {
-            case 2:
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-              date[1]++;
-              date[2] = 1;
-          }
-          break;
-        case 30:
-          if (date[1] != 2) break;
-          date[1]++;
-          date[2] = 1;
-          break;
-        case 29:
-          if (date[1] != 2) break;
-          if (date[1] % 400 == 0) break;
-          if (date[1] % 4 == 0 || date[1] % 100 != 0) break;
-          date[1]++;
-          date[2] = 1;
-          break;
-      }
-      break;
-
-    case false:
-      date[2]--;
-      if (date[2] > 0) break;
-      switch (date[1] - 1) {
-        case 0:
-          date[0]--;
-          date[1] = 12;
-          date[2] = 31;
-          break;
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-          date[1]--;
-          date[2] = 30;
-          break;
-        case 2:
-          date[1]--;
-          date[2] = 28;
-          if (date[1] % 400 == 0) break;
-          if (date[1] % 4 == 0 || date[1] % 100 != 0) break;
-          date[2] = 29;
-          break;
-        default:
-          date[1]--;
-          date[2] = 31;
-      }
-      break;
-  }
-
-  return date;
-}
-
-
-/**
- * encodeArrayDate()
- * 文字列の日付を配列に変換
- * 変換出来ない場合、falseを返す
- * 
- * @param {String} v
- * @returns {Array|Boolean}
- */
-
-var encodeArrayDate = function(v) {
-
-  format = v.match(/([0-9]{4})-([0-9]{2})-([0-9]{2})/g);
-  if (!format) return false;
-
-  v = v.replace(/-0/g , '-') ;
-  v = v.split('-');
-
-  dt = new Date(v[0], v[1] - 1, v[2]);
-  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) return false;
-
-  return v;
-
-}
-
-
-/**
- * decodeArrayDate()
- * 配列の日付を文字列に変換
- * 変換出来ない場合、falseを返す
- * 
- * @param {Array} v
- * @param {String} p 区切り文字
- * @param {Boolean} w 曜日の有無
- * @returns {String|Boolean}
- */
-
-var decodeArrayDate = function(v, p, w) {
-
-  weekDayList = ['日', '月', '火', '水', '木', '金', '土'];
-
-  if (typeof p === 'undefined') w = '-';
-  if (typeof w === 'undefined') w = false;
-
-  dt = new Date(v[0], v[1] - 1, v[2]);
-  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) return false;
-
-  str = '';
-  str += v[0];
-  str += p;
-  str += (v[1] < 10) ? '0' + v[1] : v[1];
-  str += p;
-  str += (v[2] < 10) ? '0' + v[2] : v[2];
-
-  if (w === true) {
-    str += ' ';
-    str += weekDayList[dt.getDay()];
-  }
-
-  return str;
-
-}
-
-
-/**
  * TokyoMetroDelay()
  *
  * オブジェクト定義
@@ -667,8 +459,221 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
 }
 
 
+/**
+ * getUrlVars()
+ * URLのパラメータを取得する
+ *
+ * @returns {Object}
+ */
+
+var getUrlVars = function() {
+  var vars = {};
+  var param = location.search.substring(1).split('&');
+  for (var i = 0; i < param.length; i++) {
+    var keySearch = param[i].search(/=/);
+    var key = '';
+    if (keySearch != -1) key = param[i].slice(0, keySearch);
+    var val = param[i].slice(param[i].indexOf('=', 0) + 1);
+    if (key != '') vars[key] = decodeURI(val);
+  }
+  return vars;
+}
+
+
+/**
+ * delayTextToSimple()
+ * 遅延テキストをシンプルにする
+ *
+ * @param {String} v
+ * @returns {String}
+ */
+
+var delayTextToSimple = function(v) {
+  if (v.substr(0, 2) == '最大') {
+    return '+' + v.substr(2, 3);
+  } else {
+    return '61+分';
+  }
+}
+
+
+/**
+ * getTimezone()
+ * 日付のタイムゾーンを取得
+ * 
+ * @param {Object} date
+ * @returns {String}
+ */
+
+var getTimezone = function(date) {
+
+  timezoneBorder = [4, 7, 10, 17];
+
+  hour = date.getUTCHours() + 9;
+  if (date.getUTCMinutes() < 5 && (timezoneBorder.indexOf(hour) >= 0 || timezoneBorder.indexOf(hour-24) >= 0)) hour--;
+  if (hour >= 24) hour -= 24;
+
+  if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
+  else if (timezoneBorder[1] <= hour && hour < timezoneBorder[2]) return 'b';
+  else if (timezoneBorder[2] <= hour && hour < timezoneBorder[3]) return 'c';
+  else if (timezoneBorder[3] <= hour || hour < timezoneBorder[0]) return 'd';
+
+}
+
+
+/**
+ * displaceArrayDate()
+ * 配列の日付をずらす
+ * 
+ * @param {Array} date
+ * @param {Boolean} o
+ * @returns {Array}
+ */
+
+var displaceArrayDate = function(date, o) {
+
+  if (typeof o === 'undefined') o = true;
+
+  switch (o) {
+    case true:
+      date[2]++;
+      if (0 < date[2] && date[2] < 29) break;
+      switch (date[2]) {
+        case 32:
+          date[1]++;
+          date[2] = 1;
+          if (date[1] == 12) date[0]++;
+          break;
+        case 31:
+          switch (date[1]) {
+            case 2:
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+              date[1]++;
+              date[2] = 1;
+          }
+          break;
+        case 30:
+          if (date[1] != 2) break;
+          date[1]++;
+          date[2] = 1;
+          break;
+        case 29:
+          if (date[1] != 2) break;
+          if (date[1] % 400 == 0) break;
+          if (date[1] % 4 == 0 || date[1] % 100 != 0) break;
+          date[1]++;
+          date[2] = 1;
+          break;
+      }
+      break;
+
+    case false:
+      date[2]--;
+      if (date[2] > 0) break;
+      switch (date[1] - 1) {
+        case 0:
+          date[0]--;
+          date[1] = 12;
+          date[2] = 31;
+          break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+          date[1]--;
+          date[2] = 30;
+          break;
+        case 2:
+          date[1]--;
+          date[2] = 28;
+          if (date[1] % 400 == 0) break;
+          if (date[1] % 4 == 0 || date[1] % 100 != 0) break;
+          date[2] = 29;
+          break;
+        default:
+          date[1]--;
+          date[2] = 31;
+      }
+      break;
+  }
+
+  return date;
+}
+
+
+/**
+ * encodeArrayDate()
+ * 文字列の日付を配列に変換
+ * 変換出来ない場合、falseを返す
+ * 
+ * @param {String} v
+ * @returns {Array|Boolean}
+ */
+
+var encodeArrayDate = function(v) {
+
+  format = v.match(/([0-9]{4})-([0-9]{2})-([0-9]{2})/g);
+  if (!format) return false;
+
+  v = v.replace(/-0/g , '-') ;
+  v = v.split('-');
+
+  dt = new Date(v[0], v[1] - 1, v[2]);
+  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) return false;
+
+  return v;
+
+}
+
+
+/**
+ * decodeArrayDate()
+ * 配列の日付を文字列に変換
+ * 変換出来ない場合、falseを返す
+ * 
+ * @param {Array} v
+ * @param {String} p 区切り文字
+ * @param {Boolean} w 曜日の有無
+ * @returns {String|Boolean}
+ */
+
+var decodeArrayDate = function(v, p, w) {
+
+  weekDayList = ['日', '月', '火', '水', '木', '金', '土'];
+
+  if (typeof p === 'undefined') w = '-';
+  if (typeof w === 'undefined') w = false;
+
+  dt = new Date(v[0], v[1] - 1, v[2]);
+  if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) return false;
+
+  str = '';
+  str += v[0];
+  str += p;
+  str += (v[1] < 10) ? '0' + v[1] : v[1];
+  str += p;
+  str += (v[2] < 10) ? '0' + v[2] : v[2];
+
+  if (w === true) {
+    str += ' ';
+    str += weekDayList[dt.getDay()];
+  }
+
+  return str;
+
+}
+
+
 var app = new TokyoMetroDelay();
 app.draw();
+
+
+/**
+ * タイムゾーンの変更（矢印をクリック）
+ */
 
 document.getElementById("previousTimezone").addEventListener("click", function(event) {
   app.setPreviousTimezone();
@@ -678,6 +683,11 @@ document.getElementById("nextTimezone").addEventListener("click", function(event
   app.setNextTimezone();
   app.draw();
 }, false);
+
+
+/**
+ * タイムゾーンの変更（モバイル端末でスワイプ）
+ */
 
 var direction, position;
 window.addEventListener("touchstart", function(event) {
@@ -700,6 +710,13 @@ window.addEventListener("touchend", function(event) {
     app.draw();
   }
 }, false);
+
+
+
+/**
+ * 現在の日時の入れ替え
+ */
+
 setInterval(function() {
   app.setCurrentTime();
 }, 300000);
