@@ -3,7 +3,7 @@ var sass = require('gulp-sass');
 var compass = require('gulp-compass');
 var autoprefixer = require('gulp-autoprefixer');
 var plumber = require('gulp-plumber');
-var notify  = require('gulp-notify');
+var notify = require('gulp-notify');
 var uglify = require('gulp-uglify');
 var svgmin = require('gulp-svgmin');
 var htmlmin = require('gulp-htmlmin');
@@ -11,6 +11,24 @@ var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 
 gulp.task('sass', function() {
+  gulp.src('./src/sass/**/style.scss')
+    .pipe(plumber({
+      errorHandler: notify.onError("<%= error.message %>")
+    }))
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+      outputStyle: 'expanded'
+    }))
+    .pipe(autoprefixer({
+      browsers: ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'],
+      cascade: false
+    }))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./dist/css'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('sass-min', function() {
   gulp.src('./src/sass/**/style.scss')
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
@@ -33,6 +51,15 @@ gulp.task('js', function(){
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
     }))
+    .pipe(gulp.dest('./dist/js'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('js-min', function(){
+  gulp.src('./src/js/script.js')
+    .pipe(plumber({
+      errorHandler: notify.onError("<%= error.message %>")
+    }))
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(sourcemaps.write())
@@ -41,6 +68,15 @@ gulp.task('js', function(){
 });
 
 gulp.task('html', function(){
+  gulp.src('./src/**/*.html')
+    .pipe(plumber({
+      errorHandler: notify.onError("<%= error.message %>")
+    }))
+    .pipe(gulp.dest('./dist'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('html-min', function(){
   gulp.src('./src/**/*.html')
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
@@ -58,13 +94,15 @@ gulp.task('svg', function() {
   .pipe(gulp.dest('./dist/img/'));　
 });
 
-gulp.task('watch', function(){
+gulp.task('watch', ['serve'], function(){
   gulp.watch('./src/sass/**/*.scss', ['sass']);
   gulp.watch('./src/js/**/*.js', ['js']);
   gulp.watch('./src/**/*.html', ['html']);
 });
 
-gulp.task('serve', ['watch'], function(){
+gulp.task('minify', ['sass-min', 'js-min', 'html-min']);
+
+gulp.task('serve', function(){
   browserSync.init({
     server: './dist'
   });
@@ -72,5 +110,5 @@ gulp.task('serve', ['watch'], function(){
 });
 
 gulp.task('default', function(){
-  gulp.run('serve');
+  gulp.run('watch');
 });
