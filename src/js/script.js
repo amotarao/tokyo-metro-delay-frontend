@@ -221,17 +221,19 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
  */
 
 TokyoMetroDelay.prototype.setDelayLine = function() {
+
   var date = decodeArrayDate(this.selectDate, '');
+
+  if (date in this.data && this.selectTimezone in this.data[date]) {
+    this.currentData = this.data[date][this.selectTimezone]['delayLine'];
+    this.currentDataDetail = this.data[date][this.selectTimezone]['delayLineDetail'];
+    return true;
+  }
 
   this.currentData = false;
   this.currentDataDetail = false;
+  return false;
 
-  if (date in this.data) {
-    if (this.selectTimezone in this.data[date]) {
-      this.currentData = this.data[date][this.selectTimezone]['delayLine'];
-      this.currentDataDetail = this.data[date][this.selectTimezone]['delayLineDetail'];
-    }
-  }
 }
 
 
