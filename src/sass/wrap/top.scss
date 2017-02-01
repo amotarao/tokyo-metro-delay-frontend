@@ -278,6 +278,12 @@
     height: 18vw;
   }
 
+  @media #{$media-square} {
+    width: 24.3vw;
+    height: 24.3vw;
+    max-height: 24.3vh;
+  }
+
   img {
     display: block;
     width: 100%;
