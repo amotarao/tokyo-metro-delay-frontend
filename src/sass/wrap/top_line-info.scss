@@ -1,6 +1,7 @@
 .line-info {
   width: 100%;
   order: -1;
+  overflow: hidden;
   
   @media #{$media-square-mobile} {
     display: none;
@@ -31,7 +32,6 @@
   text-indent: -9999em;
   border-width: 36px;
   border-style: solid;
-  border-color: transparent;
 
   &, &:after {
     border-radius: 50%;
