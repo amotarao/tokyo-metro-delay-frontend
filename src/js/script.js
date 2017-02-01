@@ -296,6 +296,7 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
   this._list.classList.remove('list--count_' + document.querySelectorAll('.line-delay').length);
   Array.prototype.forEach.call(this._list.querySelectorAll('.line-delay'), function(e) {
     e.classList.remove('line-delay');
+    e.querySelector('a').href = '';
   });
   var delay = document.querySelectorAll('.delay-text');
   Array.prototype.forEach.call(delay, function(node) {
@@ -308,6 +309,9 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
     var self = this;
     this.currentData.forEach(function(line) {
       self._list.querySelector('li[data-line-name=' + line + ']').classList.add('line-delay');
+
+      href = 'http://www.tokyometro.jp/delay/detail/' + decodeArrayDate(self.selectDate, '') + '/' + line + '_' + encodeTimezone(self.selectTimezone) + '.shtml';
+      self._list.querySelector('li[data-line-name=' + line + ']').querySelector('a').href = href;
 
       var ele = document.createElement('span');
       var str = document.createTextNode(delayTextToSimple(self.currentDataDetail[line]));
@@ -657,6 +661,28 @@ var decodeArrayDate = function(v, p, w) {
 
   return str;
 
+}
+
+
+/**
+ * encodeTimezone()
+ * タイムゾーンの形式を変換する
+ * 
+ * @param {String} v
+ * @returns {String}
+ */
+
+var encodeTimezone = function(v) {
+  switch (v) {
+    case 'a':
+      return '1';
+    case 'b':
+      return '2';
+    case 'c':
+      return '3';
+    case 'd':
+      return '4';
+  }
 }
 
 
