@@ -586,14 +586,14 @@ var displaceArrayDate = function(date, way) {
   if (typeof way === 'undefined')
     way = true;
 
-  var obj = new Date(date[0], date[1], date[2]);
+  var obj = new Date(date[0], date[1] - 1, date[2]);
 
   if (way)
     obj.setDate(obj.getDate() + 1);
   else
     obj.setDate(obj.getDate() - 1);
 
-  date = [obj.getFullYear(), obj.getMonth(), obj.getDate()];
+  date = [obj.getFullYear(), obj.getMonth() + 1, obj.getDate()];
 
   return date;
 
