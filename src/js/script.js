@@ -116,7 +116,6 @@ TokyoMetroDelay.prototype.setSelectDate = function() {
   }
 
   this.selectDate = this.currentDate;
-  this.drawControlArrow();
 
   return;
 
@@ -178,6 +177,7 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
   }
   this.setDelayLine();
   this.drawCurrentTimezone();
+  this.drawControlArrow();
 
   return
 
@@ -210,6 +210,7 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
   }
   this.setDelayLine();
   this.drawCurrentTimezone();
+  this.drawControlArrow();
 
   return;
 
@@ -284,6 +285,7 @@ TokyoMetroDelay.prototype.handleEvents = function() {
 
   setInterval(function() {
     self.setCurrentTime();
+    self.drawControlArrow();
   }, 300000);
 
 }
@@ -299,6 +301,7 @@ TokyoMetroDelay.prototype.initDraw = function() {
   this.drawInfo('loading');
   this.drawCurrentDate();
   this.drawCurrentTimezone();
+  this.drawControlArrow();
 }
 
 
