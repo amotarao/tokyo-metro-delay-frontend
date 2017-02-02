@@ -21,6 +21,7 @@ TokyoMetroDelay.prototype.init = function() {
   this.setSelectTimezone();
   this.setDocumentSelecter();
   this.initDraw();
+  this.handleEvents();
 
   this.loading = true;
   this.data = JSON.parse('{"' + decodeArrayDate(this.selectDate, '') + '":{"' + this.selectTimezone + '":{"delayLine":[],"delayLineDetail":[]}}}');
@@ -233,6 +234,55 @@ TokyoMetroDelay.prototype.setDelayLine = function() {
   this.currentData = false;
   this.currentDataDetail = false;
   return false;
+
+}
+
+
+/**
+ * handleEvents()
+ *
+ * イベントを登録する
+ */
+
+TokyoMetroDelay.prototype.handleEvents = function() {
+
+  var self = this;
+
+  document.getElementById("previousTimezone").addEventListener("click", function(event) {
+    self.setPreviousTimezone();
+    self.draw();
+  }, false);
+
+  document.getElementById("nextTimezone").addEventListener("click", function(event) {
+    self.setNextTimezone();
+    self.draw();
+  }, false);
+
+  var direction, position;
+  window.addEventListener("touchstart", function(event) {
+    position = event.touches[0].pageX;
+    direction = '';
+  }, false);
+  window.addEventListener("touchmove", function(event) {
+    if (position - event.changedTouches[0].pageX > 50) {
+      direction = 'left';
+    } else if (position - event.changedTouches[0].pageX < -50) {
+      direction = 'right';
+    }
+  }, false);
+  window.addEventListener("touchend", function(event) {
+    if (direction == 'right') {
+      self.setNextTimezone();
+      self.draw();
+    } else if (direction == 'left') {
+      self.setPreviousTimezone();
+      self.draw();
+    }
+  }, false);
+
+  setInterval(function() {
+    self.setCurrentTime();
+  }, 300000);
 
 }
 
@@ -690,54 +740,3 @@ var encodeTimezone = function(v) {
 
 var app = new TokyoMetroDelay();
 app.draw();
-
-
-/**
- * タイムゾーンの変更（矢印をクリック）
- */
-
-document.getElementById("previousTimezone").addEventListener("click", function(event) {
-  app.setPreviousTimezone();
-  app.draw();
-}, false);
-document.getElementById("nextTimezone").addEventListener("click", function(event) {
-  app.setNextTimezone();
-  app.draw();
-}, false);
-
-
-/**
- * タイムゾーンの変更（モバイル端末でスワイプ）
- */
-
-var direction, position;
-window.addEventListener("touchstart", function(event) {
-  position = event.touches[0].pageX;
-  direction = '';
-}, false);
-window.addEventListener("touchmove", function(event) {
-  if (position - event.changedTouches[0].pageX > 50) {
-    direction = 'left';
-  } else if (position - event.changedTouches[0].pageX < -50) {
-    direction = 'right';
-  }
-}, false);
-window.addEventListener("touchend", function(event) {
-  if (direction == 'right') {
-    app.setNextTimezone();
-    app.draw();
-  } else if (direction == 'left') {
-    app.setPreviousTimezone();
-    app.draw();
-  }
-}, false);
-
-
-
-/**
- * 現在の日時の入れ替え
- */
-
-setInterval(function() {
-  app.setCurrentTime();
-}, 300000);
