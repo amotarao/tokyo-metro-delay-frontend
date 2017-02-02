@@ -66,6 +66,7 @@ TokyoMetroDelay.prototype.setDocumentSelecter = function() {
   this.$info = document.getElementById('appInfo');
   this.$date = document.getElementById('currentDate');
   this.$time = document.getElementById('currentTime');
+  this.$prev = document.getElementById('previousTimezone');
   this.$next = document.getElementById('nextTimezone');
 
 }
@@ -249,12 +250,13 @@ TokyoMetroDelay.prototype.handleEvents = function() {
 
   var self = this;
 
-  document.getElementById("previousTimezone").addEventListener("click", function(event) {
+  this.$prev.addEventListener("click", function(event) {
+    console.log("clicked");
     self.setPreviousTimezone();
     self.draw();
   }, false);
 
-  document.getElementById("nextTimezone").addEventListener("click", function(event) {
+  this.$next.addEventListener("click", function(event) {
     self.setNextTimezone();
     self.draw();
   }, false);
