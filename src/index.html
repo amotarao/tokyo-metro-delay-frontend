@@ -16,7 +16,7 @@
     <div class="control">
         <p class="control-arrow arrow-left" id="previousTimezone"><span>←</span></p>
         <div class="control-when select-date">
-            <p class="current">&nbsp;</p>
+            <p class="current" id="currentDate">&nbsp;</p>
             <ul class="date-list">
                 <li>2017.1.12 木</li>
                 <li>2017.1.11 水</li>
@@ -25,7 +25,7 @@
             </ul>
         </div>
         <div class="control-when select-time">
-            <p class="current">&nbsp;</p>
+            <p class="current" id="currentTime">&nbsp;</p>
             <ul class="time-list">
                 <li>~ 7:00</li>
                 <li>7:00 ~ 10:00</li>
@@ -45,7 +45,7 @@
 
 <div class="top-wrap">
     <ul class="list" id="list">
-        <div class="list-item line-info info-loading">
+        <div class="list-item line-info info-loading" id="appInfo">
             <div class="info-item">
                 <div class="circle"></div>
                 <p class="info-text">読み込み中</p>

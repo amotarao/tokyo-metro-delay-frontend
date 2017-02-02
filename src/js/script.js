@@ -61,12 +61,13 @@ TokyoMetroDelay.prototype.getJSON = function(url) {
  */
 
 TokyoMetroDelay.prototype.setDocumentSelecter = function() {
-  this._listWrap   = document.querySelector('.top-wrap');
-  this._list       = document.querySelector('.list');
-  this._lineInfo   = document.querySelector('.line-info');
-  this._selectDate = document.querySelector('.select-date .current');
-  this._selectTime = document.querySelector('.select-time .current');
-  this._controlNext = document.getElementById('nextTimezone');
+
+  this.$list = document.getElementById('list');
+  this.$info = document.getElementById('appInfo');
+  this.$date = document.getElementById('currentDate');
+  this.$time = document.getElementById('currentTime');
+  this.$next = document.getElementById('nextTimezone');
+
 }
 
 
@@ -309,7 +310,7 @@ TokyoMetroDelay.prototype.initDraw = function() {
 TokyoMetroDelay.prototype.draw = function() {
   oldDelayLineCount = document.querySelectorAll('.line-delay').length;
   delayLineCount = this.currentData.length;
-  if (oldDelayLineCount == 0) infoClass = this._lineInfo.classList[2];
+  if (oldDelayLineCount == 0) infoClass = this.$info.classList[2];
 
   if (this.loading) { // ロード中
     this.drawInfo('loading');
@@ -325,7 +326,7 @@ TokyoMetroDelay.prototype.draw = function() {
   }
 
   this.drawInfo('null');
-  this._list.classList.add('is-changing');
+  this.$list.classList.add('is-changing');
 
   this.drawDelayLine();
 
@@ -345,8 +346,8 @@ TokyoMetroDelay.prototype.draw = function() {
 
 TokyoMetroDelay.prototype.drawDelayLine = function() {
   // 遅延路線リセット
-  this._list.classList.remove('list--count_' + document.querySelectorAll('.line-delay').length);
-  Array.prototype.forEach.call(this._list.querySelectorAll('.line-delay'), function(e) {
+  this.$list.classList.remove('list--count_' + document.querySelectorAll('.line-delay').length);
+  Array.prototype.forEach.call(this.$list.querySelectorAll('.line-delay'), function(e) {
     e.classList.remove('line-delay');
     e.querySelector('a').href = '';
   });
@@ -374,7 +375,7 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
       self._list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(ele);
 
     });
-    this._list.classList.add('list--count_' + this.currentData.length);
+    this.$list.classList.add('list--count_' + this.currentData.length);
 //    this.drawInfo('hide');
   } else if (!this.currentData) {
     this.drawInfo('nodata');
@@ -392,26 +393,26 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
 
 TokyoMetroDelay.prototype.drawInfo = function(v) {
 
-  this._lineInfo.classList.remove('info-loading', 'info-scheduled', 'info-nodata');
+  this.$info.classList.remove('info-loading', 'info-scheduled', 'info-nodata');
 
   switch (v) {
     case 'null':
-      this._lineInfo.querySelector('.info-text').innerHTML = '';
+      this.$info.querySelector('.info-text').innerHTML = '';
       break;
 
     case 'loading':
-      this._lineInfo.classList.add('info-loading');
-      this._lineInfo.querySelector('.info-text').innerHTML = '読み込み中';
+      this.$info.classList.add('info-loading');
+      this.$info.querySelector('.info-text').innerHTML = '読み込み中';
       break;
 
     case 'scheduled':
-      this._lineInfo.classList.add('info-scheduled');
-      this._lineInfo.querySelector('.info-text').innerHTML = '時刻通り';
+      this.$info.classList.add('info-scheduled');
+      this.$info.querySelector('.info-text').innerHTML = '時刻通り';
       break;
 
     case 'nodata':
-      this._lineInfo.classList.add('info-nodata');
-      this._lineInfo.querySelector('.info-text').innerHTML = 'データなし';
+      this.$info.classList.add('info-nodata');
+      this.$info.querySelector('.info-text').innerHTML = 'データなし';
       break;
 
     case 'hide':
@@ -428,7 +429,7 @@ TokyoMetroDelay.prototype.drawInfo = function(v) {
 
 TokyoMetroDelay.prototype.drawCurrentDate = function() {
 
-  this._selectDate.innerHTML = decodeArrayDate(this.selectDate, '.', true);
+  this.$date.innerHTML = decodeArrayDate(this.selectDate, '.', true);
 
   return;
 
@@ -464,7 +465,7 @@ TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
   var str = document.createTextNode(time);
 
   //  node.parentNode.removeChild(node);
-  this._selectTime.innerHTML = time;
+  this.$time.innerHTML = time;
 }
 
 
@@ -483,11 +484,11 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
   s = s[0] * 500 + s[1] * 40 + s[2];
 
   if (c < s) {
-    this._controlNext.classList.add('is-invalid');
+    this.$next.classList.add('is-invalid');
     return;
   }
   if (c > s) {
-    this._controlNext.classList.remove('is-invalid');
+    this.$next.classList.remove('is-invalid');
     return;
   }
 
@@ -495,11 +496,11 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
   s = this.selectTimezone;
 
   if (c <= s) {
-    this._controlNext.classList.add('is-invalid');
+    this.$next.classList.add('is-invalid');
     return;
   }
   if (c > s) {
-    this._controlNext.classList.remove('is-invalid');
+    this.$next.classList.remove('is-invalid');
     return;
   }
 
