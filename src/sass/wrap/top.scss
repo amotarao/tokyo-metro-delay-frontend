@@ -35,13 +35,6 @@
 
   @media #{$media-normal} {
     min-width: 720px;
-
-/*    &.is-changing {
-      height: calc(200vh + 144px);
-      margin: calc(-50vh + -36px) auto calc(-50vh + -108px);
-  //    transition: height $time-changing ease-in-out,
-  //                margin $time-changing ease-in-out;
-    }*/
   }
 
   @media #{$media-mobile} {
@@ -99,11 +92,6 @@
         height: 50%;
       }
     }
-/*    .list.is-changing {
-      .line-blank-middle {
-        height: 100%;
-      }
-    }*/
   }
 }
 
@@ -169,14 +157,6 @@
           }
         }
       }
-
-/*      &.is-changing {
-        .line {
-          @media #{$media-normal} {
-            height: 25%;
-          }
-        }
-      }*/
 
       &.list--count_1 {
         .line.line-delay {
