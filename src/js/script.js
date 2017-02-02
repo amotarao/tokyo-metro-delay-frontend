@@ -333,7 +333,7 @@ TokyoMetroDelay.prototype.draw = function() {
   var self = this;
 
   setTimeout(function() {
-    self._list.classList.remove('is-changing');
+    self.$list.classList.remove('is-changing');
   }, 300);
 }
 
@@ -361,18 +361,18 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
 
     var self = this;
     this.currentData.forEach(function(line) {
-      self._list.querySelector('li[data-line-name=' + line + ']').classList.add('line-delay');
+      self.$list.querySelector('li[data-line-name=' + line + ']').classList.add('line-delay');
 
       href = 'http://www.tokyometro.jp/delay/detail/' + decodeArrayDate(self.selectDate, '') + '/' + line + '_' + encodeTimezone(self.selectTimezone) + '.shtml';
-      self._list.querySelector('li[data-line-name=' + line + ']').querySelector('a').href = href;
+      self.$list.querySelector('li[data-line-name=' + line + ']').querySelector('a').href = href;
 
       var ele = document.createElement('span');
       var str = document.createTextNode(delayTextToSimple(self.currentDataDetail[line]));
       ele.classList.add('delay-text');
       ele.appendChild(str);
 
-      self._list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(document.createTextNode(' '));
-      self._list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(ele);
+      self.$list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(document.createTextNode(' '));
+      self.$list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(ele);
 
     });
     this.$list.classList.add('list--count_' + this.currentData.length);
