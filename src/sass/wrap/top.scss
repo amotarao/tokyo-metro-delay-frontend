@@ -37,12 +37,19 @@
     min-width: 720px;
   }
 
+  @media #{$media-horizontal} {
+    width: 48%;
+    height: 96%;
+    margin: auto auto 4% 6%;
+  }
+
   @media #{$media-mobile} {
     width: 80vw;
     max-width: 80vh;
     height: 75vh;
     max-height: 100vw;
     margin: auto;
+    padding-top: 2%;
   }
 
   @media #{$media-square} {
@@ -86,6 +93,10 @@
     display: none;
   }
 
+  @media #{$media-horizontal} {
+    display: none;
+  }
+
   @at-root {
     .list.list--count_9 {
       .line-blank-middle {
@@ -101,6 +112,10 @@
   flex-grow: 1;
 
   @media #{$media-square-mobile} {
+    display: none;
+  }
+
+  @media #{$media-horizontal} {
     display: none;
   }
 
@@ -123,20 +138,33 @@
   transition: order 0s linear $time-changing,
               height $time-changing ease-in-out;
   
-  @media #{$media-square-mobile} {
+  @media #{$media-square} {
     height: 27%;
     width: 27%;
+    flex-grow: 1;
   }
   @media #{$media-mobile} {
-    height: 25%;
+    height: 27%;
     width: 27%;
+    flex-grow: 1;
+  }
+  @media #{$media-horizontal} {
+    height: 27%;
+    width: 27%;
+    flex-grow: 1;
   }
 
   &.line-delay {
-    width: auto;
     order: -1;
 
+    @media #{$media-normal} {
+      width: auto;
+    }
+
     @media #{$media-square-mobile} {
+      order: 0;
+    }
+    @media #{$media-horizontal} {
       order: 0;
     }
   }
@@ -146,70 +174,66 @@
 
       &:not([class*="list--count_"]) {
         .line {
-          flex-grow: 1;
-        }
-      }
-
-      &[class*="list--count_"] {
-        .line {
           @media #{$media-normal} {
-            width: 12%;
+            flex-grow: 1;
           }
         }
       }
 
-      &.list--count_1 {
-        .line.line-delay {
-          width: 100%;
+      @media #{$media-normal} {
+
+        &[class*="list--count_"] {
+          .line {
+            width: 12%;
+          }
         }
-      }
-      &.list--count_2 {
-        .line.line-delay {
-          width: 50%;
+
+        &.list--count_1 {
+          .line.line-delay {
+            width: 100%;
+          }
         }
-      }
-      &.list--count_3 {
-        .line.line-delay {
-          width: 30%;
+        &.list--count_2 {
+          .line.line-delay {
+            width: 50%;
+          }
         }
-      }
-      &.list--count_4 {
-        .line.line-delay {
-          width: 20%;
+        &.list--count_3 {
+          .line.line-delay {
+            width: 30%;
+          }
         }
-      }
-      &.list--count_5 {
-        .line.line-delay {
-          width: 16%;
+        &.list--count_4 {
+          .line.line-delay {
+            width: 20%;
+          }
         }
-      }
-      &.list--count_6 {
-        .line.line-delay {
-          width: 13%;
+        &.list--count_5 {
+          .line.line-delay {
+            width: 16%;
+          }
         }
-      }
-      &.list--count_7 {
-        .line.line-delay {
-          width: 11%;
-          min-width: 60px;
+        &.list--count_6 {
+          .line.line-delay {
+            width: 13%;
+          }
         }
-      }
-      &.list--count_8 {
-        .line.line-delay {
-          width: 10%;
-          min-width: 60px;
+        &.list--count_7 {
+          .line.line-delay {
+            width: 11%;
+            min-width: 60px;
+          }
         }
-      }
-      &.list--count_9 {
-        .line.line-delay {
-          width: 9%;
-          min-width: 60px;
+        &.list--count_8 {
+          .line.line-delay {
+            width: 10%;
+            min-width: 60px;
+          }
         }
-      }
-      &[class*="list--count_"] {
-        .line.line-delay {
-          @media #{$media-square-mobile} {
-            width: 27%;
+        &.list--count_9 {
+          .line.line-delay {
+            width: 9%;
+            min-width: 60px;
           }
         }
       }
@@ -223,6 +247,10 @@
   text-decoration: none;
 
   @media #{$media-square-mobile} {
+    height: 100%;
+  }
+
+  @media #{$media-horizontal} {
     height: 100%;
   }
 
@@ -262,6 +290,12 @@
     width: 24.3vw;
     height: 24.3vw;
     max-height: 24.3vh;
+  }
+
+  @media #{$media-horizontal} {
+    width: 80%;
+    height: 80%;
+    margin: auto;
   }
 
   img {
@@ -312,6 +346,9 @@
   .delay-text {
     color: #FFB300;
     @media #{$media-mobile} {
+      display: none;
+    }
+    @media #{$media-horizontal} {
       display: none;
     }
   }

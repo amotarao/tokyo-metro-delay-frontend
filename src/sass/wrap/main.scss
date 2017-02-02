@@ -29,6 +29,18 @@
     margin: 0;
     bottom: 0;
   }
+
+  @media #{$media-horizontal} {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36%;
+    margin: auto 4% auto 60%;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
 }
 .site-title {
   color: $part-control-main-color;
@@ -41,7 +53,13 @@
   text-indent: .6em;
 
   @media #{$media-mobile} {
-    font-size: 23px;
+    font-size: 22px;
+    letter-spacing: .3em;
+    text-indent: .3em;
+  }
+
+  @media #{$media-horizontal} {
+    font-size: 22px;
     letter-spacing: .3em;
     text-indent: .3em;
   }
@@ -67,11 +85,32 @@
   @media #{$media-mobile} {
     margin: 0;
   }
+
+  @media #{$media-horizontal} {
+    width: auto;
+    height: 3.4em;
+    flex-wrap: wrap;
+  }
 }
 
 .control-when {
+  height: 1.7em;
+  overflow: hidden;
+
+  @media #{$media-horizontal} {
+    width: calc(100% - 60px);
+    text-align: center;
+  }
+
   &.select-time {
     text-align: right;
+    
+    @media #{$media-horizontal} {
+      margin-left: 30px;
+      margin-top: -1.7em;
+      order: 1;
+      text-align: center;
+    }
   }
 }
 

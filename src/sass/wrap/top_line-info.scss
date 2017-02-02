@@ -6,6 +6,10 @@
   @media #{$media-square-mobile} {
     display: none;
   }
+  
+  @media #{$media-horizontal} {
+    display: none;
+  }
 
   @at-root {
     .list[class*="list--count_"] {

@@ -17,6 +17,11 @@ body {
     min-width: 320px;
   }
 
+  @media #{$media-horizontal} {
+    min-width: 480px;
+    min-height: 320px;
+  }
+
   & > body {
     overflow: auto;
   }
@@ -40,6 +45,13 @@ body {
   @media #{$media-square-mobile} {
     min-height: 320px;
     min-width: 320px;
+  }
+
+  @media #{$media-horizontal} {
+    min-width: 480px;
+    min-height: 320px;
+    max-width: 960px;
+    margin: 0;
   }
 }
 
