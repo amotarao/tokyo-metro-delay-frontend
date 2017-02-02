@@ -578,81 +578,26 @@ var getTimezone = function(date) {
  * 配列の日付をずらす
  * 
  * @param {Array} date
- * @param {Boolean} o
+ * @param {Boolean} way
  * @returns {Array}
  */
 
-var displaceArrayDate = function(date, o) {
+var displaceArrayDate = function(date, way) {
 
-  if (typeof o === 'undefined') o = true;
+  if (typeof way === 'undefined')
+    way = true;
 
-  switch (o) {
-    case true:
-      date[2]++;
-      if (0 < date[2] && date[2] < 29) break;
-      switch (date[2]) {
-        case 32:
-          date[1]++;
-          date[2] = 1;
-          if (date[1] == 12) date[0]++;
-          break;
-        case 31:
-          switch (date[1]) {
-            case 2:
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-              date[1]++;
-              date[2] = 1;
-          }
-          break;
-        case 30:
-          if (date[1] != 2) break;
-          date[1]++;
-          date[2] = 1;
-          break;
-        case 29:
-          if (date[1] != 2) break;
-          if (date[1] % 400 == 0) break;
-          if (date[1] % 4 == 0 || date[1] % 100 != 0) break;
-          date[1]++;
-          date[2] = 1;
-          break;
-      }
-      break;
+  var obj = new Date(date[0], date[1], date[2]);
 
-    case false:
-      date[2]--;
-      if (date[2] > 0) break;
-      switch (date[1] - 1) {
-        case 0:
-          date[0]--;
-          date[1] = 12;
-          date[2] = 31;
-          break;
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-          date[1]--;
-          date[2] = 30;
-          break;
-        case 2:
-          date[1]--;
-          date[2] = 28;
-          if (date[1] % 400 == 0) break;
-          if (date[1] % 4 == 0 || date[1] % 100 != 0) break;
-          date[2] = 29;
-          break;
-        default:
-          date[1]--;
-          date[2] = 31;
-      }
-      break;
-  }
+  if (way)
+    obj.setDate(obj.getDate() + 1);
+  else
+    obj.setDate(obj.getDate() - 1);
+
+  date = [obj.getFullYear(), obj.getMonth(), obj.getDate()];
 
   return date;
+
 }
 
 
