@@ -11,6 +11,11 @@
     transform: translateY(-50%);
   }
 
+  @media #{$media-small} {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   @media #{$media-square} {
     padding: 0.5em 0;
     margin: 0;

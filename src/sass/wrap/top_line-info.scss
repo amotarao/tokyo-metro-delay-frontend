@@ -3,7 +3,11 @@
   order: -1;
   overflow: hidden;
   
-  @media #{$media-square-mobile} {
+  @media #{$media-square} {
+    display: none;
+  }
+  
+  @media #{$media-mobile} {
     display: none;
   }
   
@@ -24,7 +28,11 @@
   max-width: 100%;
   text-decoration: none;
 
-  @media #{$media-square-mobile} {
+  @media #{$media-square} {
+    height: 100%;
+  }
+
+  @media #{$media-mobile} {
     height: 100%;
   }
 }

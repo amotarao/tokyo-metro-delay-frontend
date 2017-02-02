@@ -32,13 +32,11 @@ $part-control-bgcolor : transparent;
 $font-family-default : "Noto Sans CJK JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, Verdana, Meiryo, "M+ 1p", sans-serif;
 $font-family-roboto : "Roboto", "Noto Sans CJK JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, Verdana, Meiryo, "M+ 1p", sans-serif;
 
-$media-square :        "only screen and (max-width : 479px) and (max-height : 479px)";
-$media-mobile :        "only screen and (max-width : 479px) and (min-height : 480px)";
-$media-horizontal :    "only screen and (min-width : 480px) and (max-height : 479px)";
-$media-small :         "only screen and (max-width : 839px) and (min-height : 480px)";
-$media-normal :        "only screen and (min-width : 840px) and (min-height : 480px)";
-
-$media-square-mobile : "only screen and (max-width : 479px)";
+$media-square :        "only screen                         and (max-width : 479px) and (max-height : 479px)";
+$media-horizontal :    "only screen and (min-width : 480px)                         and (max-height : 479px)";
+$media-mobile :        "only screen                         and (max-width : 639px) and (min-height : 480px)";
+$media-small :         "only screen and (min-width : 640px) and (max-width : 839px) and (min-height : 480px)";
+$media-normal :        "only screen and (min-width : 840px)                         and (min-height : 480px)";
 
 $color-scheduled : #8BC34A;
 $color-nodata :    #FBC02D;
