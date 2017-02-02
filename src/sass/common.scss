@@ -26,9 +26,9 @@ body {
 }
 
 .container {
-  width: 100vw;
+  width: 100%;
   min-width: 840px;
-  height: 100vh;
+  height: 100%;
   min-height: 480px;
 
   overflow: hidden;
@@ -40,5 +40,14 @@ body {
   @media #{$media-square-mobile} {
     min-height: 320px;
     min-width: 320px;
+  }
+}
+
+a[href=""] {
+  pointer-events: none;
+  cursor: default;
+
+  & > * {
+    pointer-events: inherit;
   }
 }

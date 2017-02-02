@@ -5,9 +5,7 @@
 
 // variables
 @import "variables";
-
-// libraries
-@import "loader";
+@import "animation";
 
 // common
 @import "common";
@@ -16,6 +14,7 @@
 @import "wrap/main";
 @import "wrap/meta";
 @import "wrap/top";
+@import "wrap/top_line-info";
 //@import "wrap/detail";
 
 // css
