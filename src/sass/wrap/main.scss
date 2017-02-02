@@ -145,4 +145,10 @@
       border-left: 6px solid $part-control-color;
     }
   }
+  &.is-invalid {
+    pointer-events: none;
+    span {
+      border-color: transparent;
+    }
+  }
 }
