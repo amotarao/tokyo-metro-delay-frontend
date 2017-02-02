@@ -251,7 +251,6 @@ TokyoMetroDelay.prototype.handleEvents = function() {
   var self = this;
 
   this.$prev.addEventListener("click", function(event) {
-    console.log("clicked");
     self.setPreviousTimezone();
     self.draw();
   }, false);
