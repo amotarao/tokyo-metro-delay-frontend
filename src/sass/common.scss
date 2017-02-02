@@ -42,3 +42,12 @@ body {
     min-width: 320px;
   }
 }
+
+a[href=""] {
+  pointer-events: none;
+  cursor: default;
+
+  & > * {
+    pointer-events: inherit;
+  }
+}
