@@ -23,6 +23,7 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
+  position: relative;
 
   @media #{$media-normal} {
     min-width: 720px;

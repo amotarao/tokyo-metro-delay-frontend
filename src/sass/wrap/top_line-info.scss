@@ -4,21 +4,46 @@
   overflow: hidden;
   
   @media #{$media-square} {
-    display: none;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: rgba(250,250,250,0.7);
   }
   
   @media #{$media-mobile} {
-    display: none;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: rgba(250,250,250,0.7);
   }
   
   @media #{$media-horizontal} {
-    display: none;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: rgba(250,250,250,0.7);
   }
 
   @at-root {
     .list[class*="list--count_"] {
       .line-info {
         height: 0;
+
+        @media #{$media-square} {
+          display: none;
+        }
+        @media #{$media-mobile} {
+          display: none;
+        }
+        @media #{$media-horizontal} {
+          display: none;
+        }
       }
     }
   }
@@ -29,11 +54,24 @@
   text-decoration: none;
 
   @media #{$media-square} {
-    height: 100%;
+    background: white;
+    padding: 0.2em 4em;
+    margin-bottom: 1em;
+    border-radius: 5px;
   }
 
   @media #{$media-mobile} {
-    height: 100%;
+    background: white;
+    padding: 0.2em 4em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+  }
+
+  @media #{$media-horizontal} {
+    background: white;
+    padding: 0.2em 4em;
+    margin-bottom: 1em;
+    border-radius: 5px;
   }
 }
 
@@ -44,6 +82,18 @@
   text-indent: -9999em;
   border-width: 36px;
   border-style: solid;
+
+  @media #{$media-square} {
+    display: none;
+  }
+
+  @media #{$media-mobile} {
+    display: none;
+  }
+
+  @media #{$media-horizontal} {
+    display: none;
+  }
 
   &, &:after {
     border-radius: 50%;
