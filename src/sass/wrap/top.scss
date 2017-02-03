@@ -196,14 +196,17 @@
         .line {
           @media #{$media-normal} {
             flex-grow: 1;
-            opacity: 0.3;
           }
           @media #{$media-small} {
             flex-grow: 1;
-            opacity: 0.3;
           }
           @media #{$media-horizontal} {
-            flex-grow: 1;
+            opacity: 0.3;
+          }
+          @media #{$media-mobile} {
+            opacity: 0.3;
+          }
+          @media #{$media-square} {
             opacity: 0.3;
           }
         }
