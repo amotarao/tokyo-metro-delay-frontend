@@ -261,28 +261,6 @@ TokyoMetroDelay.prototype.handleEvents = function() {
     self.draw();
   }, false);
 
-  var direction, position;
-  window.addEventListener("touchstart", function(event) {
-    position = event.touches[0].pageX;
-    direction = '';
-  }, false);
-  window.addEventListener("touchmove", function(event) {
-    if (position - event.changedTouches[0].pageX > 50) {
-      direction = 'left';
-    } else if (position - event.changedTouches[0].pageX < -50) {
-      direction = 'right';
-    }
-  }, false);
-  window.addEventListener("touchend", function(event) {
-    if (direction == 'right') {
-      self.setNextTimezone();
-      self.draw();
-    } else if (direction == 'left') {
-      self.setPreviousTimezone();
-      self.draw();
-    }
-  }, false);
-
   setInterval(function() {
     self.setCurrentTime();
     self.drawControlArrow();
