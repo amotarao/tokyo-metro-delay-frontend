@@ -22,35 +22,9 @@ TokyoMetroDelay.prototype.init = function() {
   this.setDocumentSelecter();
   this.initDraw();
   this.handleEvents();
+  this.handleFirebase();
 
   this.loading = true;
-  this.data = JSON.parse('{"' + decodeArrayDate(this.selectDate, '') + '":{"' + this.selectTimezone + '":{"delayLine":[],"delayLineDetail":[]}}}');
-  this.getJSON('./api/get');
-  this.setDelayLine();
-}
-
-
-/**
- * getJSON()
- *
- * jsonを取得する
- */
-
-TokyoMetroDelay.prototype.getJSON = function(url) {
-  var self = this;
-
-  var req = new XMLHttpRequest();
-  req.onreadystatechange = function() {
-    //  req.onreadystatechange = () => {
-    if (req.readyState == 4 && req.status == 200) {
-      self.loading = false;
-      self.data = JSON.parse(req.responseText);
-      self.setDelayLine();
-      self.draw();
-    }
-  };
-  req.open('GET', url, true);
-  req.send(null);
 }
 
 
@@ -265,6 +239,36 @@ TokyoMetroDelay.prototype.handleEvents = function() {
     self.setCurrentTime();
     self.drawControlArrow();
   }, 300000);
+
+}
+
+
+/**
+ * handleFirebase()
+ *
+ * イベントを登録する
+ */
+
+TokyoMetroDelay.prototype.handleFirebase = function() {
+
+  var self = this;
+
+  var config = {
+    apiKey: "AIzaSyD9-btg4czHVhZfcnotSNZ06qpt-jq4XKk",
+    authDomain: "tokyometrodelay.firebaseapp.com",
+    databaseURL: "https://tokyometrodelay.firebaseio.com",
+    storageBucket: "tokyometrodelay.appspot.com",
+    messagingSenderId: "266088211944"
+  };
+  firebase.initializeApp(config);
+
+  var data = firebase.database().ref('data_v1');
+  data.on('value', function(snapshot) {
+    self.loading = false;
+    self.data = snapshot.val();
+    self.setDelayLine();
+    self.draw();
+  });
 
 }
 
@@ -671,4 +675,3 @@ var encodeTimezone = function(v) {
 
 
 var app = new TokyoMetroDelay();
-app.draw();
