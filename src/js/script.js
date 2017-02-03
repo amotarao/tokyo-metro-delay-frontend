@@ -149,7 +149,7 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
       this.selectTimezone = 'c';
       break;
   }
-  this.setDelayLine();
+  this.setSelectData();
   this.drawCurrentTimezone();
   this.drawControlArrow();
 
@@ -182,7 +182,7 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
       this.drawCurrentDate();
       break;
   }
-  this.setDelayLine();
+  this.setSelectData();
   this.drawCurrentTimezone();
   this.drawControlArrow();
 
@@ -192,13 +192,13 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
 
 
 /**
- * setDelayLine()
+ * setSelectData()
  *
  * 選択している時間帯の遅延路線をセットする
  * Make:
  */
 
-TokyoMetroDelay.prototype.setDelayLine = function() {
+TokyoMetroDelay.prototype.setSelectData = function() {
 
   var date = decodeArrayDate(this.selectDate, '');
 
@@ -266,7 +266,7 @@ TokyoMetroDelay.prototype.handleFirebase = function() {
   data.on('value', function(snapshot) {
     self.loading = false;
     self.data = snapshot.val();
-    self.setDelayLine();
+    self.setSelectData();
     self.draw();
   });
 
