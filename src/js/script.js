@@ -598,6 +598,10 @@ var encodeArrayDate = function(v) {
   v = v.replace(/-0/g , '-') ;
   v = v.split('-');
 
+  v[0] = parseInt(v[0]);
+  v[1] = parseInt(v[1]);
+  v[2] = parseInt(v[2]);
+
   dt = new Date(v[0], v[1] - 1, v[2]);
   if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) return false;
 
