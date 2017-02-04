@@ -85,7 +85,7 @@ TokyoMetroDelay.prototype.setCurrentTime = function() {
 
   arrayDate = [today.getUTCFullYear(), today.getUTCMonth()+1, today.getUTCDate()];
   if (19 <= today.getUTCHours()) {
-    this.currentDate = displaceArrayDate(arrayDate, true);
+    this.currentDate = displaceArrayDate(arrayDate, 1);
   } else {
     this.currentDate = arrayDate;
   }
@@ -160,11 +160,19 @@ TokyoMetroDelay.prototype.setSelectTimezone = function() {
 
 TokyoMetroDelay.prototype.setPreviousTimezone = function() {
 
+  var self = this;
+
   switch (this.selectTimezone) {
     case 'a':
       this.selectTimezone = 'd';
-      this.selectDate = displaceArrayDate(this.selectDate, false);
+      this.selectDate = displaceArrayDate(this.selectDate, -1);
       this.drawCurrentDate();
+
+      old_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(displaceArrayDate(this.selectDate, -1), '-'));
+      old_data.on('value', function(snapshot) {
+        self.loadedData(snapshot.val());
+      });
+
       break;
     case 'b':
       this.selectTimezone = 'a';
@@ -176,6 +184,7 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
       this.selectTimezone = 'c';
       break;
   }
+
   this.setSelectData();
   this.drawCurrentTimezone();
   this.drawControlArrow();
@@ -205,7 +214,7 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
       break;
     case 'd':
       this.selectTimezone = 'a';
-      this.selectDate = displaceArrayDate(this.selectDate, true);
+      this.selectDate = displaceArrayDate(this.selectDate, 1);
       this.drawCurrentDate();
       break;
   }
@@ -316,21 +325,32 @@ TokyoMetroDelay.prototype.handleFirebase = function() {
   };
   this.firebase.initializeApp(config);
 
-  latest_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(this.selectDate, '-'));
+  latest_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(this.currentDate, '-'));
   latest_data.on('value', function(snapshot) {
-    self.loading = false;
-    self.dataMerge(snapshot.val());
-    self.setSelectData();
-    self.draw();
+    self.loadedData(snapshot.val());
   });
 
-  all_data = this.firebase.database().ref('data_v1');
+  all_data = this.firebase.database().ref('data_v1').orderByChild('date').startAt(decodeArrayDate(displaceArrayDate(this.currentDate, -5), '-')).endAt(decodeArrayDate(displaceArrayDate(this.currentDate, -1), '-'));
   all_data.on('value', function(snapshot) {
-    self.loading = false;
-    self.dataMerge(snapshot.val());
-    self.setSelectData();
-    self.draw();
+    self.loadedData(snapshot.val());
   });
+
+}
+
+
+/**
+ * loadedData()
+ *
+ * データがロードし終わったときの処理
+ * @param {Object}
+ */
+
+TokyoMetroDelay.prototype.loadedData = function(obj) {
+
+  this.loading = false;
+  this.dataMerge(obj);
+  this.setSelectData();
+  this.draw();
 
 }
 
@@ -572,7 +592,7 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
     return;
   }
 
-  return
+  return;
 
 }
 
@@ -646,21 +666,15 @@ var getTimezone = function(date) {
  * 配列の日付をずらす
  * 
  * @param {Array} date
- * @param {Boolean} way
+ * @param {Number} displace
  * @returns {Array}
  */
 
-var displaceArrayDate = function(date, way) {
-
-  if (typeof way === 'undefined')
-    way = true;
+var displaceArrayDate = function(date, displace) {
 
   var obj = new Date(date[0], date[1] - 1, date[2]);
 
-  if (way)
-    obj.setDate(obj.getDate() + 1);
-  else
-    obj.setDate(obj.getDate() - 1);
+  obj.setDate(obj.getDate() + displace);
 
   date = [obj.getFullYear(), obj.getMonth() + 1, obj.getDate()];
 
