@@ -15,7 +15,7 @@
 }
 
 .list {
-  height: calc(100vh + 72px);
+  height: calc(100% + 72px);
   width: 70%;
   max-width: 960px;
   margin: -18px auto -54px;
@@ -43,7 +43,7 @@
   @media #{$media-mobile} {
     width: 80vw;
     max-width: 80vh;
-    height: 75vh;
+    height: 75%;
     max-height: 100vw;
     margin: auto;
     padding-top: 2%;
@@ -52,7 +52,7 @@
   @media #{$media-square} {
     width: 90vw;
     max-width: 90vh;
-    height: 90vh;
+    height: 90%;
     max-height: 90vw;
     margin: auto;
     padding-bottom: 10%;
