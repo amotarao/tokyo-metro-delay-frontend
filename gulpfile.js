@@ -9,6 +9,8 @@ var svgmin = require('gulp-svgmin');
 var htmlmin = require('gulp-htmlmin');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
+var mmq = require('gulp-merge-media-queries');
+var cssmin = require('gulp-cssmin');
 
 gulp.task('sass', function() {
   gulp.src('./src/sass/**/style.scss')
@@ -19,6 +21,7 @@ gulp.task('sass', function() {
     .pipe(sass({
       outputStyle: 'expanded'
     }))
+    .pipe(mmq({}))
     .pipe(autoprefixer({
       browsers: ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'],
       cascade: false
@@ -34,12 +37,14 @@ gulp.task('sass-min', function() {
       errorHandler: notify.onError("<%= error.message %>")
     }))
     .pipe(sass({
-      outputStyle: 'compressed'
+      outputStyle: 'expanded'
     }))
+    .pipe(mmq({}))
     .pipe(autoprefixer({
       browsers: ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'],
       cascade: false
     }))
+    .pipe(cssmin())
     .pipe(gulp.dest('./dist/css'))
     .pipe(browserSync.stream());
 });
