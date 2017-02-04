@@ -1,11 +1,22 @@
 .ad {
-  background: $color-company-metro;
+  overflow: hidden;
   position: absolute;
-  bottom: 8px;
+  bottom: 0;
   display: none;
 }
 
-@media (max-width: 479px) and (min-height: 600px) {
+@media (max-width: 479px) and (min-height: 500px) {
+  .ad {
+    display: block;
+    width: 320px;
+    height: 50px;
+    margin: 0 calc(50% - 160px);
+  }
+  .container {
+    height: calc(100% - 50px);
+  }
+}
+@media (max-width: 479px) and (min-height: 550px) {
   .ad {
     display: block;
     width: 320px;
@@ -13,7 +24,7 @@
     margin: 0 calc(50% - 160px);
   }
   .container {
-    height: calc(100% - 116px);
+    height: calc(100% - 100px);
   }
 }
 @media (min-width: 480px) and (min-height: 600px) {
@@ -24,7 +35,7 @@
     margin: 0 calc(50% - 234px);
   }
   .container {
-    height: calc(100% - 76px);
+    height: calc(100% - 75px);
   }
 }
 @media (min-width: 840px) and (min-height: 768px) {
@@ -35,6 +46,6 @@
     margin: 0 calc(50% - 364px);
   }
   .container {
-    height: calc(100% - 106px);
+    height: calc(100% - 120px);
   }
 }
