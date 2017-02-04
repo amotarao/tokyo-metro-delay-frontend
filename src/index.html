@@ -2,10 +2,35 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
 <title>東京メトロ、遅れてる？</title>
-<link rel="stylesheet" href="css/style.css">
+<meta name="description" content="東京メトロの遅れの情報をお伝えします。遅刻したい委員会">
+<link rel="stylesheet" href="./css/style.css">
+
+<meta name="application-name" content="メトロ遅れ"> 
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="shortcut icon" href="./img/touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="メトロ遅れ">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#00abd2">
+<link rel="apple-touch-icon" sizes="192x192" href="./img/touch-icon.png">
+
+<meta property="og:title" content="東京メトロ、遅れてる？">
+<meta property="og:site_name" content="東京メトロ、遅れてる？">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://metro.chikoku.net/">
+<meta property="og:description" content="東京メトロの遅れの情報をお伝えします。遅刻したい委員会">
+<meta property="og:image" content="http://metro.chikoku.net/img/card.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@chikokunet">
+<meta name="twitter:title" content="東京メトロ、遅れてる？">
+<meta name="twitter:description" content="東京メトロの遅れの情報をお伝えします。遅刻したい委員会">
+<meta name="twitter:image:src" content="http://metro.chikoku.net/img/card.png">
+
 </head>
 <body>
 
@@ -17,30 +42,17 @@
         <p class="control-arrow arrow-left" id="previousTimezone"><span>←</span></p>
         <div class="control-when select-date">
             <p class="current" id="currentDate">&nbsp;</p>
-            <ul class="date-list">
-                <li>2017.1.12 木</li>
-                <li>2017.1.11 水</li>
-                <li>2017.1.10 火</li>
-                <li>2017.1.9 月</li>
             </ul>
         </div>
         <div class="control-when select-time">
             <p class="current" id="currentTime">&nbsp;</p>
-            <ul class="time-list">
-                <li>~ 7:00</li>
-                <li>7:00 ~ 10:00</li>
-                <li>10:00 ~ 17:00</li>
-                <li>17:00 ~</li>
-            </ul>
         </div>
         <p class="control-arrow arrow-right" id="nextTimezone"><span>→</span></p>
     </div>
 </div>
 
 <div class="meta-wrap">
-    <!--p>このサイトについて</p>
-    <p>お問い合わせ</p-->
-    <p><a href="https://www.slideshare.net/secret/JTvLB17Oycx3Bq" target="_blank">補足資料</a> &copy; Amon Sawamura</p>
+    <p>&copy; 遅刻したい委員会</p>
 </div>
 
 <div class="top-wrap">
@@ -113,7 +125,32 @@
 
 </div>
 
+<div class="ad">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6290116289384010"
+     data-ad-slot="6449380486"
+     data-ad-format="horizontal"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
 <script src="./js/script.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-91438713-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 
 </body>
 </html>

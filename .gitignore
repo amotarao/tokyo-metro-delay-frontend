@@ -1,8 +1,6 @@
 node_modules
 dist
+token.json
 
-_/**
-api/data
-_.php
-_set.php
+_
 src/svg/icon_*
