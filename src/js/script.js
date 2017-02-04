@@ -452,8 +452,10 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
     this._line.forEach(function(line) {
       self.$list.querySelector('li[data-line-name=' + line + ']').classList.add('line-delay');
 
-      href = 'http://www.tokyometro.jp/delay/detail/' + decodeArrayDate(self.selectDate, '') + '/' + line + '_' + encodeTimezone(self.selectTimezone) + '.shtml';
-      self.$list.querySelector('li[data-line-name=' + line + ']').querySelector('a').href = href;
+      if (self._target == 'certificate') {
+        href = 'http://www.tokyometro.jp/delay/detail/' + decodeArrayDate(self.selectDate, '') + '/' + line + '_' + encodeTimezone(self.selectTimezone) + '.shtml';
+        self.$list.querySelector('li[data-line-name=' + line + ']').querySelector('a').href = href;
+      }
 
       var ele = document.createElement('span');
       var str = document.createTextNode(delayTextToSimple(self._data["line"][line][self._target]));
