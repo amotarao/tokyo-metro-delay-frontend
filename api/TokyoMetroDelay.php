@@ -259,22 +259,20 @@ class TokyoMetroDelay
             }
 
             // これから入れるデータ
-            if (!isset($delayData[$key]["line"][$line]["delay"]) && !isset($delayData[$key]["line"][$line]["delay_max"])) {
+            if (!isset($delayData[$key]["line"][$line]["delay_max"])) {
                 $tmp = array(
                     "delay"     => $delayLine[$line],
                     "delay_max" => $delayLine[$line]
                 );
-            } else if ($delayData[$key]["line"][$line]["delay"] < $delayLine[$line] && $delayData[$key]["line"][$line]["delay_max"] < $delayLine[$line]) {
+            } else if ($delayData[$key]["line"][$line]["delay_max"] < $delayLine[$line]) {
                 $tmp = array(
                     "delay"     => $delayLine[$line],
                     "delay_max" => $delayLine[$line]
                 );
-            } else if ($delayData[$key]["line"][$line]["delay"] < $delayLine[$line]) {
+            } else {
                 $tmp = array(
                     "delay"     => $delayLine[$line]
                 );
-            } else {
-                $tmp = array();
             }
 
             $update[$line] = array_merge($exists, $tmp);
