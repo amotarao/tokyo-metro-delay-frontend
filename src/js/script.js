@@ -533,28 +533,31 @@ TokyoMetroDelay.prototype.drawCurrentDate = function() {
  */
 
 TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
+
   var time;
 
   switch (this.selectTimezone) {
     case 'a':
-      var time = '~ 7:00';
+      time = '~ 7:00';
       break;
     case 'b':
-      var time = '7:00 ~ 10:00';
+      time = '7:00 ~ 10:00';
       break;
     case 'c':
-      var time = '10:00 ~ 17:00';
+      time = '10:00 ~ 17:00';
       break;
     case 'd':
-      var time = '17:00 ~';
+      time = '17:00 ~';
       break;
     default:
-      var time = '~ 7:00';
+      time = '~ 7:00';
       break;
   }
-  //var str = document.createTextNode(time);
 
-  //  node.parentNode.removeChild(node);
+  if (this.selectDate.toString() + this.selectTimezone === this.currentDate.toString() + this.currentTimezone) {
+    time = time.replace(/~.*/g, '~ 現在');
+  }
+
   this.$time.innerHTML = time;
 }
 
