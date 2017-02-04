@@ -200,17 +200,41 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
 
 TokyoMetroDelay.prototype.setSelectData = function() {
 
-  var date = decodeArrayDate(this.selectDate, '');
+  var self = this;
+  var tmp = 0;
 
-  if (date in this.data && this.selectTimezone in this.data[date]) {
-    this.currentData = this.data[date][this.selectTimezone]['delayLine'];
-    this.currentDataDetail = this.data[date][this.selectTimezone]['delayLineDetail'];
-    return true;
+  var date = decodeArrayDate(this.selectDate, '-');
+
+  this.data.forIn(function(key, value, index) {
+    if (value.date == date && value.timezone == self.selectTimezone) {
+      tmp = key;
+      return;
+    }
+  });
+
+  if (tmp === 0) {
+    this._line = false;
+    this._data = false;
+    return false;
   }
 
-  this.currentData = false;
-  this.currentDataDetail = false;
-  return false;
+  this._line = [];
+  this._data = this.data[tmp];
+
+  switch (this._data['@type']) {
+    case 'now':
+      this._target = 'delay_max';
+    case 'log':
+      this._target = 'certificate';
+  }
+
+  for (var line in this._data['line']) {
+    if (this._data['line'][line][this._target] > 0) {
+      this._line[this._line.length] = line;
+    }
+  }
+
+  return true;
 
 }
 
@@ -252,6 +276,7 @@ TokyoMetroDelay.prototype.handleEvents = function() {
 TokyoMetroDelay.prototype.handleFirebase = function() {
 
   var self = this;
+  this.firebase = firebase;
 
   var config = {
     apiKey: "AIzaSyD9-btg4czHVhZfcnotSNZ06qpt-jq4XKk",
@@ -260,9 +285,9 @@ TokyoMetroDelay.prototype.handleFirebase = function() {
     storageBucket: "tokyometrodelay.appspot.com",
     messagingSenderId: "266088211944"
   };
-  firebase.initializeApp(config);
+  this.firebase.initializeApp(config);
 
-  var data = firebase.database().ref('data_v1');
+  var data = this.firebase.database().ref('data_v1');
   data.on('value', function(snapshot) {
     self.loading = false;
     self.data = snapshot.val();
@@ -295,7 +320,7 @@ TokyoMetroDelay.prototype.initDraw = function() {
 
 TokyoMetroDelay.prototype.draw = function() {
   oldDelayLineCount = document.querySelectorAll('.line-delay').length;
-  delayLineCount = this.currentData.length;
+  delayLineCount = this._line.length;
   if (oldDelayLineCount == 0) infoClass = this.$info.classList[2];
 
   if (this.loading) { // ロード中
@@ -306,7 +331,7 @@ TokyoMetroDelay.prototype.draw = function() {
     this.drawInfo('scheduled');
     return true;
   }
-  if (oldDelayLineCount == 0 && !this.currentData && (infoClass == 'info-nodata' || infoClass == 'info-scheduled' || infoClass == 'info-loader')) {
+  if (oldDelayLineCount == 0 && !this._line && (infoClass == 'info-nodata' || infoClass == 'info-scheduled' || infoClass == 'info-loader')) {
     this.drawInfo('nodata');
     return true;
   }
@@ -343,17 +368,17 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
   });
 
   // 遅延路線セット
-  if (this.currentData.length > 0) {
+  if (this._line.length > 0) {
 
     var self = this;
-    this.currentData.forEach(function(line) {
+    this._line.forEach(function(line) {
       self.$list.querySelector('li[data-line-name=' + line + ']').classList.add('line-delay');
 
       href = 'http://www.tokyometro.jp/delay/detail/' + decodeArrayDate(self.selectDate, '') + '/' + line + '_' + encodeTimezone(self.selectTimezone) + '.shtml';
       self.$list.querySelector('li[data-line-name=' + line + ']').querySelector('a').href = href;
 
       var ele = document.createElement('span');
-      var str = document.createTextNode(delayTextToSimple(self.currentDataDetail[line]));
+      var str = document.createTextNode(delayTextToSimple(self._data["line"][line][self._target]));
       ele.classList.add('delay-text');
       ele.appendChild(str);
 
@@ -361,9 +386,8 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
       self.$list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(ele);
 
     });
-    this.$list.classList.add('list--count_' + this.currentData.length);
-//    this.drawInfo('hide');
-  } else if (!this.currentData) {
+    this.$list.classList.add('list--count_' + this._line.length);
+  } else if (!this._line) {
     this.drawInfo('nodata');
   } else {
     this.drawInfo('scheduled');
@@ -448,7 +472,7 @@ TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
       var time = '~ 7:00';
       break;
   }
-  var str = document.createTextNode(time);
+  //var str = document.createTextNode(time);
 
   //  node.parentNode.removeChild(node);
   this.$time.innerHTML = time;
@@ -525,10 +549,12 @@ var getUrlVars = function() {
  */
 
 var delayTextToSimple = function(v) {
-  if (v.substr(0, 2) == '最大') {
-    return '+' + v.substr(2, 3);
+  v = parseInt(v);
+
+  if (v > 61) {
+    return v + '+分';
   } else {
-    return '61+分';
+    return '+' + v + '分';
   }
 }
 
@@ -675,3 +701,15 @@ var encodeTimezone = function(v) {
 
 
 var app = new TokyoMetroDelay();
+
+Object.defineProperty(Object.prototype, "forIn", {
+  value: function(fn, self) {
+    self = self || this;
+
+    Object.keys(this).forEach(function(key, index) {
+      var value = this[key];
+
+      fn.call(self, key, value, index);
+    }, this);
+  }
+});
