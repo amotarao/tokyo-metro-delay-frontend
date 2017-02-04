@@ -81,9 +81,9 @@ TokyoMetroDelay.prototype.setDocumentSelecter = function() {
 
 TokyoMetroDelay.prototype.setCurrentTime = function() {
 
-  today = new Date();
+  var today = new Date();
+  var arrayDate = [today.getUTCFullYear(), today.getUTCMonth()+1, today.getUTCDate()];
 
-  arrayDate = [today.getUTCFullYear(), today.getUTCMonth()+1, today.getUTCDate()];
   if (19 <= today.getUTCHours()) {
     this.currentDate = displaceArrayDate(arrayDate, 1);
   } else {
@@ -106,7 +106,7 @@ TokyoMetroDelay.prototype.setCurrentTime = function() {
 
 TokyoMetroDelay.prototype.setSelectDate = function() {
 
-  param = getUrlVars().date;
+  var param = getUrlVars().date;
 
   if (typeof param !== "undefined") {
     arrayDate = encodeArrayDate(param);
@@ -132,7 +132,7 @@ TokyoMetroDelay.prototype.setSelectDate = function() {
 
 TokyoMetroDelay.prototype.setSelectTimezone = function() {
 
-  param = getUrlVars().timezone;
+  var param = getUrlVars().timezone;
 
   if (typeof param !== "undefined") {
     switch (param) {
@@ -189,7 +189,7 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
   this.drawCurrentTimezone();
   this.drawControlArrow();
 
-  return
+  return;
 
 }
 
@@ -383,10 +383,12 @@ TokyoMetroDelay.prototype.dataMerge = function(obj) {
  */
 
 TokyoMetroDelay.prototype.initDraw = function() {
+
   this.drawInfo('loading');
   this.drawCurrentDate();
   this.drawCurrentTimezone();
   this.drawControlArrow();
+
 }
 
 
@@ -397,9 +399,12 @@ TokyoMetroDelay.prototype.initDraw = function() {
  */
 
 TokyoMetroDelay.prototype.draw = function() {
-  oldDelayLineCount = document.querySelectorAll('.line-delay').length;
-  delayLineCount = this._line.length;
-  if (oldDelayLineCount == 0) infoClass = this.$info.classList[2];
+
+  var self = this;
+
+  var oldDelayLineCount = document.querySelectorAll('.line-delay').length;
+  var delayLineCount = this._line.length;
+  var infoClass = this.$info.classList[2];
 
   if (this.loading) { // ロード中
     this.drawInfo('loading');
@@ -419,11 +424,10 @@ TokyoMetroDelay.prototype.draw = function() {
 
   this.drawDelayLine();
 
-  var self = this;
-
   setTimeout(function() {
     self.$list.classList.remove('is-changing');
   }, 300);
+
 }
 
 
@@ -434,6 +438,9 @@ TokyoMetroDelay.prototype.draw = function() {
  */
 
 TokyoMetroDelay.prototype.drawDelayLine = function() {
+
+  var self = this;
+
   // 遅延路線リセット
   this.$list.classList.remove('list--count_' + document.querySelectorAll('.line-delay').length);
   Array.prototype.forEach.call(this.$list.querySelectorAll('.line-delay'), function(e) {
@@ -447,8 +454,6 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
 
   // 遅延路線セット
   if (this._line.length > 0) {
-
-    var self = this;
     this._line.forEach(function(line) {
       self.$list.querySelector('li[data-line-name=' + line + ']').classList.add('line-delay');
 
@@ -472,6 +477,7 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
   } else {
     this.drawInfo('scheduled');
   }
+
 }
 
 
@@ -508,6 +514,7 @@ TokyoMetroDelay.prototype.drawInfo = function(v) {
     case 'hide':
       break;
   }
+
 }
 
 
@@ -538,7 +545,7 @@ TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
 
   switch (this.selectTimezone) {
     case 'a':
-      time = '~ 7:00';
+      time = ' ~ 7:00';
       break;
     case 'b':
       time = '7:00 ~ 10:00';
@@ -547,10 +554,10 @@ TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
       time = '10:00 ~ 17:00';
       break;
     case 'd':
-      time = '17:00 ~';
+      time = '17:00 ~ ';
       break;
     default:
-      time = '~ 7:00';
+      time = ' ~ 7:00';
       break;
   }
 
@@ -559,6 +566,7 @@ TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
   }
 
   this.$time.innerHTML = time;
+
 }
 
 
@@ -570,8 +578,8 @@ TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
 
 TokyoMetroDelay.prototype.drawControlArrow = function() {
 
-  c = this.currentDate;
-  s = this.selectDate;
+  var c = this.currentDate;
+  var s = this.selectDate;
 
   c = c[0] * 500 + c[1] * 40 + c[2];
   s = s[0] * 500 + s[1] * 40 + s[2];
@@ -610,6 +618,7 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
  */
 
 var getUrlVars = function() {
+
   var vars = {};
   var param = location.search.substring(1).split('&');
   for (var i = 0; i < param.length; i++) {
@@ -620,6 +629,7 @@ var getUrlVars = function() {
     if (key != '') vars[key] = decodeURI(val);
   }
   return vars;
+
 }
 
 
@@ -632,6 +642,7 @@ var getUrlVars = function() {
  */
 
 var delayTextToSimple = function(v) {
+
   v = parseInt(v);
 
   if (v > 61) {
@@ -639,6 +650,7 @@ var delayTextToSimple = function(v) {
   } else {
     return '+' + v + '分';
   }
+
 }
 
 
@@ -652,9 +664,9 @@ var delayTextToSimple = function(v) {
 
 var getTimezone = function(date) {
 
-  timezoneBorder = [4, 7, 10, 17];
+  var timezoneBorder = [4, 7, 10, 17];
+  var hour = date.getUTCHours() + 9;
 
-  hour = date.getUTCHours() + 9;
   if (date.getUTCMinutes() < 5 && (timezoneBorder.indexOf(hour) >= 0 || timezoneBorder.indexOf(hour-24) >= 0)) hour--;
   if (hour >= 24) hour -= 24;
 
@@ -699,7 +711,7 @@ var displaceArrayDate = function(date, displace) {
 
 var encodeArrayDate = function(v) {
 
-  format = v.match(/([0-9]{4})-([0-9]{2})-([0-9]{2})/g);
+  var format = v.match(/([0-9]{4})-([0-9]{2})-([0-9]{2})/g);
   if (!format) return false;
 
   v = v.replace(/-0/g , '-') ;
@@ -730,15 +742,15 @@ var encodeArrayDate = function(v) {
 
 var decodeArrayDate = function(v, p, w) {
 
-  weekDayList = ['日', '月', '火', '水', '木', '金', '土'];
+  var weekDayList = ['日', '月', '火', '水', '木', '金', '土'];
 
   if (typeof p === 'undefined') w = '-';
   if (typeof w === 'undefined') w = false;
 
-  dt = new Date(v[0], v[1] - 1, v[2]);
+  var dt = new Date(v[0], v[1] - 1, v[2]);
   if (dt.getFullYear() != v[0] || dt.getMonth() != v[1] - 1 || dt.getDate() != v[2]) return false;
 
-  str = '';
+  var str = '';
   str += v[0];
   str += p;
   str += (v[1] < 10) ? '0' + v[1] : v[1];
@@ -764,6 +776,7 @@ var decodeArrayDate = function(v, p, w) {
  */
 
 var encodeTimezone = function(v) {
+
   switch (v) {
     case 'a':
       return '1';
@@ -774,6 +787,7 @@ var encodeTimezone = function(v) {
     case 'd':
       return '4';
   }
+
 }
 
 
