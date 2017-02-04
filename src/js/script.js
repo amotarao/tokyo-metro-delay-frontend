@@ -1,6 +1,4 @@
 /**
- * TokyoMetroDelay()
- *
  * オブジェクト定義
  */
 
@@ -10,8 +8,6 @@ function TokyoMetroDelay() {
 
 
 /**
- * init()
- *
  * 初期化
  */
 
@@ -33,8 +29,6 @@ TokyoMetroDelay.prototype.init = function() {
 
 
 /**
- * defineProperty()
- *
  * 既存のプロパティを定義する
  */
 
@@ -56,8 +50,6 @@ TokyoMetroDelay.prototype.defineProperty = function() {
 
 
 /**
- * setDocumentSelecter()
- *
  * htmlのセレクタを設定
  */
 
@@ -74,8 +66,6 @@ TokyoMetroDelay.prototype.setDocumentSelecter = function() {
 
 
 /**
- * setCurrentTime()
- *
  * 現在の日付・時間帯をセットする
  */
 
@@ -99,8 +89,6 @@ TokyoMetroDelay.prototype.setCurrentTime = function() {
 
 
 /**
- * setSelectDate()
- *
  * 選択する日付をセットする
  */
 
@@ -124,8 +112,6 @@ TokyoMetroDelay.prototype.setSelectDate = function() {
 
 
 /**
- * setSelectTimezone()
- *
  * 選択する時間帯をセットする
  * Make: this.selectTimezone
  */
@@ -153,8 +139,6 @@ TokyoMetroDelay.prototype.setSelectTimezone = function() {
 
 
 /**
- * setPreviousTimezone()
- *
  * 前の時間帯にセット
  */
 
@@ -195,8 +179,6 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
 
 
 /**
- * setNextTimezone()
- *
  * 次の時間帯にセット
  */
 
@@ -228,10 +210,7 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
 
 
 /**
- * setSelectData()
- *
  * 選択している時間帯の遅延路線をセットする
- * Make:
  */
 
 TokyoMetroDelay.prototype.setSelectData = function() {
@@ -278,8 +257,6 @@ TokyoMetroDelay.prototype.setSelectData = function() {
 
 
 /**
- * handleEvents()
- *
  * イベントを登録する
  */
 
@@ -306,8 +283,6 @@ TokyoMetroDelay.prototype.handleEvents = function() {
 
 
 /**
- * handleFirebase()
- *
  * イベントを登録する
  */
 
@@ -339,8 +314,6 @@ TokyoMetroDelay.prototype.handleFirebase = function() {
 
 
 /**
- * loadedData()
- *
  * データがロードし終わったときの処理
  * @param {Object}
  */
@@ -356,8 +329,6 @@ TokyoMetroDelay.prototype.loadedData = function(obj) {
 
 
 /**
- * dataMerge()
- *
  * データをマージする
  * @param {Object}
  */
@@ -377,8 +348,6 @@ TokyoMetroDelay.prototype.dataMerge = function(obj) {
 
 
 /**
- * initDraw()
- *
  * 初回の描画
  */
 
@@ -393,8 +362,6 @@ TokyoMetroDelay.prototype.initDraw = function() {
 
 
 /**
- * draw()
- *
  * 描画
  */
 
@@ -432,8 +399,6 @@ TokyoMetroDelay.prototype.draw = function() {
 
 
 /**
- * drawDelayLine()
- *
  * 遅延路線にクラスをセット
  */
 
@@ -482,8 +447,6 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
 
 
 /**
- * drawInfo()
- *
  * インフォメーションを描画
  */
 
@@ -519,8 +482,6 @@ TokyoMetroDelay.prototype.drawInfo = function(v) {
 
 
 /**
- * drawCurrentDate()
- *
  * 選択中の日付を描画
  */
 
@@ -534,8 +495,6 @@ TokyoMetroDelay.prototype.drawCurrentDate = function() {
 
 
 /**
- * drawCurrentTimezone()
- *
  * 選択中の時間帯を描画
  */
 
@@ -571,8 +530,6 @@ TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
 
 
 /**
- * drawControlArrow()
- *
  * コントロール矢印の描画
  */
 
@@ -611,9 +568,7 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
 
 
 /**
- * getUrlVars()
  * URLのパラメータを取得する
- *
  * @returns {Object}
  */
 
@@ -634,9 +589,7 @@ var getUrlVars = function() {
 
 
 /**
- * delayTextToSimple()
  * 遅延テキストをシンプルにする
- *
  * @param {String} v
  * @returns {String}
  */
@@ -655,9 +608,7 @@ var delayTextToSimple = function(v) {
 
 
 /**
- * getTimezone()
  * 日付のタイムゾーンを取得
- * 
  * @param {Object} date
  * @returns {String}
  */
@@ -679,9 +630,7 @@ var getTimezone = function(date) {
 
 
 /**
- * displaceArrayDate()
  * 配列の日付をずらす
- * 
  * @param {Array} date
  * @param {Number} displace
  * @returns {Array}
@@ -701,10 +650,8 @@ var displaceArrayDate = function(date, displace) {
 
 
 /**
- * encodeArrayDate()
  * 文字列の日付を配列に変換
  * 変換出来ない場合、falseを返す
- * 
  * @param {String} v
  * @returns {Array|Boolean}
  */
@@ -730,10 +677,8 @@ var encodeArrayDate = function(v) {
 
 
 /**
- * decodeArrayDate()
  * 配列の日付を文字列に変換
  * 変換出来ない場合、falseを返す
- * 
  * @param {Array} v
  * @param {String} p 区切り文字
  * @param {Boolean} w 曜日の有無
@@ -768,9 +713,7 @@ var decodeArrayDate = function(v, p, w) {
 
 
 /**
- * encodeTimezone()
  * タイムゾーンの形式を変換する
- * 
  * @param {String} v
  * @returns {String}
  */
