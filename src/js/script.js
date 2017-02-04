@@ -599,7 +599,7 @@ var delayTextToSimple = function(v) {
   v = parseInt(v);
 
   if (v > 61) {
-    return v + '+分';
+    return '61+分';
   } else {
     return '+' + v + '分';
   }
