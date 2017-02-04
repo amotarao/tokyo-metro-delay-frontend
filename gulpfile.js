@@ -33,7 +33,6 @@ gulp.task('sass-min', function() {
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
     }))
-    .pipe(sourcemaps.init())
     .pipe(sass({
       outputStyle: 'compressed'
     }))
@@ -41,7 +40,6 @@ gulp.task('sass-min', function() {
       browsers: ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'],
       cascade: false
     }))
-    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./dist/css'))
     .pipe(browserSync.stream());
 });
@@ -51,6 +49,8 @@ gulp.task('js', function(){
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
     }))
+    .pipe(sourcemaps.init())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./dist/js'))
     .pipe(browserSync.stream());
 });
@@ -60,9 +60,7 @@ gulp.task('js-min', function(){
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
     }))
-    .pipe(sourcemaps.init())
     .pipe(uglify())
-    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./dist/js'))
     .pipe(browserSync.stream());
 });
