@@ -59,12 +59,14 @@
 
   @media #{$media-mobile} {
     font-size: 22px;
+    font-weight: 400;
     letter-spacing: .3em;
     text-indent: .3em;
   }
 
   @media #{$media-horizontal} {
     font-size: 22px;
+    font-weight: 400;
     letter-spacing: .3em;
     text-indent: .3em;
   }
@@ -88,10 +90,12 @@
   width: 320px;
 
   @media #{$media-mobile} {
+    font-weight: 500;
     margin: 0;
   }
 
   @media #{$media-horizontal} {
+    font-weight: 500;
     width: auto;
     height: 3.4em;
     flex-wrap: wrap;

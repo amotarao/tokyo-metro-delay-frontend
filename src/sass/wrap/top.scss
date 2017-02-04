@@ -460,9 +460,11 @@
   }
 
   @media #{$media-mobile} {
+    font-weight: 500;
     padding: 0.4em 0;
   }
   @media #{$media-horizontal} {
+    font-weight: 500;
     padding: 0.4em 0;
   }
 }
