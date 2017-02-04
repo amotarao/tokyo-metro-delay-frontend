@@ -16,6 +16,8 @@ function TokyoMetroDelay() {
  */
 
 TokyoMetroDelay.prototype.init = function() {
+
+  this.defineProperty();
   this.setCurrentTime()
   this.setSelectDate();
   this.setSelectTimezone();
@@ -25,6 +27,31 @@ TokyoMetroDelay.prototype.init = function() {
   this.handleFirebase();
 
   this.loading = true;
+  this.data = {};
+
+}
+
+
+/**
+ * defineProperty()
+ *
+ * 既存のプロパティを定義する
+ */
+
+TokyoMetroDelay.prototype.defineProperty = function() {
+
+  Object.defineProperty(Object.prototype, "forIn", {
+    value: function(fn, self) {
+      self = self || this;
+
+      Object.keys(this).forEach(function(key, index) {
+        var value = this[key];
+
+        fn.call(self, key, value, index);
+      }, this);
+    }
+  });
+
 }
 
 
@@ -224,8 +251,10 @@ TokyoMetroDelay.prototype.setSelectData = function() {
   switch (this._data['@type']) {
     case 'now':
       this._target = 'delay_max';
+      break;
     case 'log':
       this._target = 'certificate';
+      break;
   }
 
   for (var line in this._data['line']) {
@@ -287,13 +316,42 @@ TokyoMetroDelay.prototype.handleFirebase = function() {
   };
   this.firebase.initializeApp(config);
 
-  var data = this.firebase.database().ref('data_v1');
-  data.on('value', function(snapshot) {
+  latest_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(this.selectDate, '-'));
+  latest_data.on('value', function(snapshot) {
     self.loading = false;
-    self.data = snapshot.val();
+    self.dataMerge(snapshot.val());
     self.setSelectData();
     self.draw();
   });
+
+  all_data = this.firebase.database().ref('data_v1');
+  all_data.on('value', function(snapshot) {
+    self.loading = false;
+    self.dataMerge(snapshot.val());
+    self.setSelectData();
+    self.draw();
+  });
+
+}
+
+
+/**
+ * dataMerge()
+ *
+ * データをマージする
+ * @param {Object}
+ */
+
+TokyoMetroDelay.prototype.dataMerge = function(obj) {
+
+  if (!obj) {
+    obj = {};
+  }
+  for (var attrname in obj) {
+      if (obj.hasOwnProperty(attrname)) {
+          this.data[attrname] = obj[attrname];
+      }
+  }
 
 }
 
@@ -701,15 +759,3 @@ var encodeTimezone = function(v) {
 
 
 var app = new TokyoMetroDelay();
-
-Object.defineProperty(Object.prototype, "forIn", {
-  value: function(fn, self) {
-    self = self || this;
-
-    Object.keys(this).forEach(function(key, index) {
-      var value = this[key];
-
-      fn.call(self, key, value, index);
-    }, this);
-  }
-});
