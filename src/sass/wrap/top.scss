@@ -147,8 +147,6 @@
   align-items: center;
   flex-wrap: wrap;
   width: 11%;
-  transition: order 0s linear $time-changing,
-              height $time-changing ease-in-out;
   
   @media #{$media-square} {
     height: 27%;
