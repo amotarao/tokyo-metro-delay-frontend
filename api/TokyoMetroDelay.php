@@ -144,8 +144,18 @@ class TokyoMetroDelay
      */
     private function setAction()
     {
-        $this->setFromNow();
-        $this->setFromLog();
+        if (isset($this->param["from"])) {
+            if (strpos($this->param["from"], "now") !== false) {
+                $this->setFromNow();
+            }
+            if (strpos($this->param["from"], "log") !== false) {
+                $this->setFromLog();
+            }
+
+        } else {
+            $this->setFromNow();
+            $this->setFromLog();
+        }
     }
 
 
@@ -176,6 +186,9 @@ class TokyoMetroDelay
         }
 
         $this->updateLineDelayNow($data, $delayLine);
+
+        // TEST
+        $this->pushFirebaseLogData("/now", $delayLine);
     }
 
 
@@ -198,6 +211,9 @@ class TokyoMetroDelay
         }
         
         $this->updateLineDelayLog($data, $delayLine);
+
+        // TEST
+        $this->pushFirebaseLogData("/log", $delayLine);
     }
 
 
@@ -331,6 +347,21 @@ class TokyoMetroDelay
      */
     private function pushFirebaseData($path, $data) {
         $this->firebase->push(FIREBASE_PATH . $path, $data);
+    }
+
+
+    /**
+     * FirebaseにログデータをPush
+     * @param string
+     * @param array
+     */
+    private function pushFirebaseLogData($path, $data) {
+        $path = "_log" . $path;
+        $logdata = array(
+            "_timestamp" => date("c"),
+            "data" => $data
+        );
+        $this->pushFirebaseData($path, $logdata);
     }
 
 
