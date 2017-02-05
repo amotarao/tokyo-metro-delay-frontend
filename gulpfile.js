@@ -94,16 +94,27 @@ gulp.task('html-min', function(){
 gulp.task('svg', function() {
   gulp.src('./src/svg/**/*.svg')
   .pipe(svgmin())
-  .pipe(gulp.dest('./dist/img/'));　
+  .pipe(gulp.dest('./dist/img'));　
+});
+
+gulp.task('copy-direct', function() {
+  gulp.src(['./src_direct/**/*', './src_direct/**/.htaccess'], {base: 'src_direct'})
+  .pipe(gulp.dest('./dist'));　
+});
+
+gulp.task('copy-direct-min', function() {
+  gulp.src(['./src_direct/**/*', './src_direct/**/.htaccess'], {base: 'src_direct'})
+  .pipe(gulp.dest('./dist_min'));　
 });
 
 gulp.task('watch', ['serve'], function(){
   gulp.watch('./src/sass/**/*.scss', ['sass']);
   gulp.watch('./src/js/**/*.js', ['js']);
   gulp.watch('./src/**/*.html', ['html']);
+  gulp.watch(['./src_direct/**/*', './src_direct/**/.htaccess'], ['copy-direct']);
 });
 
-gulp.task('minify', ['sass-min', 'js-min', 'html-min']);
+gulp.task('minify', ['sass-min', 'js-min', 'html-min', 'copy-direct-min']);
 
 gulp.task('serve', function(){
   browserSync.init({
