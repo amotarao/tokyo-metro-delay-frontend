@@ -131,6 +131,18 @@
   display: flex;
   flex-direction: column;
 
+  @media #{$media-square} {
+    font-weight: 500;
+  }
+
+  @media #{$media-mobile} {
+    font-weight: 500;
+  }
+
+  @media #{$media-horizontal} {
+    font-weight: 500;
+  }
+
   @at-root {
     .info-loading {
       .info-text {

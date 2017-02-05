@@ -9,8 +9,15 @@ $param = array(
 
 new TokyoMetroDelay($param);
 
-$hour = (int)date("G");
-if (0 <= $hour % 30 && $hour % 30 < 7) {
-    $param["from"] = "log";
+
+$minute = (int)date("i");
+
+if (0 == $minute % 5) {
+
+    $param = array(
+        "action" => "set",
+        "from" => "log"
+    );
+
     new TokyoMetroDelay($param);
 }
