@@ -4,12 +4,16 @@
   line-height: 1.4;
   letter-spacing: .1em;
   text-indent: .1em;
-  padding: 0.6em 0;
+  padding: 0.6em 0 0.2em;
   position: absolute;
   text-align: right;
   width: 100%;
   z-index: 9999;
   opacity: 0.7;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
 
   @media #{$media-square} {
     display: none;
@@ -22,13 +26,20 @@
   @media #{$media-horizontal} {
     font-weight: 500;
   }
+}
 
-  p {
-    display: inline-block;
-    margin-left: 0.4em;
+.meta-item {
+  display: inline-block;
+  margin-left: 0.6em;
+  margin-bottom: 0.4em;
 
-    a {
-      text-decoration: none;
+  &.tweet {
+    & > * {
+      vertical-align: bottom;
     }
+  }
+
+  a {
+    text-decoration: none;
   }
 }
