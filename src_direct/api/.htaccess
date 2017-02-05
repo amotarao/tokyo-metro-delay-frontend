@@ -1,0 +1,10 @@
+<Files ~ "^(token\.json)$">
+  deny from all
+</Files>
+
+RewriteEngine on
+
+RewriteBase /api/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /api/index.php [L]

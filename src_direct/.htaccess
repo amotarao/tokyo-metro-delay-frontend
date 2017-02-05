@@ -1,0 +1,52 @@
+# ETags(Configure entity tags) を無視する設定
+<ifModule mod_headers.c>
+    Header unset ETag
+</ifModule>
+FileETag None
+
+# Enable Keep-Alive を設定
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# MIME Type 追加
+<IfModule mime_module>
+    AddType image/svg+xml .svg
+    AddType text/javascript .js
+</IfModule>
+
+# プロクシキャッシュの設定（画像とフォントをキャッシュ）
+<IfModule mod_headers.c>
+    <FilesMatch "\.(svg)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+    <FilesMatch "\.(png)$">
+        Header set Cache-Control "max-age=604800, public"
+    </FilesMatch>
+    <FilesMatch "\.(html|css|js)$">
+        Header set Cache-Control "max-age=86400, public"
+    </FilesMatch>
+    # プロキシサーバーが間違ったコンテンツを配布しないようにする
+    Header append Vary Accept-Encoding env=!dont-vary
+</IfModule>
+
+# ブラウザキャッシュの設定
+<IfModule mod_headers.c>
+<ifModule mod_expires.c>
+    ExpiresActive On
+
+    # キャッシュ初期化（1秒に設定）
+    ExpiresDefault "access plus 1 seconds"
+
+    # MIME Type ごとの設定
+    ExpiresByType text/css "access plus 1 days"
+    ExpiresByType text/javascript "access plus 1 days"
+    ExpiresByType image/png "access plus 1 weeks"
+    ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+</IfModule>
+
+# index無し統一
+RewriteEngine on
+RewriteCond %{REQUEST_URI} ^/index\.html$
+RewriteRule ^.*$ http://%{HTTP_HOST}/ [R=301,L]
