@@ -170,7 +170,7 @@ class TokyoMetroDelay
             "@type" => "now",
             "timezone" => $this->time["timezone"]
         );
-        $data = $this->findFirebaseData($findData);
+        $data = $this->findFirebaseData($findData, true);
 
         $contents = $this->getOpendataData("&rdf:type=odpt:Train");
         $delayLine = array();
@@ -187,8 +187,8 @@ class TokyoMetroDelay
 
         $this->updateLineDelayNow($data, $delayLine);
 
-        // TEST
-        $this->pushFirebaseLogData("/now", $delayLine);
+//        // TEST
+//        $this->pushFirebaseLogData("/now", $delayLine);
     }
 
 
@@ -199,11 +199,33 @@ class TokyoMetroDelay
     private function setFromLog()
     {
         $prevTime = $this->getPrevTime($this->time);
+
+        // 遅延証データが存在するかどうかを確認 無い場合は終了
+        $exist = $this->existCertificateData($prevTime);
+        if ($exist !== true) {
+            // TEST
+            $this->pushFirebaseLogData("/exist_data", $exist);
+            return false;
+        }
+
+        // 既に存在するかどうかを確認 ある場合は終了
         $findData = array(
             "date" => $this->dateArrayToSrting($prevTime),
-            "timezone" => $prevTime["timezone"]
+            "timezone" => $prevTime["timezone"],
+            "@type" => "log"
         );
-        $data = $this->findFirebaseData($findData);
+        $exist_log = $this->findFirebaseData($findData, false);
+        if ($exist_log !== null) {
+            return false;
+        }
+
+        // 挿入するデータを検索、指定
+        $findData = array(
+            "date" => $this->dateArrayToSrting($prevTime),
+            "timezone" => $prevTime["timezone"],
+            "@type" => "now"
+        );
+        $data = $this->findFirebaseData($findData, true);
 
         $delayLine = array();
         foreach ($this->lines as $line) {
@@ -220,9 +242,10 @@ class TokyoMetroDelay
     /**
      * データを検索
      * @param array 連想配列を指定 この１番最初の項目でデータを取得し、残りの項目でフィルターする
+     * @param bool trueの場合、作成
      * @return mixed
      */
-    private function findFirebaseData($array)
+    private function findFirebaseData($array, $make)
     {
         $first_key   = key($array);
         $first_value = $array[key($array)];
@@ -249,9 +272,12 @@ class TokyoMetroDelay
             }
         }
 
-        $this->pushFirebaseData("", $array);
+        if ($make === true) {
+            $this->pushFirebaseData("", $array);
+            return $this->findFirebaseData($array, $make);
+        }
 
-        return $this->findFirebaseData($array);
+        return false;
     }
 
 
@@ -449,5 +475,54 @@ class TokyoMetroDelay
         $delay = (int)preg_replace('/[^0-9]/', '', $text);
 
         return $delay;
+    }
+
+
+    /**
+     * 遅延証データが存在するか確認
+     * @param array
+     * @return mixed
+     */
+
+    private function existCertificateData($time)
+    {
+        $timezone = $time["timezone"];
+        $count_all = 0;
+
+        $delay_text = array(
+            "遅延なし",
+            "5分程度の遅延",
+            "10分程度の遅延",
+            "15分程度の遅延",
+            "20分程度の遅延",
+            "25分程度の遅延",
+            "30分程度の遅延",
+            "35分程度の遅延",
+            "40分程度の遅延",
+            "45分程度の遅延",
+            "50分程度の遅延",
+            "55分程度の遅延",
+            "60分程度の遅延",
+            "61分以上の遅延"
+        );
+
+        foreach ($this->lines as $line) {
+
+            $contents = file_get_contents("http://www.tokyometro.jp/delay/history/{$line}.html");
+            $contents = str_replace('<!--  <p>遅延証明書<br class="v2_showPc">（15分程度の遅延）</p>  -->', "", $contents);
+            $a=preg_match('/<div class="v2_mt0 v2_headingH3">(.*)<div class="v2_headingH3">/s', $contents, $matches);
+            str_replace($delay_text, "", $matches[1], $count);
+
+            $count_all += $count;
+
+            if ($timezone == "a" && $count == 1) continue;
+            if ($timezone == "b" && $count == 2) continue;
+            if ($timezone == "c" && $count == 3) continue;
+            if ($timezone == "d" && $count == 4) continue;
+
+            return $count_all;
+        }
+
+        return true;
     }
 }
