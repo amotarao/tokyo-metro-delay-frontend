@@ -215,7 +215,8 @@ class TokyoMetroDelay
             "@type" => "log"
         );
         $exist_log = $this->findFirebaseData($findData, false);
-        if ($exist_log !== null) {
+
+        if ($exist_log !== false) {
             return false;
         }
 
