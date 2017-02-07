@@ -618,7 +618,6 @@ var getTimezone = function(date) {
   var timezoneBorder = [4, 7, 10, 17];
   var hour = date.getUTCHours() + 9;
 
-  if (date.getUTCMinutes() < 5 && (timezoneBorder.indexOf(hour) >= 0 || timezoneBorder.indexOf(hour-24) >= 0)) hour--;
   if (hour >= 24) hour -= 24;
 
   if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
