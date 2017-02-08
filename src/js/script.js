@@ -283,7 +283,7 @@ TokyoMetroDelay.prototype.handleEvents = function() {
 
 
 /**
- * イベントを登録する
+ * Firebaseイベントを登録する
  */
 
 TokyoMetroDelay.prototype.handleFirebase = function() {
