@@ -200,14 +200,6 @@ class TokyoMetroDelay
     {
         $prevTime = $this->getPrevTime($this->time);
 
-        // 遅延証データが存在するかどうかを確認 無い場合は終了
-        $exist = $this->existCertificateData($prevTime);
-        if ($exist !== true) {
-            // TEST
-            $this->pushFirebaseLogData("/exist_data", $exist);
-            return false;
-        }
-
         // 既に存在するかどうかを確認 ある場合は終了
         $findData = array(
             "date" => $this->dateArrayToSrting($prevTime),
@@ -217,6 +209,16 @@ class TokyoMetroDelay
         $exist_log = $this->findFirebaseData($findData, false);
 
         if ($exist_log !== false) {
+            return false;
+        }
+
+        // 遅延証データが存在するかどうかを確認 無い場合は終了
+        $exist = $this->existCertificateData($prevTime);
+        if ($exist !== true) {
+            // TEST
+            if ($exist % 9 != 0) {
+                $this->pushFirebaseLogData("/exist_data", $exist);
+            }
             return false;
         }
 
@@ -516,6 +518,7 @@ class TokyoMetroDelay
 
             $count_all += $count;
 
+            if ($timezone == "d" && $count == 0) continue;
             if ($timezone == "a" && $count == 1) continue;
             if ($timezone == "b" && $count == 2) continue;
             if ($timezone == "c" && $count == 3) continue;
