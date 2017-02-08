@@ -157,7 +157,6 @@ class TokyoMetroDelay
 
     /**
      * NowデータをFirebaseにセット
-     * @return array
      */
     private function setFromNow()
     {
@@ -190,7 +189,6 @@ class TokyoMetroDelay
 
     /**
      * LogデータをFirebaseにセット
-     * @return array
      */
     private function setFromLog()
     {
