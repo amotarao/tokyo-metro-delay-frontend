@@ -14,15 +14,17 @@ function TokyoMetroDelay() {
 TokyoMetroDelay.prototype.init = function() {
 
   this.defineProperty();
+  this.setDocumentSelecter();
+  this.checkAbout();
   this.setCurrentTime()
   this.setSelectDate();
   this.setSelectTimezone();
-  this.setDocumentSelecter();
   this.initDraw();
   this.handleEvents();
   this.handleFirebase();
 
   this.loading = true;
+  this.clickedAbout = false;
   this.data = {};
 
 }
@@ -61,6 +63,9 @@ TokyoMetroDelay.prototype.setDocumentSelecter = function() {
   this.$time = document.getElementById('currentTime');
   this.$prev = document.getElementById('previousTimezone');
   this.$next = document.getElementById('nextTimezone');
+  this.$about = document.getElementById('about');
+  this.$openAbout = document.getElementById('open-about');
+  this.$closeAbout = document.getElementById('close-about');
 
 }
 
@@ -274,6 +279,36 @@ TokyoMetroDelay.prototype.handleEvents = function() {
     self.draw();
   }, false);
 
+  this.$openAbout.addEventListener("click", function(event) {
+    if (window.history && window.history.pushState) {
+      event.preventDefault();
+      history.pushState(null, null, "/about");
+    }
+
+    self.clickedAbout = true;
+    self.openAbout();
+  }, false);
+
+  this.$closeAbout.addEventListener("click", function(event) {
+    if (window.history && window.history.replaceState) {
+      event.preventDefault();
+      if (self.clickedAbout) {
+        console.log("a");
+        window.history.go(-1);
+      } else {
+        console.log("b");
+        history.replaceState(null, null, "/");
+      }
+    }
+
+    self.clickedAbout = false;
+    self.closeAbout();
+  }, false);
+
+  window.addEventListener('popState', function(event) {
+    self.checkAbout();
+  }, false);
+
   setInterval(function() {
     self.setCurrentTime();
     self.drawControlArrow();
@@ -343,6 +378,42 @@ TokyoMetroDelay.prototype.dataMerge = function(obj) {
           this.data[attrname] = obj[attrname];
       }
   }
+
+}
+
+
+/**
+ * Aboutを開く
+ */
+
+TokyoMetroDelay.prototype.openAbout = function() {
+
+  this.$about.classList.add('is-active');
+
+}
+
+
+/**
+ * Aboutを閉じる
+ */
+
+TokyoMetroDelay.prototype.closeAbout = function() {
+
+  this.$about.classList.remove('is-active');
+
+}
+
+
+/**
+ * Aboutをチェックする
+ */
+
+TokyoMetroDelay.prototype.checkAbout = function() {
+
+  if ("/about" === location.pathname)
+    this.openAbout();
+  else
+    this.closeAbout();
 
 }
 

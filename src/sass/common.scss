@@ -89,6 +89,17 @@ a[href=""] {
   }
 }
 
+a {
+  &,
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: $color-link;
+    text-decoration: none;
+  }
+}
+
 .color-metro-ginza {
   color: $color-line-metro-ginza;
 }
