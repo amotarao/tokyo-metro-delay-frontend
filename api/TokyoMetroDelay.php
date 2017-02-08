@@ -151,10 +151,6 @@ class TokyoMetroDelay
             if (strpos($this->param["from"], "log") !== false) {
                 $this->setFromLog();
             }
-
-        } else {
-            $this->setFromNow();
-            $this->setFromLog();
         }
     }
 
@@ -252,6 +248,7 @@ class TokyoMetroDelay
     {
         $first_key   = key($array);
         $first_value = $array[key($array)];
+        $extracts    = array();
 
         $data = $this->getFirebaseData("", array('orderBy' => '"'.$first_key.'"', 'equalTo' => '"'.$first_value.'"'));
 
@@ -267,12 +264,30 @@ class TokyoMetroDelay
                     $extract = array(
                         array_keys($data)[$i] => $d
                     );
-
-                    return $extract;
+                    array_push($extracts, $extract);
                 }
 
                 $i++;
             }
+        }
+
+        // データがある場合、データが複数無いかどうか確認
+        // 複数有る場合は、エラーデータを削除
+        // データを返す
+        if (!empty($extracts)) {
+
+            if (count($extracts) > 1) {
+                $i = 0;
+                foreach ($extracts as $e) {
+                    $i++;
+                    if ($i == 1) continue;
+
+                    $key = key($e);
+                    $this->deleteFirebaseDataFromKey("/{$key}");
+                }
+            }
+
+            return $extracts[0];
         }
 
         if ($make === true) {
@@ -409,6 +424,17 @@ class TokyoMetroDelay
         }
 
         return false;
+    }
+
+
+    /**
+     * FirebaseのデータをDelete
+     * @param string
+     * @param string key
+     * @return mixed
+     */
+    private function deleteFirebaseDataFromKey($path) {
+        $this->firebase->delete(FIREBASE_PATH . $path);
     }
 
 
