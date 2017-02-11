@@ -54,3 +54,6 @@ RewriteRule ^.*$ http://%{HTTP_HOST}/ [R=301,L]
 # about遷移
 RewriteCond %{REQUEST_URI} ^/about$
 RewriteRule . / [L]
+
+# .appcache
+AddType text/cache-manifest .appcache
