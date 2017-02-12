@@ -11,6 +11,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 var mmq = require('gulp-merge-media-queries');
 var cssmin = require('gulp-cssmin');
+var concat = require('gulp-concat');
 
 gulp.task('sass', function() {
   gulp.src('./src/sass/**/style.scss')
@@ -50,22 +51,24 @@ gulp.task('sass-min', function() {
 });
 
 gulp.task('js', function(){
-  gulp.src('./src/js/script.js')
+  gulp.src('./src/js/**/*.js')
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
     }))
     .pipe(sourcemaps.init())
+    .pipe(concat('main.js'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./dist/js'))
     .pipe(browserSync.stream());
 });
 
 gulp.task('js-min', function(){
-  gulp.src('./src/js/script.js')
+  gulp.src('./src/js/**/*.js')
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
     }))
     .pipe(uglify())
+    .pipe(concat('main.js'))
     .pipe(gulp.dest('./dist_min/js'))
     .pipe(browserSync.stream());
 });
