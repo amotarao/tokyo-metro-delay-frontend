@@ -293,10 +293,8 @@ TokyoMetroDelay.prototype.handleEvents = function() {
     if (window.history && window.history.replaceState) {
       event.preventDefault();
       if (self.clickedAbout) {
-        console.log("a");
         window.history.go(-1);
       } else {
-        console.log("b");
         history.replaceState(null, null, "/");
       }
     }
