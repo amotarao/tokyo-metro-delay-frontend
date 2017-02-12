@@ -29,12 +29,20 @@ class TokyoMetroDelay
 
     public function __construct($param = null)
     {
+        // 深夜帯は終了
+        $hour = (int)date("G");
+        if (1 <= $hour && $hour < 5) {
+            header("HTTP/1.0 403 Forbidden");
+            exit;
+        }
+
+
         $this->firebase = new \Firebase\FirebaseLib(FIREBASE_URL, FIREBASE_TOKEN);
 
         $this->time = array(
-            "year"     => (string)date("Y", strtotime("-4 hour")),
-            "month"    => (string)date("m", strtotime("-4 hour")),
-            "date"     => (string)date("d", strtotime("-4 hour")),
+            "year"     => (string)date("Y", strtotime("-3 hour")),
+            "month"    => (string)date("m", strtotime("-3 hour")),
+            "date"     => (string)date("d", strtotime("-3 hour")),
             "timezone" => (string)$this->getTimezone()
         );
 
@@ -60,13 +68,13 @@ class TokyoMetroDelay
     {
         $hour = ($time !== null) ? (int)date("G", $time) : (int)date("G");
 
-        if      ( 4 <= $hour && $hour <  7)
+        if      ( 3 <= $hour && $hour <  7)
             return "a";
         else if ( 7 <= $hour && $hour < 10)
             return "b";
         else if (10 <= $hour && $hour < 17)
             return "c";
-        else if (17 <= $hour || $hour <  4)
+        else if (17 <= $hour || $hour <  3)
             return "d";
 
         return false;
