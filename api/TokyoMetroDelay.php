@@ -29,14 +29,6 @@ class TokyoMetroDelay
 
     public function __construct($param = null)
     {
-        // 深夜帯は終了
-        $hour = (int)date("G");
-        if (1 <= $hour && $hour < 5) {
-            header("HTTP/1.0 403 Forbidden");
-            exit;
-        }
-
-
         $this->firebase = new \Firebase\FirebaseLib(FIREBASE_URL, FIREBASE_TOKEN);
 
         $this->time = array(
@@ -168,6 +160,12 @@ class TokyoMetroDelay
      */
     private function setFromNow()
     {
+        // 深夜帯は終了
+        $hour = (int)date("G");
+        if (1 <= $hour && $hour < 5) {
+            return false;
+        }
+
         $findData = array(
             "date" => $this->dateArrayToSrting($this->time),
             "@type" => "now",
