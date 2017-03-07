@@ -1,10 +1,25 @@
 CACHE MANIFEST
-# 2017-02-12:v2
+# 2017-02-21:v2.1.6
 
 CACHE:
-img/*
+img/card.png
+img/icon_metro-asakusa.svg
+img/icon_metro-chiyoda.svg
+img/icon_metro-fukutoshin.svg
+img/icon_metro-ginza.svg
+img/icon_metro-hanzomon.svg
+img/icon_metro-hibiya.svg
+img/icon_metro-marunouchi.svg
+img/icon_metro-mita.svg
+img/icon_metro-namboku.svg
+img/icon_metro-oedo.svg
+img/icon_metro-shinjuku.svg
+img/icon_metro-tozai.svg
+img/icon_metro-yurakucho.svg
+img/touch-icon.png
+img/twitter-icon.png
 css/style.css
-js/script.js
+js/main.js
 
 NETWORK:
 *
