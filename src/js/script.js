@@ -497,9 +497,10 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
       }
 
       var ele = document.createElement('span');
-      var str = document.createTextNode(delayTextToSimple(self._data["line"][line][self._target]));
+      var str = delayTextToSimple(self._data['line'][line][self._target]);
+      var txt = document.createTextNode(str);
       ele.classList.add('delay-text');
-      ele.appendChild(str);
+      ele.appendChild(txt);
 
       self.$list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(document.createTextNode(' '));
       self.$list.querySelector('li[data-line-name=' + line + '] .line-text').appendChild(ele);
@@ -667,7 +668,7 @@ var delayTextToSimple = function(v) {
 
   v = parseInt(v);
 
-  if (v > 61) {
+  if (v > 60) {
     return '61+分';
   } else {
     return '+' + v + '分';
