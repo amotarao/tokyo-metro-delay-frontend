@@ -557,7 +557,7 @@ class TokyoMetroDelay
 
             $contents = file_get_contents("http://www.tokyometro.jp/delay/history/{$line}.html");
             $contents = str_replace('<!--  <p>遅延証明書<br class="v2_showPc">（15分程度の遅延）</p>  -->', "", $contents);
-            $a=preg_match('/<div class="v2_mt0 v2_headingH3">(.*)<div class="v2_headingH3">/s', $contents, $matches);
+            $a = preg_match('/<div class="v2_mt0 v2_headingH3">(.*)<div class="v2_headingH3">/s', $contents, $matches);
             str_replace($delay_text, "", $matches[1], $count);
 
             $count_all += $count;
