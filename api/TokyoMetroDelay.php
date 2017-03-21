@@ -62,8 +62,12 @@ class TokyoMetroDelay
 
         if      ( 3 <= $hour && $hour <  7)
             return "a";
-        else if ( 7 <= $hour && $hour < 10)
-            return "b";
+        else if ( 7 == $hour)
+            return "e";
+        else if ( 8 == $hour)
+            return "f";
+        else if ( 9 == $hour)
+            return "g";
         else if (10 <= $hour && $hour < 17)
             return "c";
         else if (17 <= $hour || $hour <  3)
@@ -85,9 +89,15 @@ class TokyoMetroDelay
                 $time["timezone"] = "c";
                 return $time;
             case "c":
-                $time["timezone"] = "b";
+                $time["timezone"] = "g";
                 return $time;
-            case "b":
+            case "g":
+                $time["timezone"] = "f";
+                return $time;
+            case "f":
+                $time["timezone"] = "e";
+                return $time;
+            case "e":
                 $time["timezone"] = "a";
                 return $time;
             case "a":
@@ -128,8 +138,12 @@ class TokyoMetroDelay
         switch ($v) {
             case "a":
                 return "1";
-            case "b":
-                return "2";
+            case "e":
+                return "5";
+            case "f":
+                return "6";
+            case "g":
+                return "7";
             case "c":
                 return "3";
             case "d":
@@ -550,9 +564,11 @@ class TokyoMetroDelay
 
             if ($timezone == "d" && $count == 0) continue;
             if ($timezone == "a" && $count == 1) continue;
-            if ($timezone == "b" && $count == 2) continue;
-            if ($timezone == "c" && $count == 3) continue;
-            if ($timezone == "d" && $count == 4) continue;
+            if ($timezone == "e" && $count == 2) continue;
+            if ($timezone == "f" && $count == 3) continue;
+            if ($timezone == "g" && $count == 4) continue;
+            if ($timezone == "c" && $count == 5) continue;
+            if ($timezone == "d" && $count == 6) continue;
 
             return $count_all;
         }

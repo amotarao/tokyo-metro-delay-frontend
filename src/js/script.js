@@ -85,7 +85,7 @@ TokyoMetroDelay.prototype.setCurrentTime = function() {
     this.currentDate = arrayDate;
   }
 
-  this.currentTimezone = getTimezone(today);
+  this.currentTimezone = getTimezone(this.currentDate, today);
 
   return;
 
@@ -118,22 +118,41 @@ TokyoMetroDelay.prototype.setSelectDate = function() {
 
 /**
  * 選択する時間帯をセットする
- * Make: this.selectTimezone
  */
 
 TokyoMetroDelay.prototype.setSelectTimezone = function() {
 
+  var d = this.selectDate;
+  d = calcDate(d);
+
   var param = getUrlVars().timezone;
 
   if (typeof param !== "undefined") {
-    switch (param) {
-      case 'a':
-      case 'b':
-      case 'c':
-      case 'd':
-        this.selectTimezone = param;
-        return;
+    if (d < 8634) {
+
+      switch (param) {
+        case 'a':
+        case 'b':
+        case 'c':
+        case 'd':
+          this.selectTimezone = param;
+          return;
+      }
+
+    } else {
+
+      switch (param) {
+        case 'a':
+        case 'e':
+        case 'f':
+        case 'g':
+        case 'c':
+        case 'd':
+          this.selectTimezone = param;
+          return;
+      }
     }
+
   }
 
   this.selectTimezone = this.currentTimezone;
@@ -151,27 +170,65 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
 
   var self = this;
 
-  switch (this.selectTimezone) {
-    case 'a':
-      this.selectTimezone = 'd';
-      this.selectDate = displaceArrayDate(this.selectDate, -1);
-      this.drawCurrentDate();
+  var d = this.selectDate;
+  d = calcDate(d);
 
-      old_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(displaceArrayDate(this.selectDate, -1), '-'));
-      old_data.on('value', function(snapshot) {
-        self.loadedData(snapshot.val());
-      });
+  if (d < 8634) {
 
-      break;
-    case 'b':
-      this.selectTimezone = 'a';
-      break;
-    case 'c':
-      this.selectTimezone = 'b';
-      break;
-    case 'd':
-      this.selectTimezone = 'c';
-      break;
+    switch (this.selectTimezone) {
+      case 'a':
+        this.selectTimezone = 'd';
+        this.selectDate = displaceArrayDate(this.selectDate, -1);
+        this.drawCurrentDate();
+
+        old_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(displaceArrayDate(this.selectDate, -1), '-'));
+        old_data.on('value', function(snapshot) {
+          self.loadedData(snapshot.val());
+        });
+
+        break;
+      case 'b':
+        this.selectTimezone = 'a';
+        break;
+      case 'c':
+        this.selectTimezone = 'b';
+        break;
+      case 'd':
+        this.selectTimezone = 'c';
+        break;
+    }
+
+  } else {
+
+    switch (this.selectTimezone) {
+      case 'a':
+        this.selectTimezone = 'd';
+        this.selectDate = displaceArrayDate(this.selectDate, -1);
+        this.drawCurrentDate();
+
+        old_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(displaceArrayDate(this.selectDate, -1), '-'));
+        old_data.on('value', function(snapshot) {
+          self.loadedData(snapshot.val());
+        });
+
+        break;
+      case 'e':
+        this.selectTimezone = 'a';
+        break;
+      case 'f':
+        this.selectTimezone = 'e';
+        break;
+      case 'g':
+        this.selectTimezone = 'f';
+        break;
+      case 'c':
+        this.selectTimezone = 'g';
+        break;
+      case 'd':
+        this.selectTimezone = 'c';
+        break;
+    }
+
   }
 
   this.setSelectData();
@@ -189,22 +246,55 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
 
 TokyoMetroDelay.prototype.setNextTimezone = function() {
 
-  switch (this.selectTimezone) {
-    case 'a':
-      this.selectTimezone = 'b';
-      break;
-    case 'b':
-      this.selectTimezone = 'c';
-      break;
-    case 'c':
-      this.selectTimezone = 'd';
-      break;
-    case 'd':
-      this.selectTimezone = 'a';
-      this.selectDate = displaceArrayDate(this.selectDate, 1);
-      this.drawCurrentDate();
-      break;
+  var d = this.selectDate;
+  d = calcDate(d);
+
+  if (d < 8634) {
+
+    switch (this.selectTimezone) {
+      case 'a':
+        this.selectTimezone = 'b';
+        break;
+      case 'b':
+        this.selectTimezone = 'c';
+        break;
+      case 'c':
+        this.selectTimezone = 'd';
+        break;
+      case 'd':
+        this.selectTimezone = 'a';
+        this.selectDate = displaceArrayDate(this.selectDate, 1);
+        this.drawCurrentDate();
+        break;
+    }
+
+  } else {
+
+    switch (this.selectTimezone) {
+      case 'a':
+        this.selectTimezone = 'e';
+        break;
+      case 'e':
+        this.selectTimezone = 'f';
+        break;
+      case 'f':
+        this.selectTimezone = 'g';
+        break;
+      case 'g':
+        this.selectTimezone = 'c';
+        break;
+      case 'c':
+        this.selectTimezone = 'd';
+        break;
+      case 'd':
+        this.selectTimezone = 'a';
+        this.selectDate = displaceArrayDate(this.selectDate, 1);
+        this.drawCurrentDate();
+        break;
+    }
+
   }
+
   this.setSelectData();
   this.drawCurrentTimezone();
   this.drawControlArrow();
@@ -492,7 +582,7 @@ TokyoMetroDelay.prototype.drawDelayLine = function() {
       self.$list.querySelector('li[data-line-name=' + line + ']').classList.add('line-delay');
 
       if (self._target == 'certificate') {
-        href = 'http://www.tokyometro.jp/delay/detail/' + decodeArrayDate(self.selectDate, '') + '/' + line + '_' + encodeTimezone(self.selectTimezone) + '.shtml';
+        href = 'http://www.tokyometro.jp/delay/detail/' + decodeArrayDate(self.selectDate, '') + '/' + line + '_' + encodeTimezone(self.selectDate, self.selectTimezone) + '.shtml';
         self.$list.querySelector('li[data-line-name=' + line + ']').querySelector('a').href = href;
       }
 
@@ -571,24 +661,57 @@ TokyoMetroDelay.prototype.drawCurrentDate = function() {
 TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
 
   var time;
+  var d = this.selectDate;
+  d = calcDate(d);
 
-  switch (this.selectTimezone) {
-    case 'a':
-      time = ' ~ 7:00';
-      break;
-    case 'b':
-      time = '7:00 ~ 10:00';
-      break;
-    case 'c':
-      time = '10:00 ~ 17:00';
-      break;
-    case 'd':
-      time = '17:00 ~ ';
-      break;
-    default:
-      time = ' ~ 7:00';
-      break;
+  if (d < 8634) {
+
+    switch (this.selectTimezone) {
+      case 'a':
+        time = ' ~ 7:00';
+        break;
+      case 'b':
+        time = '7:00 ~ 10:00';
+        break;
+      case 'c':
+        time = '10:00 ~ 17:00';
+        break;
+      case 'd':
+        time = '17:00 ~ ';
+        break;
+      default:
+        time = ' ~ 7:00';
+        break;
+    }
+
+  } else {
+
+    switch (this.selectTimezone) {
+      case 'a':
+        time = ' ~ 7:00';
+        break;
+      case 'e':
+        time = '7:00 ~ 8:00';
+        break;
+      case 'f':
+        time = '8:00 ~ 9:00';
+        break;
+      case 'g':
+        time = '9:00 ~ 10:00';
+        break;
+      case 'c':
+        time = '10:00 ~ 17:00';
+        break;
+      case 'd':
+        time = '17:00 ~ ';
+        break;
+      default:
+        time = ' ~ 7:00';
+        break;
+    }
+
   }
+
 
   if (this.selectDate.toString() + this.selectTimezone === this.currentDate.toString() + this.currentTimezone) {
     time = time.replace(/~.*/g, '~ 現在');
@@ -608,8 +731,8 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
   var c = this.currentDate;
   var s = this.selectDate;
 
-  c = c[0] * 500 + c[1] * 40 + c[2];
-  s = s[0] * 500 + s[1] * 40 + s[2];
+  c = calcDate(c);
+  s = calcDate(s);
 
   if (c < s) {
     this.$next.classList.add('is-invalid');
@@ -620,8 +743,30 @@ TokyoMetroDelay.prototype.drawControlArrow = function() {
     return;
   }
 
-  c = this.currentTimezone;
-  s = this.selectTimezone;
+  var d =  this.selectDate;
+  d = calcDate(d);
+
+  if (d < 8634) {
+
+    c = this.currentTimezone;
+    s = this.selectTimezone;
+
+  } else {
+
+    var t = {
+      'a': 'aa',
+      'e': 'be',
+      'f': 'cf',
+      'g': 'dg',
+      'c': 'ec',
+      'd': 'fd',
+    }
+
+    c = t[this.currentTimezone];
+    s = t[this.selectTimezone];
+
+  }
+
 
   if (c <= s) {
     this.$next.classList.add('is-invalid');
@@ -679,21 +824,39 @@ var delayTextToSimple = function(v) {
 
 /**
  * 日付のタイムゾーンを取得
+ * @param {Array} date
  * @param {Object} date
  * @returns {String}
  */
 
-var getTimezone = function(date) {
+var getTimezone = function(d, date) {
 
-  var timezoneBorder = [4, 7, 10, 17];
+  d = calcDate(d);
+
   var hour = date.getUTCHours() + 9;
-
   if (hour >= 24) hour -= 24;
 
-  if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
-  else if (timezoneBorder[1] <= hour && hour < timezoneBorder[2]) return 'b';
-  else if (timezoneBorder[2] <= hour && hour < timezoneBorder[3]) return 'c';
-  else if (timezoneBorder[3] <= hour || hour < timezoneBorder[0]) return 'd';
+  if (d < 8634) {
+
+    var timezoneBorder = [4, 7, 10, 17];
+
+    if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
+    else if (timezoneBorder[1] <= hour && hour < timezoneBorder[2]) return 'b';
+    else if (timezoneBorder[2] <= hour && hour < timezoneBorder[3]) return 'c';
+    else if (timezoneBorder[3] <= hour || hour < timezoneBorder[0]) return 'd';
+
+  } else {
+
+    var timezoneBorder = [4, 7, 8, 9, 10, 17];
+
+    if      (timezoneBorder[0] <= hour && hour < timezoneBorder[1]) return 'a';
+    else if (timezoneBorder[1] <= hour && hour < timezoneBorder[2]) return 'e';
+    else if (timezoneBorder[2] <= hour && hour < timezoneBorder[3]) return 'f';
+    else if (timezoneBorder[3] <= hour && hour < timezoneBorder[4]) return 'g';
+    else if (timezoneBorder[4] <= hour && hour < timezoneBorder[5]) return 'c';
+    else if (timezoneBorder[5] <= hour || hour < timezoneBorder[0]) return 'd';
+
+  }
 
 }
 
@@ -783,22 +946,59 @@ var decodeArrayDate = function(v, p, w) {
 
 /**
  * タイムゾーンの形式を変換する
+ * @param {Array} d
  * @param {String} v
  * @returns {String}
  */
 
-var encodeTimezone = function(v) {
+var encodeTimezone = function(d, v) {
 
-  switch (v) {
-    case 'a':
-      return '1';
-    case 'b':
-      return '2';
-    case 'c':
-      return '3';
-    case 'd':
-      return '4';
+  d = calcDate(d);
+
+  if (d < 8634) {
+
+    switch (v) {
+      case 'a':
+        return '1';
+      case 'b':
+        return '2';
+      case 'c':
+        return '3';
+      case 'd':
+        return '4';
+    }
+
+  } else {
+
+    switch (v) {
+      case 'a':
+        return '1';
+      case 'e':
+        return '5';
+      case 'f':
+        return '6';
+      case 'g':
+        return '7';
+      case 'c':
+        return '3';
+      case 'd':
+        return '4';
+    }
+
   }
+
+}
+
+
+/**
+ * 日付を数値にする
+ * @param {Array} v
+ * @returns {Number}
+ */
+
+var calcDate = function(v) {
+
+  return (v[0]-2000) * 500 + v[1] * 40 + v[2];
 
 }
 
