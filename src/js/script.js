@@ -179,7 +179,7 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
       case 'a':
         this.selectTimezone = 'd';
         this.selectDate = displaceArrayDate(this.selectDate, -1);
-        this.drawCurrentDate();
+        this.drawSelectDate();
 
         old_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(displaceArrayDate(this.selectDate, -1), '-'));
         old_data.on('value', function(snapshot) {
@@ -204,7 +204,7 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
       case 'a':
         this.selectTimezone = 'd';
         this.selectDate = displaceArrayDate(this.selectDate, -1);
-        this.drawCurrentDate();
+        this.drawSelectDate();
 
         old_data = this.firebase.database().ref('data_v1').orderByChild('date').equalTo(decodeArrayDate(displaceArrayDate(this.selectDate, -1), '-'));
         old_data.on('value', function(snapshot) {
@@ -232,7 +232,7 @@ TokyoMetroDelay.prototype.setPreviousTimezone = function() {
   }
 
   this.setSelectData();
-  this.drawCurrentTimezone();
+  this.drawSelectTimezone();
   this.drawControlArrow();
 
   return;
@@ -264,7 +264,7 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
       case 'd':
         this.selectTimezone = 'a';
         this.selectDate = displaceArrayDate(this.selectDate, 1);
-        this.drawCurrentDate();
+        this.drawSelectDate();
         break;
     }
 
@@ -289,14 +289,14 @@ TokyoMetroDelay.prototype.setNextTimezone = function() {
       case 'd':
         this.selectTimezone = 'a';
         this.selectDate = displaceArrayDate(this.selectDate, 1);
-        this.drawCurrentDate();
+        this.drawSelectDate();
         break;
     }
 
   }
 
   this.setSelectData();
-  this.drawCurrentTimezone();
+  this.drawSelectTimezone();
   this.drawControlArrow();
 
   return;
@@ -513,8 +513,8 @@ TokyoMetroDelay.prototype.checkAbout = function() {
 TokyoMetroDelay.prototype.initDraw = function() {
 
   this.drawInfo('loading');
-  this.drawCurrentDate();
-  this.drawCurrentTimezone();
+  this.drawSelectDate();
+  this.drawSelectTimezone();
   this.drawControlArrow();
 
 }
@@ -645,7 +645,7 @@ TokyoMetroDelay.prototype.drawInfo = function(v) {
  * 選択中の日付を描画
  */
 
-TokyoMetroDelay.prototype.drawCurrentDate = function() {
+TokyoMetroDelay.prototype.drawSelectDate = function() {
 
   this.$date.innerHTML = decodeArrayDate(this.selectDate, '.', true);
 
@@ -658,7 +658,7 @@ TokyoMetroDelay.prototype.drawCurrentDate = function() {
  * 選択中の時間帯を描画
  */
 
-TokyoMetroDelay.prototype.drawCurrentTimezone = function() {
+TokyoMetroDelay.prototype.drawSelectTimezone = function() {
 
   var time;
   var d = this.selectDate;
