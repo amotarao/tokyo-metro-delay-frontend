@@ -5,6 +5,8 @@ error_reporting(E_ALL);
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+use Firebase\FirebaseLib;
+
 define('FIREBASE_URL', 'https://tokyometrodelay.firebaseio.com/');
 define('FIREBASE_PATH', "/data_v1");
 define('FIREBASE_TOKEN', json_decode(file_get_contents('./token.json'), true)["firebase"]);
@@ -28,7 +30,7 @@ class TokyoMetroDelay
 
     public function __construct($param = null)
     {
-        $this->firebase = new \Firebase\FirebaseLib(FIREBASE_URL, FIREBASE_TOKEN);
+        $this->firebase = new FirebaseLib(FIREBASE_URL, FIREBASE_TOKEN);
 
         $this->time = array(
             "year"     => (string)date("Y", strtotime("-3 hour")),
