@@ -3,8 +3,7 @@
 ini_set( "display_errors", 1 );
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/firebase-php/src/firebaseLib.php';
-require_once __DIR__ . '/firebase-php/src/firebaseStub.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 define('FIREBASE_URL', 'https://tokyometrodelay.firebaseio.com/');
 define('FIREBASE_PATH', "/data_v1");
