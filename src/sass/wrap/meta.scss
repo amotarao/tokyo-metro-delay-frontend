@@ -41,6 +41,12 @@
     }
   }
 
+  &.line-share {
+    & > * {
+      vertical-align: bottom;
+    }
+  }
+
   a {
     text-decoration: none;
   }

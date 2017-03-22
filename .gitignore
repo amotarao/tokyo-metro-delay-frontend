@@ -1,8 +1,8 @@
 node_modules
 dist
 dist_min
+vendor
 token.json
 
 _
 src/svg/icon_*
-api/firebase-php

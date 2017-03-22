@@ -3,8 +3,7 @@
 ini_set( "display_errors", 1 );
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/firebase-php/src/firebaseLib.php';
-require_once __DIR__ . '/firebase-php/src/firebaseStub.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 define('FIREBASE_URL', 'https://tokyometrodelay.firebaseio.com/');
 define('FIREBASE_PATH', "/data_v1");
@@ -29,14 +28,6 @@ class TokyoMetroDelay
 
     public function __construct($param = null)
     {
-        // 深夜帯は終了
-        $hour = (int)date("G");
-        if (1 <= $hour && $hour < 5) {
-            header("HTTP/1.0 403 Forbidden");
-            exit;
-        }
-
-
         $this->firebase = new \Firebase\FirebaseLib(FIREBASE_URL, FIREBASE_TOKEN);
 
         $this->time = array(
@@ -70,8 +61,12 @@ class TokyoMetroDelay
 
         if      ( 3 <= $hour && $hour <  7)
             return "a";
-        else if ( 7 <= $hour && $hour < 10)
-            return "b";
+        else if ( 7 == $hour)
+            return "e";
+        else if ( 8 == $hour)
+            return "f";
+        else if ( 9 == $hour)
+            return "g";
         else if (10 <= $hour && $hour < 17)
             return "c";
         else if (17 <= $hour || $hour <  3)
@@ -93,9 +88,15 @@ class TokyoMetroDelay
                 $time["timezone"] = "c";
                 return $time;
             case "c":
-                $time["timezone"] = "b";
+                $time["timezone"] = "g";
                 return $time;
-            case "b":
+            case "g":
+                $time["timezone"] = "f";
+                return $time;
+            case "f":
+                $time["timezone"] = "e";
+                return $time;
+            case "e":
                 $time["timezone"] = "a";
                 return $time;
             case "a":
@@ -136,8 +137,12 @@ class TokyoMetroDelay
         switch ($v) {
             case "a":
                 return "1";
-            case "b":
-                return "2";
+            case "e":
+                return "5";
+            case "f":
+                return "6";
+            case "g":
+                return "7";
             case "c":
                 return "3";
             case "d":
@@ -168,6 +173,12 @@ class TokyoMetroDelay
      */
     private function setFromNow()
     {
+        // 深夜帯は終了
+        $hour = (int)date("G");
+        if (1 <= $hour && $hour < 5) {
+            return false;
+        }
+
         $findData = array(
             "date" => $this->dateArrayToSrting($this->time),
             "@type" => "now",
@@ -545,16 +556,18 @@ class TokyoMetroDelay
 
             $contents = file_get_contents("http://www.tokyometro.jp/delay/history/{$line}.html");
             $contents = str_replace('<!--  <p>遅延証明書<br class="v2_showPc">（15分程度の遅延）</p>  -->', "", $contents);
-            $a=preg_match('/<div class="v2_mt0 v2_headingH3">(.*)<div class="v2_headingH3">/s', $contents, $matches);
+            $a = preg_match('/<div class="v2_mt0 v2_headingH3">(.*)<div class="v2_headingH3">/s', $contents, $matches);
             str_replace($delay_text, "", $matches[1], $count);
 
             $count_all += $count;
 
             if ($timezone == "d" && $count == 0) continue;
             if ($timezone == "a" && $count == 1) continue;
-            if ($timezone == "b" && $count == 2) continue;
-            if ($timezone == "c" && $count == 3) continue;
-            if ($timezone == "d" && $count == 4) continue;
+            if ($timezone == "e" && $count == 2) continue;
+            if ($timezone == "f" && $count == 3) continue;
+            if ($timezone == "g" && $count == 4) continue;
+            if ($timezone == "c" && $count == 5) continue;
+            if ($timezone == "d" && $count == 6) continue;
 
             return $count_all;
         }
