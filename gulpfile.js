@@ -127,7 +127,7 @@ gulp.task('manifest', function(){
       preferOnline: true,
       network: ['http://*', 'https://*', '*'],
       filename: 'manifest.appcache',
-      exclude: ['*.appcache', '.htaccess']
+      exclude: ['manifest.appcache', 'sitemap.xml']
      }))
     .pipe(gulp.dest(destPath + '_min'));
 });
