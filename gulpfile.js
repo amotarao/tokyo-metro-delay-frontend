@@ -32,7 +32,7 @@ gulp.task('sass', function() {
       cascade: false
     }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(distPath + '/css'))
+    .pipe(gulp.dest(destPath + '/css'))
     .pipe(browserSync.stream());
 });
 
@@ -50,7 +50,7 @@ gulp.task('sass-min', function() {
       cascade: false
     }))
     .pipe(cssmin())
-    .pipe(gulp.dest(distPath + '_min/css'))
+    .pipe(gulp.dest(destPath + '_min/css'))
     .pipe(browserSync.stream());
 });
 
@@ -62,7 +62,7 @@ gulp.task('js', function(){
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(distPath + '/js'))
+    .pipe(gulp.dest(destPath + '/js'))
     .pipe(browserSync.stream());
 });
 
@@ -73,7 +73,7 @@ gulp.task('js-min', function(){
     }))
     .pipe(uglify())
     .pipe(concat('main.js'))
-    .pipe(gulp.dest(distPath + '_min/js'))
+    .pipe(gulp.dest(destPath + '_min/js'))
     .pipe(browserSync.stream());
 });
 
@@ -82,7 +82,7 @@ gulp.task('html', function(){
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
     }))
-    .pipe(gulp.dest(distPath + ''))
+    .pipe(gulp.dest(destPath + ''))
     .pipe(browserSync.stream());
 });
 
@@ -94,24 +94,30 @@ gulp.task('html-min', function(){
     .pipe(htmlmin({
       collapseWhitespace: true
     }))
-    .pipe(gulp.dest(distPath + '_min'))
+    .pipe(gulp.dest(destPath + '_min'))
     .pipe(browserSync.stream());
 });
 
 gulp.task('svg', function() {
   gulp.src(srcPath + 'svg/**/*.svg')
   .pipe(svgmin())
-  .pipe(gulp.dest(distPath + '/img'));　
+  .pipe(gulp.dest(destPath + '/img'));　
+});
+
+gulp.task('svg-min', function() {
+  gulp.src(srcPath + 'svg/**/*.svg')
+  .pipe(svgmin())
+  .pipe(gulp.dest(destPath + '/img'));　
 });
 
 gulp.task('copy-direct', function() {
   gulp.src(['./src_direct/**/*', './src_direct/**/.htaccess'], {base: 'src_direct'})
-  .pipe(gulp.dest(distPath + ''));　
+  .pipe(gulp.dest(destPath + ''));　
 });
 
 gulp.task('copy-direct-min', function() {
   gulp.src(['./src_direct/**/*', './src_direct/**/.htaccess'], {base: 'src_direct'})
-  .pipe(gulp.dest(distPath + '_min'));　
+  .pipe(gulp.dest(destPath + '_min'));　
 });
 
 gulp.task('manifest', function(){
@@ -137,9 +143,9 @@ gulp.task('minify', ['sass-min', 'js-min', 'html-min', 'copy-direct-min']);
 
 gulp.task('serve', function(){
   browserSync.init({
-    server: distPath + ''
+    server: destPath + ''
   });
-  gulp.watch(distPath + '/**/*.html').on('change', browserSync.reload);
+  gulp.watch(destPath + '/**/*.html').on('change', browserSync.reload);
 });
 
 gulp.task('default', function(){
