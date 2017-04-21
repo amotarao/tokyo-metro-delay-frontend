@@ -10,7 +10,8 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     mmq = require('gulp-merge-media-queries'),
     cssmin = require('gulp-cssmin'),
-    concat = require('gulp-concat');
+    concat = require('gulp-concat'),
+    manifest = require('gulp-appcache');
 
 const srcPath = './src',
       destPath = './dist',
@@ -111,6 +112,18 @@ gulp.task('copy-direct', function() {
 gulp.task('copy-direct-min', function() {
   gulp.src(['./src_direct/**/*', './src_direct/**/.htaccess'], {base: 'src_direct'})
   .pipe(gulp.dest(distPath + '_min'));　
+});
+
+gulp.task('manifest', function(){
+  gulp.src(destPath + '_min/**')
+    .pipe(manifest({
+      hash: true,
+      preferOnline: true,
+      network: ['http://*', 'https://*', '*'],
+      filename: 'manifest.appcache',
+      exclude: ['*.appcache', '.htaccess']
+     }))
+    .pipe(gulp.dest(destPath + '_min'));
 });
 
 gulp.task('watch', ['serve'], function(){
