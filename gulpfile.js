@@ -92,7 +92,8 @@ gulp.task('html-min', function(){
       errorHandler: notify.onError("<%= error.message %>")
     }))
     .pipe(htmlmin({
-      collapseWhitespace: true
+      collapseWhitespace: true,
+      removeComments: true
     }))
     .pipe(gulp.dest(destPath + '_min'))
     .pipe(browserSync.stream());
