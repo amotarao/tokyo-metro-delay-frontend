@@ -1,12 +1,13 @@
 {
-  "name": "web4",
+  "name": "tokyo-metro-delay",
   "version": "1.0.0",
   "description": "",
+  "homepage": "http://metro.chikoku.net/",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "chikokunet",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.18.6",
