@@ -3,6 +3,11 @@ dist
 dist_min
 vendor
 token.json
+.DS_Store
 
 _
 src/svg/icon_*
+git 
+composer.lock
+composer.json
+img.html

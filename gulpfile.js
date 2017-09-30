@@ -140,7 +140,7 @@ gulp.task('watch', ['serve'], function(){
   gulp.watch(['./src_direct/**/*', './src_direct/**/.htaccess'], ['copy-direct']);
 });
 
-gulp.task('minify', ['sass-min', 'js-min', 'html-min', 'copy-direct-min']);
+gulp.task('minify', ['sass-min', 'js-min', 'html-min', 'copy-direct-min', 'manifest']);
 
 gulp.task('serve', function(){
   browserSync.init({
