@@ -5,15 +5,15 @@
   display: none;
 }
 
-@media (max-width: 479px) and (min-height: 500px) {
+@media (max-width: 479px) and (min-height: 520px) {
   .ad {
     display: block;
     width: 320px;
-    height: 50px;
+    height: 100px;
     margin: 0 calc(50% - 160px);
   }
   .container {
-    height: calc(100% - 50px);
+    height: calc(100% - 100px);
   }
 }
 @media (max-width: 479px) and (min-height: 700px) {
