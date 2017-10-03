@@ -11,7 +11,8 @@ var gulp = require('gulp'),
     mmq = require('gulp-merge-media-queries'),
     cssmin = require('gulp-cssmin'),
     concat = require('gulp-concat'),
-    manifest = require('gulp-appcache');
+    manifest = require('gulp-appcache')
+    runSequence = require('run-sequence');
 
 const srcPath = './src',
       destPath = './dist',
@@ -54,7 +55,7 @@ gulp.task('sass-min', function() {
     .pipe(browserSync.stream());
 });
 
-gulp.task('js', function(){
+gulp.task('js', function() {
   gulp.src(srcPath + '/js/**/*.js')
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
@@ -66,7 +67,7 @@ gulp.task('js', function(){
     .pipe(browserSync.stream());
 });
 
-gulp.task('js-min', function(){
+gulp.task('js-min', function() {
   gulp.src(srcPath + '/js/**/*.js')
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
@@ -77,7 +78,7 @@ gulp.task('js-min', function(){
     .pipe(browserSync.stream());
 });
 
-gulp.task('html', function(){
+gulp.task('html', function() {
   gulp.src(srcPath + '/**/*.html')
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
@@ -86,7 +87,7 @@ gulp.task('html', function(){
     .pipe(browserSync.stream());
 });
 
-gulp.task('html-min', function(){
+gulp.task('html-min', function() {
   gulp.src(srcPath + '/**/*.html')
     .pipe(plumber({
       errorHandler: notify.onError("<%= error.message %>")
@@ -121,7 +122,7 @@ gulp.task('copy-direct-min', function() {
   .pipe(gulp.dest(destPath + '_min'));　
 });
 
-gulp.task('manifest', function(){
+gulp.task('manifest', function() {
   gulp.src(destPath + '_min/**')
     .pipe(manifest({
       hash: true,
@@ -133,22 +134,27 @@ gulp.task('manifest', function(){
     .pipe(gulp.dest(destPath + '_min'));
 });
 
-gulp.task('watch', ['serve'], function(){
+gulp.task('watch', ['serve'], function() {
   gulp.watch(srcPath + '/sass/**/*.scss', ['sass']);
   gulp.watch(srcPath + '/js/**/*.js', ['js']);
   gulp.watch(srcPath + '/**/*.html', ['html']);
   gulp.watch(['./src_direct/**/*', './src_direct/**/.htaccess'], ['copy-direct']);
 });
 
-gulp.task('minify', ['sass-min', 'js-min', 'html-min', 'copy-direct-min', 'manifest']);
+gulp.task('minify', function() {
+  return runSequence(
+    ['sass-min', 'js-min', 'html-min', 'copy-direct-min'],
+    'manifest'
+  )
+});
 
-gulp.task('serve', function(){
+gulp.task('serve', function() {
   browserSync.init({
     server: destPath
   });
   gulp.watch(destPath + '/**/*.html').on('change', browserSync.reload);
 });
 
-gulp.task('default', function(){
+gulp.task('default', function() {
   gulp.run('watch');
 });
