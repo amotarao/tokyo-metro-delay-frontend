@@ -113,12 +113,12 @@ gulp.task('svg-min', function() {
 });
 
 gulp.task('copy-direct', function() {
-  gulp.src(['./src_direct/**/*', './src_direct/**/.htaccess'], {base: 'src_direct'})
+  gulp.src(['./static/**/*', './static/**/.htaccess'], {base: 'static'})
   .pipe(gulp.dest(destPath));　
 });
 
 gulp.task('copy-direct-min', function() {
-  gulp.src(['./src_direct/**/*', './src_direct/**/.htaccess'], {base: 'src_direct'})
+  gulp.src(['./static/**/*', './static/**/.htaccess'], {base: 'static'})
   .pipe(gulp.dest(destPath + '_min'));　
 });
 
@@ -138,7 +138,7 @@ gulp.task('watch', ['serve'], function() {
   gulp.watch(srcPath + '/sass/**/*.scss', ['sass']);
   gulp.watch(srcPath + '/js/**/*.js', ['js']);
   gulp.watch(srcPath + '/**/*.html', ['html']);
-  gulp.watch(['./src_direct/**/*', './src_direct/**/.htaccess'], ['copy-direct']);
+  gulp.watch(['./static/**/*', './static/**/.htaccess'], ['copy-direct']);
 });
 
 gulp.task('minify', function() {
