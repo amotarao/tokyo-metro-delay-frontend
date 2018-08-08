@@ -134,13 +134,6 @@ gulp.task('manifest', function() {
     .pipe(gulp.dest(destPath + '_min'));
 });
 
-gulp.task('watch', ['serve'], function() {
-  gulp.watch(srcPath + '/sass/**/*.scss', ['sass']);
-  gulp.watch(srcPath + '/js/**/*.js', ['js']);
-  gulp.watch(srcPath + '/**/*.html', ['html']);
-  gulp.watch(['./static/**/*', './static/**/.htaccess'], ['copy-direct']);
-});
-
 gulp.task('minify', function() {
   return runSequence(
     ['sass-min', 'js-min', 'html-min', 'copy-direct-min'],
@@ -153,6 +146,13 @@ gulp.task('serve', function() {
     server: destPath
   });
   gulp.watch(destPath + '/**/*.html').on('change', browserSync.reload);
+});
+
+gulp.task('watch', gulp.series(gulp.parallel('serve')), function() {
+  gulp.watch(srcPath + '/sass/**/*.scss', gulp.task('sass'));
+  gulp.watch(srcPath + '/js/**/*.js', gulp.task('js'));
+  gulp.watch(srcPath + '/**/*.html', gulp.task('html'));
+  gulp.watch(['./static/**/*', './static/**/.htaccess'], gulp.task('copy-direct'));
 });
 
 gulp.task('default', function() {
