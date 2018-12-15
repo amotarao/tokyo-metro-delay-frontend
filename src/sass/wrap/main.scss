@@ -45,34 +45,38 @@
     left: 0;
     right: 0;
   }
-
 }
 .site-title {
   color: $part-control-main-color;
-  font-feature-settings: "palt";
+  font-feature-settings: 'palt';
   font-size: 26.66px;
   font-weight: 300;
-  letter-spacing: .6em;
+  letter-spacing: 0.6em;
   line-height: 1.7;
   text-align: center;
-  text-indent: .6em;
+  text-indent: 0.6em;
 
   @media #{$media-mobile} {
     font-size: 22px;
     font-weight: 400;
-    letter-spacing: .36em;
-    text-indent: .36em;
+    letter-spacing: 0.36em;
+    text-indent: 0.36em;
   }
 
   @media #{$media-horizontal} {
     font-size: 22px;
     font-weight: 400;
-    letter-spacing: .36em;
-    text-indent: .36em;
+    letter-spacing: 0.36em;
+    text-indent: 0.36em;
   }
 
   @media #{$media-square} {
     display: none;
+  }
+
+  span {
+    display: inline-block;
+    white-space: nowrap;
   }
 }
 .control {
@@ -82,8 +86,8 @@
   font-size: 16px;
   height: 1.7em;
   justify-content: space-between;
-  letter-spacing: .075em;
-  text-indent: .075em;
+  letter-spacing: 0.075em;
+  text-indent: 0.075em;
   line-height: 1.7;
   margin: auto;
   overflow: hidden;
@@ -114,7 +118,7 @@
 
   &.select-time {
     text-align: right;
-    
+
     @media #{$media-horizontal} {
       margin-left: 30px;
       margin-top: -1.7em;
@@ -130,7 +134,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  
+
   span {
     display: block;
     width: 0;
