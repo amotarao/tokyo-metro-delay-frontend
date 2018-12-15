@@ -1,65 +1,82 @@
-var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    plumber = require('gulp-plumber'),
-    notify = require('gulp-notify'),
-    uglify = require('gulp-uglify'),
-    svgmin = require('gulp-svgmin'),
-    htmlmin = require('gulp-htmlmin'),
-    sourcemaps = require('gulp-sourcemaps'),
-    browserSync = require('browser-sync').create(),
-    mmq = require('gulp-merge-media-queries'),
-    cssmin = require('gulp-cssmin'),
-    concat = require('gulp-concat'),
-    manifest = require('gulp-appcache')
-    runSequence = require('run-sequence');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
+const plumber = require('gulp-plumber');
+const notify = require('gulp-notify');
+const uglify = require('gulp-uglify');
+const svgmin = require('gulp-svgmin');
+const htmlmin = require('gulp-htmlmin');
+const sourcemaps = require('gulp-sourcemaps');
+const browserSync = require('browser-sync').create();
+const mmq = require('gulp-merge-media-queries');
+const cssmin = require('gulp-cssmin');
+const concat = require('gulp-concat');
+const manifest = require('gulp-appcache');
+const runSequence = require('run-sequence');
 
-const srcPath = './src',
-      destPath = './dist',
-      prefixBrowsers = ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'];
+const srcPath = './src';
+const destPath = './dist';
+const prefixBrowsers = ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'];
 
-gulp.task('sass', function() {
-  gulp.src(srcPath + '/sass/**/style.scss')
-    .pipe(plumber({
-      errorHandler: notify.onError("<%= error.message %>")
-    }))
+gulp.task('sass', () => {
+  gulp
+    .src(srcPath + '/sass/**/style.scss')
+    .pipe(
+      plumber({
+        errorHandler: notify.onError('<%= error.message %>'),
+      })
+    )
     .pipe(sourcemaps.init())
-    .pipe(sass({
-      outputStyle: 'expanded'
-    }))
+    .pipe(
+      sass({
+        outputStyle: 'expanded',
+      })
+    )
     .pipe(mmq({}))
-    .pipe(autoprefixer({
-      browsers: prefixBrowsers,
-      cascade: false
-    }))
+    .pipe(
+      autoprefixer({
+        browsers: prefixBrowsers,
+        cascade: false,
+      })
+    )
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(destPath + '/css'))
     .pipe(browserSync.stream());
 });
 
-gulp.task('sass-min', function() {
-  gulp.src(srcPath + '/sass/**/style.scss')
-    .pipe(plumber({
-      errorHandler: notify.onError("<%= error.message %>")
-    }))
-    .pipe(sass({
-      outputStyle: 'expanded'
-    }))
+gulp.task('sass-min', () => {
+  gulp
+    .src(srcPath + '/sass/**/style.scss')
+    .pipe(
+      plumber({
+        errorHandler: notify.onError('<%= error.message %>'),
+      })
+    )
+    .pipe(
+      sass({
+        outputStyle: 'expanded',
+      })
+    )
     .pipe(mmq({}))
-    .pipe(autoprefixer({
-      browsers: prefixBrowsers,
-      cascade: false
-    }))
+    .pipe(
+      autoprefixer({
+        browsers: prefixBrowsers,
+        cascade: false,
+      })
+    )
     .pipe(cssmin())
     .pipe(gulp.dest(destPath + '_min/css'))
     .pipe(browserSync.stream());
 });
 
-gulp.task('js', function() {
-  gulp.src(srcPath + '/js/**/*.js')
-    .pipe(plumber({
-      errorHandler: notify.onError("<%= error.message %>")
-    }))
+gulp.task('js', () => {
+  gulp
+    .src(srcPath + '/js/**/*.js')
+    .pipe(
+      plumber({
+        errorHandler: notify.onError('<%= error.message %>'),
+      })
+    )
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
     .pipe(sourcemaps.write())
@@ -67,94 +84,115 @@ gulp.task('js', function() {
     .pipe(browserSync.stream());
 });
 
-gulp.task('js-min', function() {
-  gulp.src(srcPath + '/js/**/*.js')
-    .pipe(plumber({
-      errorHandler: notify.onError("<%= error.message %>")
-    }))
+gulp.task('js-min', () => {
+  gulp
+    .src(srcPath + '/js/**/*.js')
+    .pipe(
+      plumber({
+        errorHandler: notify.onError('<%= error.message %>'),
+      })
+    )
     .pipe(uglify())
     .pipe(concat('main.js'))
     .pipe(gulp.dest(destPath + '_min/js'))
     .pipe(browserSync.stream());
 });
 
-gulp.task('html', function() {
-  gulp.src(srcPath + '/**/*.html')
-    .pipe(plumber({
-      errorHandler: notify.onError("<%= error.message %>")
-    }))
+gulp.task('html', () => {
+  gulp
+    .src(srcPath + '/**/*.html')
+    .pipe(
+      plumber({
+        errorHandler: notify.onError('<%= error.message %>'),
+      })
+    )
     .pipe(gulp.dest(destPath))
     .pipe(browserSync.stream());
 });
 
-gulp.task('html-min', function() {
-  gulp.src(srcPath + '/**/*.html')
-    .pipe(plumber({
-      errorHandler: notify.onError("<%= error.message %>")
-    }))
-    .pipe(htmlmin({
-      collapseWhitespace: true,
-      removeComments: true
-    }))
+gulp.task('html-min', () => {
+  gulp
+    .src(srcPath + '/**/*.html')
+    .pipe(
+      plumber({
+        errorHandler: notify.onError('<%= error.message %>'),
+      })
+    )
+    .pipe(
+      htmlmin({
+        collapseWhitespace: true,
+        removeComments: true,
+      })
+    )
     .pipe(gulp.dest(destPath + '_min'))
     .pipe(browserSync.stream());
 });
 
-gulp.task('svg', function() {
-  gulp.src(srcPath + '/svg/**/*.svg')
-  .pipe(svgmin())
-  .pipe(gulp.dest(destPath + '/img'));　
+gulp.task('svg', () => {
+  gulp
+    .src(srcPath + '/svg/**/*.svg')
+    .pipe(svgmin())
+    .pipe(gulp.dest(destPath + '/img'));
 });
 
-gulp.task('svg-min', function() {
-  gulp.src(srcPath + '/svg/**/*.svg')
-  .pipe(svgmin())
-  .pipe(gulp.dest(destPath + '_min/img'));　
+gulp.task('svg-min', () => {
+  gulp
+    .src(srcPath + '/svg/**/*.svg')
+    .pipe(svgmin())
+    .pipe(gulp.dest(destPath + '_min/img'));
 });
 
-gulp.task('copy-direct', function() {
-  gulp.src(['./static/**/*', './static/**/.htaccess'], {base: 'static'})
-  .pipe(gulp.dest(destPath));　
+gulp.task('copy-direct', () => {
+  gulp
+    .src(['./static/**/*', './static/**/.htaccess'], { base: 'static' })
+    .pipe(gulp.dest(destPath));
 });
 
-gulp.task('copy-direct-min', function() {
-  gulp.src(['./static/**/*', './static/**/.htaccess'], {base: 'static'})
-  .pipe(gulp.dest(destPath + '_min'));　
-});
-
-gulp.task('manifest', function() {
-  gulp.src(destPath + '_min/**')
-    .pipe(manifest({
-      hash: true,
-      preferOnline: true,
-      network: ['http://*', 'https://*', '*'],
-      filename: 'manifest.appcache',
-      exclude: ['manifest.appcache', 'sitemap.xml']
-     }))
+gulp.task('copy-direct-min', () => {
+  gulp
+    .src(['./static/**/*', './static/**/.htaccess'], { base: 'static' })
     .pipe(gulp.dest(destPath + '_min'));
 });
 
-gulp.task('minify', function() {
+gulp.task('manifest', () => {
+  gulp
+    .src(destPath + '_min/**')
+    .pipe(
+      manifest({
+        hash: true,
+        preferOnline: true,
+        network: ['http://*', 'https://*', '*'],
+        filename: 'manifest.appcache',
+        exclude: ['manifest.appcache', 'sitemap.xml'],
+      })
+    )
+    .pipe(gulp.dest(destPath + '_min'));
+});
+
+gulp.task('minify', () => {
   return runSequence(
     ['sass-min', 'js-min', 'html-min', 'copy-direct-min'],
     'manifest'
-  )
+  );
 });
 
-gulp.task('serve', function() {
+gulp.task('serve', () => {
   browserSync.init({
-    server: destPath
+    server: destPath,
   });
   gulp.watch(destPath + '/**/*.html').on('change', browserSync.reload);
 });
 
-gulp.task('watch', gulp.series(gulp.parallel('serve')), function() {
+gulp.task('watch', gulp.series(gulp.parallel('serve')), () => {
   gulp.watch(srcPath + '/sass/**/*.scss', gulp.task('sass'));
   gulp.watch(srcPath + '/js/**/*.js', gulp.task('js'));
   gulp.watch(srcPath + '/**/*.html', gulp.task('html'));
-  gulp.watch(['./static/**/*', './static/**/.htaccess'], gulp.task('copy-direct'));
+  gulp.watch(
+    ['./static/**/*', './static/**/.htaccess'],
+    gulp.task('copy-direct')
+  );
 });
 
-gulp.task('default', function() {
+gulp.task('default', () => {
   gulp.run('watch');
 });
