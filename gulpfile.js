@@ -19,7 +19,7 @@ const destPath = './dist';
 const prefixBrowsers = ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'];
 
 gulp.task('sass', () => {
-  gulp
+  return gulp
     .src(srcPath + '/sass/**/style.scss')
     .pipe(
       plumber({
@@ -45,7 +45,7 @@ gulp.task('sass', () => {
 });
 
 gulp.task('sass-min', () => {
-  gulp
+  return gulp
     .src(srcPath + '/sass/**/style.scss')
     .pipe(
       plumber({
@@ -70,7 +70,7 @@ gulp.task('sass-min', () => {
 });
 
 gulp.task('js', () => {
-  gulp
+  return gulp
     .src(srcPath + '/js/**/*.js')
     .pipe(
       plumber({
@@ -85,7 +85,7 @@ gulp.task('js', () => {
 });
 
 gulp.task('js-min', () => {
-  gulp
+  return gulp
     .src(srcPath + '/js/**/*.js')
     .pipe(
       plumber({
@@ -99,7 +99,7 @@ gulp.task('js-min', () => {
 });
 
 gulp.task('html', () => {
-  gulp
+  return gulp
     .src(srcPath + '/**/*.html')
     .pipe(
       plumber({
@@ -111,7 +111,7 @@ gulp.task('html', () => {
 });
 
 gulp.task('html-min', () => {
-  gulp
+  return gulp
     .src(srcPath + '/**/*.html')
     .pipe(
       plumber({
@@ -129,33 +129,33 @@ gulp.task('html-min', () => {
 });
 
 gulp.task('svg', () => {
-  gulp
+  return gulp
     .src(srcPath + '/svg/**/*.svg')
     .pipe(svgmin())
     .pipe(gulp.dest(destPath + '/img'));
 });
 
 gulp.task('svg-min', () => {
-  gulp
+  return gulp
     .src(srcPath + '/svg/**/*.svg')
     .pipe(svgmin())
     .pipe(gulp.dest(destPath + '_min/img'));
 });
 
 gulp.task('copy-direct', () => {
-  gulp
+  return gulp
     .src(['./static/**/*', './static/**/.htaccess'], { base: 'static' })
     .pipe(gulp.dest(destPath));
 });
 
 gulp.task('copy-direct-min', () => {
-  gulp
+  return gulp
     .src(['./static/**/*', './static/**/.htaccess'], { base: 'static' })
     .pipe(gulp.dest(destPath + '_min'));
 });
 
 gulp.task('manifest', () => {
-  gulp
+  return gulp
     .src(destPath + '_min/**')
     .pipe(
       manifest({
@@ -169,12 +169,13 @@ gulp.task('manifest', () => {
     .pipe(gulp.dest(destPath + '_min'));
 });
 
-gulp.task('minify', () => {
-  return runSequence(
-    ['sass-min', 'js-min', 'html-min', 'copy-direct-min'],
+gulp.task(
+  'minify',
+  gulp.series(
+    gulp.parallel('sass-min', 'js-min', 'html-min', 'copy-direct-min'),
     'manifest'
-  );
-});
+  )
+);
 
 gulp.task('serve', () => {
   browserSync.init({
@@ -183,7 +184,7 @@ gulp.task('serve', () => {
   gulp.watch(destPath + '/**/*.html').on('change', browserSync.reload);
 });
 
-gulp.task('watch', gulp.series(gulp.parallel('serve')), () => {
+gulp.task('watch', gulp.parallel('serve'), () => {
   gulp.watch(srcPath + '/sass/**/*.scss', gulp.task('sass'));
   gulp.watch(srcPath + '/js/**/*.js', gulp.task('js'));
   gulp.watch(srcPath + '/**/*.html', gulp.task('html'));
@@ -193,6 +194,4 @@ gulp.task('watch', gulp.series(gulp.parallel('serve')), () => {
   );
 });
 
-gulp.task('default', () => {
-  gulp.run('watch');
-});
+gulp.task('default', gulp.parallel('watch'));
