@@ -73,6 +73,11 @@
   @media #{$media-square} {
     display: none;
   }
+
+  span {
+    display: inline-block;
+    white-space: nowrap;
+  }
 }
 .control {
   color: $part-control-color;
