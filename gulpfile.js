@@ -164,14 +164,21 @@ gulp.task('serve', () => {
   gulp.watch(destPath + '/**/*.html').on('change', browserSync.reload);
 });
 
-gulp.task('watch', gulp.parallel('serve'), () => {
-  gulp.watch(srcPath + '/sass/**/*.scss', gulp.task('sass'));
-  gulp.watch(srcPath + '/js/**/*.js', gulp.task('js'));
-  gulp.watch(srcPath + '/**/*.html', gulp.task('html'));
-  gulp.watch(
-    ['./static/**/*', './static/**/.htaccess'],
-    gulp.task('copy-direct')
-  );
-});
+gulp.task(
+  'watch',
+  gulp.series(
+    gulp.parallel('sass', 'js', 'html', 'copy-direct', 'svg'),
+    'serve',
+    () => {
+      gulp.watch(srcPath + '/sass/**/*.scss', gulp.task('sass'));
+      gulp.watch(srcPath + '/js/**/*.js', gulp.task('js'));
+      gulp.watch(srcPath + '/**/*.html', gulp.task('html'));
+      gulp.watch(
+        ['./static/**/*', './static/**/.htaccess'],
+        gulp.task('copy-direct')
+      );
+    }
+  )
+);
 
 gulp.task('default', gulp.parallel('watch'));

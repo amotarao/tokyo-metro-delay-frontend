@@ -5,10 +5,10 @@
   "homepage": "https://metro.chikoku.net/",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp",
+    "start": "npm run clean && gulp watch",
     "clean": "rm -rf dist && rm -rf dist_min",
-    "build": "npm run clean && gulp build"
+    "build": "npm run clean && gulp build",
+    "gulp": "gulp"
   },
   "author": "chikokunet",
   "license": "ISC",
