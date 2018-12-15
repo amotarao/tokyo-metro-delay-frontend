@@ -11,7 +11,6 @@ const browserSync = require('browser-sync').create();
 const mmq = require('gulp-merge-media-queries');
 const cssmin = require('gulp-cssmin');
 const concat = require('gulp-concat');
-const manifest = require('gulp-appcache');
 const runSequence = require('run-sequence');
 
 const srcPath = './src';
@@ -154,27 +153,9 @@ gulp.task('copy-direct-min', () => {
     .pipe(gulp.dest(destPath + '_min'));
 });
 
-gulp.task('manifest', () => {
-  return gulp
-    .src(destPath + '_min/**')
-    .pipe(
-      manifest({
-        hash: true,
-        preferOnline: true,
-        network: ['http://*', 'https://*', '*'],
-        filename: 'manifest.appcache',
-        exclude: ['manifest.appcache', 'sitemap.xml'],
-      })
-    )
-    .pipe(gulp.dest(destPath + '_min'));
-});
-
 gulp.task(
   'minify',
-  gulp.series(
-    gulp.parallel('sass-min', 'js-min', 'html-min', 'copy-direct-min'),
-    'manifest'
-  )
+  gulp.parallel('sass-min', 'js-min', 'html-min', 'copy-direct-min')
 );
 
 gulp.task('serve', () => {
