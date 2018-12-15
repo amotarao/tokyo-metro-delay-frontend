@@ -153,7 +153,7 @@ gulp.task('copy-direct-min', () => {
 });
 
 gulp.task(
-  'minify',
+  'build',
   gulp.parallel('sass-min', 'js-min', 'html-min', 'copy-direct-min')
 );
 

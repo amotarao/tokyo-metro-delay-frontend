@@ -6,7 +6,9 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "clean": "rm -rf dist && rm -rf dist_min",
+    "build": "npm run clean && gulp build"
   },
   "author": "chikokunet",
   "license": "ISC",
