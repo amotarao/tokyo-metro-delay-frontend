@@ -11,7 +11,6 @@ const browserSync = require('browser-sync').create();
 const mmq = require('gulp-merge-media-queries');
 const cssmin = require('gulp-cssmin');
 const concat = require('gulp-concat');
-const runSequence = require('run-sequence');
 
 const srcPath = './src';
 const destPath = './dist';
