@@ -2,7 +2,7 @@
   "name": "tokyo-metro-delay",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://metro.chikoku.net/",
+  "homepage": "https://tokyo-metro-delay.amon.dev/",
   "main": "gulpfile.js",
   "scripts": {
     "start": "npm run clean && gulp watch",
