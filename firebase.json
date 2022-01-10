@@ -2,7 +2,9 @@
   "hosting": {
     "public": "dist_min",
     "ignore": [
-      ".htaccess"
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
     ]
   }
 }
