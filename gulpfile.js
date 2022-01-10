@@ -14,7 +14,6 @@ const concat = require('gulp-concat');
 
 const srcPath = './src';
 const destPath = './dist';
-const prefixBrowsers = ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'];
 
 gulp.task('sass', () => {
   return gulp
@@ -33,7 +32,6 @@ gulp.task('sass', () => {
     .pipe(mmq({}))
     .pipe(
       autoprefixer({
-        browsers: prefixBrowsers,
         cascade: false,
       })
     )
@@ -58,7 +56,6 @@ gulp.task('sass-min', () => {
     .pipe(mmq({}))
     .pipe(
       autoprefixer({
-        browsers: prefixBrowsers,
         cascade: false,
       })
     )
