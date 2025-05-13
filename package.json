@@ -10,8 +10,8 @@
     "build": "pnpm run clean && gulp build",
     "gulp": "gulp"
   },
-  "author": "chikokunet",
-  "license": "ISC",
+  "author": "Amon Sawamura <amon.sawamura@gmail.com>",
+  "license": "UNLICENSED",
   "devDependencies": {
     "browser-sync": "^2.27.7",
     "gulp": "^4.0.2",
