@@ -13,7 +13,7 @@
   "author": "Amon Sawamura <amon.sawamura@gmail.com>",
   "license": "UNLICENSED",
   "devDependencies": {
-    "browser-sync": "^2.27.7",
+    "browser-sync": "^2.29.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-concat": "^2.6.1",
