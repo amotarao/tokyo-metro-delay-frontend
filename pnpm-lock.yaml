@@ -162,10 +162,6 @@ packages:
   '@types/node@22.15.17':
     resolution: {integrity: sha512-wIX2aSZL5FE+MR0JlvF87BNVrtFWf6AE6rxSE9X7OwnVvoyCQjpzSRJ+M87se/4QCkCiebQAqrJ0y6fwIyi7nw==}
 
-  accepts@1.3.5:
-    resolution: {integrity: sha512-pt4oTticGUEOZCvli0I7ekmpXopaX+Xvb/TQRaTKnvZNIH9Srs0VWi2NGBfsRscAgwtIEtxW5JOB9sI0oN3cjw==}
-    engines: {node: '>= 0.6'}
-
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
     engines: {node: '>= 0.6'}
@@ -388,10 +384,6 @@ packages:
   braces@2.3.2:
     resolution: {integrity: sha512-aNdbnj9P8PjdXU4ybaWLK2IF3jc/EoDYbC7AazW6to3TRsfXxscC9UXOB5iDiEQrkyIbWp2SLQda4+QAa7nc3w==}
     engines: {node: '>=0.10.0'}
-
-  braces@3.0.2:
-    resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
-    engines: {node: '>=8'}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -804,10 +796,6 @@ packages:
   es6-weak-map@2.0.2:
     resolution: {integrity: sha512-rx4zGKCKP7e3n3BtHemBtuJ9DCFw5jfjtdSM132RsGxlBgJvudmL/ogowl2Je/dJDbGws+od3J3PHOTAleo27w==}
 
-  escalade@3.1.1:
-    resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
-    engines: {node: '>=6'}
-
   escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
     engines: {node: '>=6'}
@@ -894,10 +882,6 @@ packages:
   fill-range@4.0.0:
     resolution: {integrity: sha512-VcpLTWqWDiTerugjj8e3+esbg+skS3M9e54UuR3iCeIDMXCLTsAH8hTSzDQU/X6/6t3eYkOKoZSef2PlU6U1XQ==}
     engines: {node: '>=0.10.0'}
-
-  fill-range@7.0.1:
-    resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
-    engines: {node: '>=8'}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -1553,9 +1537,6 @@ packages:
   lodash.values@2.4.1:
     resolution: {integrity: sha512-fQwubKvj2Nox2gy6YnjFm8C1I6MIlzKUtBB+Pj7JGtloGqDDL5CPRr4DUUFWPwXWwAl2k3f4C3Aw8H1qAPB9ww==}
 
-  lodash@4.17.11:
-    resolution: {integrity: sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==}
-
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
@@ -1626,24 +1607,12 @@ packages:
     resolution: {integrity: sha512-MWikgl9n9M3w+bpsY3He8L+w9eF9338xRl8IAO5viDizwSzziFEyUzo2xrrloB64ADbTf8uA8vRqqttDTOmccg==}
     engines: {node: '>=0.10.0'}
 
-  micromatch@4.0.4:
-    resolution: {integrity: sha512-pRmzw/XUcwXGpD9aI9q/0XOwLNygjETJ8y0ao0wdqprrzDa4YnxLcz7fQRZr8voh8V10kGhABbNcHVk5wHgWwg==}
-    engines: {node: '>=8.6'}
-
   micromatch@4.0.8:
     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
     engines: {node: '>=8.6'}
 
-  mime-db@1.35.0:
-    resolution: {integrity: sha512-JWT/IcCTsB0Io3AhWUMjRqucrHSPsSf2xKLaRldJVULioggvkJvggZ3VXNNSRkCddE6D+BUI4HEIZIA2OjwIvg==}
-    engines: {node: '>= 0.6'}
-
   mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
-    engines: {node: '>= 0.6'}
-
-  mime-types@2.1.19:
-    resolution: {integrity: sha512-P1tKYHVSZ6uFo26mtnve4HQFE3koh1UWVkp8YUC+ESBHe945xWSoXuHHiGarDqcEZ+whpCDnlNw5LON0kLo+sw==}
     engines: {node: '>= 0.6'}
 
   mime-types@2.1.35:
@@ -1698,10 +1667,6 @@ packages:
   nanomatch@1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
     engines: {node: '>=0.10.0'}
-
-  negotiator@0.6.1:
-    resolution: {integrity: sha512-qTxkr1RoLw5Pz+1+PTJ/66hWuyi2LEOeOuIDJDlx6JF8x75bmD5C7qXTg2UlX5W9rLfkqKP+r8q6Vy6NWdWrbw==}
-    engines: {node: '>= 0.6'}
 
   negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
@@ -2692,11 +2657,6 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  accepts@1.3.5:
-    dependencies:
-      mime-types: 2.1.19
-      negotiator: 0.6.1
-
   accepts@1.3.8:
     dependencies:
       mime-types: 2.1.35
@@ -2914,14 +2874,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  braces@3.0.2:
-    dependencies:
-      fill-range: 7.0.1
-
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
-    optional: true
 
   browser-sync-client@2.29.3:
     dependencies:
@@ -2961,7 +2916,7 @@ snapshots:
       http-proxy: 1.18.1
       immutable: 3.8.2
       localtunnel: 2.0.2
-      micromatch: 4.0.4
+      micromatch: 4.0.8
       opn: 5.3.0
       portscanner: 2.2.0
       raw-body: 2.3.3
@@ -2984,7 +2939,7 @@ snapshots:
     dependencies:
       caniuse-lite: 1.0.30001298
       electron-to-chromium: 1.4.38
-      escalade: 3.1.1
+      escalade: 3.2.0
       node-releases: 2.0.1
       picocolors: 1.0.0
 
@@ -3069,7 +3024,7 @@ snapshots:
   chokidar@3.5.2:
     dependencies:
       anymatch: 3.1.2
-      braces: 3.0.2
+      braces: 3.0.3
       glob-parent: 5.1.2
       is-binary-path: 2.1.0
       is-glob: 4.0.3
@@ -3352,7 +3307,7 @@ snapshots:
 
   easy-extender@2.3.4:
     dependencies:
-      lodash: 4.17.11
+      lodash: 4.17.21
 
   eazy-logger@4.1.0:
     dependencies:
@@ -3429,8 +3384,6 @@ snapshots:
       es5-ext: 0.10.45
       es6-iterator: 2.0.3
       es6-symbol: 3.1.1
-
-  escalade@3.1.1: {}
 
   escalade@3.2.0: {}
 
@@ -3537,14 +3490,9 @@ snapshots:
       repeat-string: 1.6.1
       to-regex-range: 2.1.1
 
-  fill-range@7.0.1:
-    dependencies:
-      to-regex-range: 5.0.1
-
   fill-range@7.1.1:
     dependencies:
       to-regex-range: 5.0.1
-    optional: true
 
   finalhandler@1.1.0:
     dependencies:
@@ -4307,8 +4255,6 @@ snapshots:
     dependencies:
       lodash.keys: 2.4.1
 
-  lodash@4.17.11: {}
-
   lodash@4.17.21: {}
 
   loud-rejection@1.6.0:
@@ -4419,24 +4365,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  micromatch@4.0.4:
-    dependencies:
-      braces: 3.0.2
-      picomatch: 2.3.1
-
   micromatch@4.0.8:
     dependencies:
       braces: 3.0.3
       picomatch: 2.3.1
-    optional: true
-
-  mime-db@1.35.0: {}
 
   mime-db@1.52.0: {}
-
-  mime-types@2.1.19:
-    dependencies:
-      mime-db: 1.35.0
 
   mime-types@2.1.35:
     dependencies:
@@ -4491,8 +4425,6 @@ snapshots:
       to-regex: 3.0.2
     transitivePeerDependencies:
       - supports-color
-
-  negotiator@0.6.1: {}
 
   negotiator@0.6.3: {}
 
@@ -4940,12 +4872,12 @@ snapshots:
 
   serve-index@1.9.1:
     dependencies:
-      accepts: 1.3.5
+      accepts: 1.3.8
       batch: 0.6.1
       debug: 2.6.9
       escape-html: 1.0.3
       http-errors: 1.6.3
-      mime-types: 2.1.19
+      mime-types: 2.1.35
       parseurl: 1.3.2
     transitivePeerDependencies:
       - supports-color
@@ -5462,7 +5394,7 @@ snapshots:
   yargs@17.1.1:
     dependencies:
       cliui: 7.0.4
-      escalade: 3.1.1
+      escalade: 3.2.0
       get-caller-file: 2.0.5
       require-directory: 2.1.1
       string-width: 4.2.3
