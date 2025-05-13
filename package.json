@@ -5,9 +5,9 @@
   "homepage": "https://tokyo-metro-delay.amon.dev/",
   "main": "gulpfile.js",
   "scripts": {
-    "start": "npm run clean && gulp watch",
+    "dev": "pnpm run clean && gulp watch",
     "clean": "rm -rf dist && rm -rf dist_min",
-    "build": "npm run clean && gulp build",
+    "build": "pnpm run clean && gulp build",
     "gulp": "gulp"
   },
   "author": "chikokunet",
